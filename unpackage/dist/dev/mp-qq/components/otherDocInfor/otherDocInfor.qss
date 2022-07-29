@@ -1,0 +1,33 @@
+
+.docInfor.data-v-4e350b7e{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	padding: 30rpx 30rpx;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	border-bottom: 1px solid #F0EFEF;
+	background-color: #FFFFFF;
+}
+.docInfor uni-image.data-v-4e350b7e{
+	width: 126rpx;
+	height: 126rpx;
+	-webkit-border-radius: 50%;
+	        border-radius: 50%;
+	border: 1px solid #F0EFEF;
+	margin-right: 23rpx;
+}
+.docInfor .docname.data-v-4e350b7e{
+	font-size: 28rpx;
+	color: #000000;
+}
+.infor .line.data-v-4e350b7e{
+	margin: 0 10rpx;
+}
+.docInfor .infor.data-v-4e350b7e{
+	font-size: 24rpx;
+	line-height: 70rpx;
+	color: #8F8F8F;
+}
+

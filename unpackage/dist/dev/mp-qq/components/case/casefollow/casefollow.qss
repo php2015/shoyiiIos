@@ -1,0 +1,31 @@
+
+.follow.data-v-682a02aa{
+	margin-top: 20rpx;
+	background-color: #FFFFFF;
+	padding: 0 30rpx;
+}
+.title.data-v-682a02aa{
+	color: #242424;
+	font-size: 28rpx;
+	font-weight: Bold;
+	font-family: PingFang-SC-Bold;
+	padding: 20rpx 0;
+	border-bottom: 1px solid #F0F0F0;
+}
+.content.data-v-682a02aa{
+	color: #000000;
+	font-size: 28rpx;
+	padding: 20rpx 0;
+	font-family: PingFang-SC-Regular;
+}
+.video.data-v-682a02aa{
+	text-align: center;
+	margin-top: 20rpx;
+	width: 100%;
+}
+.noData.data-v-682a02aa{
+	background-color: #FFFFFF;
+	padding: 20rpx 30rpx;
+	margin-top: 20rpx;
+}
+

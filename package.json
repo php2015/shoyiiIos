@@ -1,0 +1,12 @@
+{
+    "id": "lm-combox",
+    "name": "lm-combox 组合框(扩展组件)",
+    "version": "0.0.1",
+    "description": "可以选择也可以输入进行模糊匹配的下拉菜单",
+    "keywords": [
+        "combox，组合框，组合下拉框，uni-combox，lm-combox，select"
+    ],
+    "dependencies": {
+        "lodash": "^4.17.21"
+    }
+}

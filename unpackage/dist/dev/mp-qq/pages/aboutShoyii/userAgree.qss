@@ -1,0 +1,14 @@
+
+.userAgree.data-v-18e0d016{
+	padding: 0 30rpx;	
+	font-size: 13px;
+	line-height: 20px;
+}
+.titleA.data-v-18e0d016{
+	font-size: 15px;
+	color: #000000;
+	font-weight: bold;
+	font-family: PingFang-SC-Bold;
+	padding: 20rpx 0;
+}
+

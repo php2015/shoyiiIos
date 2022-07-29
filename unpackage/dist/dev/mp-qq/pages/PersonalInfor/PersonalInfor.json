@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "我的资料",
+  "usingComponents": {
+    "u-avatar": "/uview-ui/components/u-avatar/u-avatar",
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "u-select": "/uview-ui/components/u-select/u-select",
+    "u-calendar": "/uview-ui/components/u-calendar/u-calendar",
+    "u-keyboard": "/uview-ui/components/u-keyboard/u-keyboard",
+    "u-top-tips": "/uview-ui/components/u-top-tips/u-top-tips",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network"
+  }
+}

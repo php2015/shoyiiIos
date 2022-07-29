@@ -1,0 +1,31 @@
+
+.charge.data-v-3b24dd48{
+	padding: 0 30rpx;
+}
+.aa.data-v-3b24dd48{
+	padding: 10rpx 0;
+	color: #000000;
+	font-size: 28rpx!important;
+	margin-top: 20rpx;
+	background-color: #FFFFFF;
+}
+.aa .uni-icons.data-v-3b24dd48{
+	margin-right: 20rpx;
+	font-size: 24rpx!important;
+}
+.slot-wrap.data-v-3b24dd48{
+	-webkit-box-flex:1;
+	-webkit-flex:1;
+	        flex:1;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	padding: 0 30rpx;
+}
+

@@ -1,0 +1,1 @@
+<view class="header"><uni-icons vue-id="0d9c7618-1" type="closeempty" size="30" data-event-opts="{{[['^click',[['close']]]]}}" onClick="__e" onVueInit="__l"></uni-icons><text data-event-opts="{{[['tap',[['register',['$event']]]]]}}" onTap="__e">注册</text></view>

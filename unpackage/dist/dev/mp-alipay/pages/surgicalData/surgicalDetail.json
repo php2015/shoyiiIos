@@ -1,0 +1,18 @@
+{
+  "defaultTitle": "方法库详情",
+  "titleBarColor": "#FFFFFF",
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar",
+    "three-model-pic": "/components/threeModelPic/threeModelPic",
+    "uni-popup": "/components/uni-popup/uni-popup",
+    "uni-segmented-control": "/components/uni-segmented-control/uni-segmented-control",
+    "audit-status": "/components/auditStatus/auditStatus",
+    "vrshow": "/components/vrshow/vrshow",
+    "wechat-share": "/components/wechatShare/wechatShare",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network",
+    "surgical-doc-infor": "/components/surgical/surgicalDocInfor",
+    "twelve-items": "/components/surgical/twelveItems",
+    "surgical-bottom": "/components/surgical/surgicalBottom",
+    "success-case": "/components/surgical/successCase"
+  }
+}

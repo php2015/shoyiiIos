@@ -1,0 +1,69 @@
+
+page.data-v-31ac9e60{
+	background-color: #FFFFFF;
+}
+.Information.data-v-31ac9e60{
+	padding-bottom: 20rpx;
+}
+.editAvatar.data-v-31ac9e60{
+	padding: 30rpx 0;
+	color: #909090;
+	font-size: 28rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+.editAvatar .logo.data-v-31ac9e60{
+	margin-bottom: 20rpx;
+}
+.basic.data-v-31ac9e60{
+	padding: 0 30rpx;
+}
+.basic .title.data-v-31ac9e60{
+	color: #000000;
+	font-size: 30rpx;
+	font-family:PingFang-SC-Bold ;
+	font-weight: bold;
+	display: inline-block;
+	padding-bottom: 30rpx;
+}
+.item.data-v-31ac9e60{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	padding: 30rpx 0;
+	border-bottom: 1px solid #EEEEEE;
+	border-top: 1px solid #EEEEEE;
+	font-size: 28rpx;
+	color: #000000;
+}
+.item .icon.data-v-31ac9e60{
+	margin-left: 22rpx;
+}
+.job.data-v-31ac9e60{
+	margin-top: 60rpx;
+}
+.date .title.data-v-31ac9e60{
+	text-align: center;
+}
+.date.data-v-31ac9e60 .u-btn--primary{
+	background-color: #86B0D4;
+}
+.hospitalText.data-v-31ac9e60{
+	width: 75%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	text-align: right;
+}
+

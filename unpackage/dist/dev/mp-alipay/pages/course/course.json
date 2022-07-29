@@ -1,0 +1,8 @@
+{
+  "defaultTitle": "树蚁历程",
+  "titleBarColor": "#FFFFFF",
+  "usingComponents": {
+    "timeline": "/components/chenbin-timeline/timeLine",
+    "timeline-item": "/components/chenbin-timeline/timelineItem"
+  }
+}

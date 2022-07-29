@@ -1,0 +1,324 @@
+{
+    "name" : "树蚁医疗",
+    "appid" : "__UNI__AF91735",
+    "description" : "",
+    "versionName" : "1.1.59",
+    "versionCode" : 131,
+    "transformPx" : false,
+    "app-plus" : {
+        "compatible" : {
+            "ignoreVersion" : true //true表示忽略版本检查提示框，HBuilderX1.9.0及以上版本支持  
+        },
+        "nvueCompiler" : "uni-app",
+        "compilerVersion" : 3,
+        "modules" : {
+            "VideoPlayer" : {},
+            "Share" : {},
+            "Push" : {},
+            "OAuth" : {},
+            "Payment" : {}
+        },
+        // "optimization": {
+        //     "subPackages": true
+        // },
+        // "runmode" : "liberate",// 开启分包优化后，必须配置资源释放模式
+        "safearea" : {
+            "background" : "#ffffff",
+            "backgroundDark" : "#2f0509",
+            "bottom" : {
+                "offset" : "auto"
+            }
+        },
+        "distribute" : {
+            "android" : {
+                "permissions" : [
+                    "<uses-permission android:name=\"android.permission.ACCESS_CHECKIN_PROPERTIES\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_LOCATION_EXTRA_COMMANDS\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_MOCK_LOCATION\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_SURFACE_FLINGER\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.ACCOUNT_MANAGER\"/>",
+                    "<uses-permission android:name=\"android.permission.ADD_VOICEMAIL\"/>",
+                    "<uses-permission android:name=\"android.permission.AUTHENTICATE_ACCOUNTS\"/>",
+                    "<uses-permission android:name=\"android.permission.BATTERY_STATS\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_ACCESSIBILITY_SERVICE\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_APPWIDGET\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_CARRIER_MESSAGING_SERVICE\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_DEVICE_ADMIN\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_DREAM_SERVICE\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_INPUT_METHOD\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_NFC_SERVICE\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_NOTIFICATION_LISTENER_SERVICE\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_PRINT_SERVICE\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_REMOTEVIEWS\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_TEXT_SERVICE\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_TV_INPUT\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_VOICE_INTERACTION\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_VPN_SERVICE\"/>",
+                    "<uses-permission android:name=\"android.permission.BIND_WALLPAPER\"/>",
+                    "<uses-permission android:name=\"android.permission.BLUETOOTH_PRIVILEGED\"/>",
+                    "<uses-permission android:name=\"android.permission.BODY_SENSORS\"/>",
+                    "<uses-permission android:name=\"android.permission.BRICK\"/>",
+                    "<uses-permission android:name=\"android.permission.BROADCAST_PACKAGE_REMOVED\"/>",
+                    "<uses-permission android:name=\"android.permission.BROADCAST_SMS\"/>",
+                    "<uses-permission android:name=\"android.permission.BROADCAST_STICKY\"/>",
+                    "<uses-permission android:name=\"android.permission.BROADCAST_WAP_PUSH\"/>",
+                    "<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+                    "<uses-permission android:name=\"android.permission.CALL_PRIVILEGED\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+                    "<uses-permission android:name=\"android.permission.CAPTURE_AUDIO_OUTPUT\"/>",
+                    "<uses-permission android:name=\"android.permission.CAPTURE_SECURE_VIDEO_OUTPUT\"/>",
+                    "<uses-permission android:name=\"android.permission.CAPTURE_VIDEO_OUTPUT\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_COMPONENT_ENABLED_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_CONFIGURATION\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_MULTICAST_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CLEAR_APP_CACHE\"/>",
+                    "<uses-permission android:name=\"android.permission.CLEAR_APP_USER_DATA\"/>",
+                    "<uses-permission android:name=\"android.permission.CONTROL_LOCATION_UPDATES\"/>",
+                    "<uses-permission android:name=\"android.permission.INSTALL_PACKAGES\"/>",
+                    "<uses-permission android:name=\"android.permission.INTERNET\"/>",
+                    "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\"/>",
+                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                ],
+                "abiFilters" : [ "armeabi-v7a", "x86" ],
+                "schemes" : ""
+            },
+            "ios" : {
+                "capabilities" : {
+                    "entitlements" : {
+                        "com.apple.developer.associated-domains" : [ "applinks:mobile.shoyii.com" ]
+                    }
+                },
+                "pushRegisterMode" : "manual",
+                "privacyDescription" : {
+                    "NSPhotoLibraryUsageDescription" : "注册时从相册中选择图片作为用户头像，身份证，营业执照等相关个人信息",
+                    "NSPhotoLibraryAddUsageDescription" : "注册时从相册中选择图片作为用户头像，上传身份证，营业执照等相关个人信息",
+                    "NSCameraUsageDescription" : "注册时用摄像头拍摄图片作为用户头像，上传身份证，营业执照等相关个人信息",
+                    "NSMicrophoneUsageDescription" : "用户在病例讨论组中交流时，通过麦克风说话将语音转为文字",
+                    "NSLocationWhenInUseUsageDescription" : "访问位置，为用户提供所在地区的天气信息",
+                    "NSLocationAlwaysUsageDescription" : "访问位置，为用户提供所在地区的天气信息",
+                    "NSLocationAlwaysAndWhenInUseUsageDescription" : "访问位置，为用户提供所在地区的天气信息u",
+                    "NSSpeechRecognitionUsageDescription" : "用户在病例讨论组中交流时，通过麦克风说话将语音转为文字",
+                    "NSLocalNetworkUsageDescription" : "访问本地网络，便于用户使用网络获取本机号码从而一键登录",
+                    "NSBluetoothPeripheralUsageDescription" : "使用了第三方的个推SDK,会存在访问用户蓝牙等设备，便于及时推送信息到用户通知栏中",
+                    "NSBluetoothAlwaysUsageDescription" : "使用了第三方的个推SDK,会存在访问用户蓝牙等设备，便于及时推送信息到用户通知栏中",
+                    "NSUserTrackingUsageDescription" : "请放心，开启权限不会获取您在其他站点的隐私信息，该权限仅用于标识设备并保障服务安全与提示浏览体验"
+                },
+                "urltypes" : "shoyiimedical",
+                "UIUserInterfaceStyle" : "Automatic"
+            },
+            "sdkConfigs" : {
+                "geolocation" : {},
+                "maps" : {
+                    "amap" : {
+                        "appkey_ios" : "66fd13c250cc61df33e87d650f638255",
+                        "appkey_android" : "ebcd2298e20d7b6eceed1819fb34c395"
+                    }
+                },
+                "oauth" : {
+                    "univerify" : {},
+                    "apple" : {},
+                    "weixin" : {
+                        "appid" : "wxdbe07c2bfb651890",
+                        "appsecret" : "9ffbdeb9e9aed157096eed988bb8d926",
+                        "UniversalLinks" : "https://mobile.shoyii.com/uni-universallinks/__UNI__AF91735"
+                    }
+                },
+                "ad" : {
+                    "gdt" : {},
+                    "csj" : {},
+                    "ks" : {}
+                },
+                "payment" : {
+                    "weixin" : {
+                        "__platform__" : [ "ios", "android" ],
+                        "appid" : "wxdbe07c2bfb651890",
+                        "UniversalLinks" : "https://mobile.shoyii.com/uni-universallinks/__UNI__AF91735"
+                    }
+                },
+                "push" : {
+                    "unipush" : {}
+                },
+                "share" : {
+                    "weixin" : {
+                        "appid" : "wxdbe07c2bfb651890",
+                        "UniversalLinks" : "https://mobile.shoyii.com/uni-universallinks/__UNI__AF91735"
+                    }
+                },
+                "speech" : {
+                    "baidu" : {
+                        "appid" : "23913950",
+                        "apikey" : "oXDDX8tqMkqNLFSShDPDMaBA",
+                        "secretkey" : "5QEbN7uS5SjdZb2NI9vryzjGmSu06MxU"
+                    }
+                }
+            },
+            "icons" : {
+                "android" : {
+                    "hdpi" : "",
+                    "xhdpi" : "",
+                    "xxhdpi" : "",
+                    "xxxhdpi" : ""
+                },
+                "ios" : {
+                    "appstore" : "/Users/apple/Desktop/image/new/image/1024.png",
+                    "iphone" : {
+                        "app@2x" : "/Users/apple/Desktop/image/new/image/120.png",
+                        "app@3x" : "/Users/apple/Desktop/image/new/image/180.png",
+                        "spotlight@2x" : "/Users/apple/Desktop/image/new/image/80.png",
+                        "spotlight@3x" : "/Users/apple/Desktop/image/new/image/120.png",
+                        "settings@2x" : "/Users/apple/Desktop/image/new/image/58.png",
+                        "settings@3x" : "/Users/apple/Desktop/image/new/image/87.png",
+                        "notification@2x" : "/Users/apple/Desktop/image/new/image/40.png",
+                        "notification@3x" : "/Users/apple/Desktop/image/new/image/60.png"
+                    }
+                }
+            },
+            "splashscreen" : {
+                "androidStyle" : "common",
+                "android" : {
+                    "hdpi" : "C:/Users/Administrator/Desktop/app/img/small1.9.png",
+                    "xhdpi" : "static/image/medium1.9.png",
+                    "xxhdpi" : "C:/Users/Administrator/Desktop/app/img/bigger1.9.png"
+                }
+            },
+            "permissionExternalStorage" : {
+                "request" : "always",
+                "prompt" : "应用保存运行状态等信息，需要获取读写手机存储（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。"
+            },
+            "permissionPhoneState" : {
+                "request" : "always",
+                "prompt" : "为保证您正常、安全地使用，需要获取设备识别码（部分手机提示为获取手机号码）使用权限，请允许。"
+            }
+        },
+        "splashscreen" : {
+            "alwaysShowBeforeRender" : false,
+            "waiting" : false,
+            "autoclose" : false,
+            "delay" : 0
+        },
+        "privacy" : {
+            "prompt" : "template", //可取值template、custom、none  
+            "template" : {
+                //prompt取值为template时有效，用于配置模板提示框上显示的内容
+                "title" : "ShoYii隐私政策",
+                "message" : "　　请你务必审慎阅读、充分理解隐私政策”各条款，包括但不限于：为了更好的向你提供服务，我们需要收集你的设备标识、操作日志等信息用于分析、优化应用性能。<br/>　　你可阅读<a href='https://mobile.shoyii.com/#/pages/aboutShoyii/userAgree'>《用户协议》</a>和<a href='https://mobile.shoyii.com/#/pages/aboutShoyii/privacyPolicy'>《隐私政策》</a> 了解详细信息。如果你同意，请点击下面按钮开始接受我们的服务。",
+                "buttonAccept" : "我同意",
+                "buttonRefuse" : "不同意并退出应用"
+            }
+        },
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "quickapp" : {},
+    "mp-weixin" : {
+        "appid" : "wx347cba31a8aac486",
+        "setting" : {
+            "urlCheck" : false,
+            "es6" : true,
+            "postcss" : true,
+            "minified" : true
+        },
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "你的位置信息将用于小程序位置接口的效果展示"
+            }
+        },
+        "optimization" : {
+            "subPackages" : true
+        },
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "quickapp-webview" : {
+        "icon" : "C:/Users/Administrator/Desktop/app/img/logo.png",
+        "package" : "shoyiiDoc",
+        "versionName" : "1.0.0"
+    },
+    "h5" : {
+        "router" : {
+            "mode" : "hash",
+            "base" : "./"
+        },
+        "title" : "shoyii",
+        "domain" : "192.168.31.40",
+        "devServer" : {
+            "disableHostCheck" : true
+        },
+        // "port" : 8080,
+        // "proxy" : {
+        //     "/asjdhjv" : {
+        //         "target" : "http://apis.juhe.cn",
+        //         "changeOrigin" : true,
+        //         "secure" : false,
+        //         "pathRewrite" : {
+        //             "^/asjdhjv" : ""
+        //         }
+        //     },
+        //     "/prefix" : {
+        //         "target" : "https://shoyii-open-1258143571.cos.ap-guangzhou.myqcloud.com",
+        //         "changeOrigin" : true,
+        //         "secure" : false,
+        //         "pathRewrite" : {
+        //             "^/prefix" : ""
+        //         }
+        //     }
+        // }
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true //启用摇树优化  
+            }
+        },
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-qq" : {
+        "optimization" : {
+            "subPackages" : true
+        },
+        "setting" : {
+            "es6" : true,
+            "postcss" : true,
+            "minified" : true,
+            "urlCheck" : false
+        },
+        "appid" : "1111260965"
+    },
+    "_spaceID" : "c334da1d-fd3c-453e-ac83-9fb351395a46"
+}
+// "port" : 8080,
+// "proxy" : {
+//     "/asjdhjv" : {
+//         "target" : "http://apis.juhe.cn",
+//         "changeOrigin" : true,
+//         "secure" : false,
+//         "pathRewrite" : {
+//             "^/asjdhjv" : ""
+//         }
+//     },
+//     "/prefix" : {
+//         "target" : "https://shoyii-open-1258143571.cos.ap-guangzhou.myqcloud.com",
+//         "changeOrigin" : true,
+//         "secure" : false,
+//         "pathRewrite" : {
+//             "^/prefix" : ""
+//         }
+//     }
+// }
+//启用摇树优化  
+

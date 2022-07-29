@@ -1,0 +1,20 @@
+{
+  "navigationBarTitleText": "模型库",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationBarTextStyle": "black",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar",
+    "u-search": "/uview-ui/components/u-search/u-search",
+    "u-checkbox": "/uview-ui/components/u-checkbox/u-checkbox",
+    "u-empty": "/uview-ui/components/u-empty/u-empty",
+    "u-button": "/uview-ui/components/u-button/u-button",
+    "u-modal": "/uview-ui/components/u-modal/u-modal",
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-radio-group": "/uview-ui/components/u-radio-group/u-radio-group",
+    "u-radio": "/uview-ui/components/u-radio/u-radio",
+    "audit-status": "/components/auditStatus/auditStatus",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network",
+    "modellist": "/components/model/modellist"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "defaultTitle": "页面错误",
+  "pullRefresh": false,
+  "usingComponents": {
+    "u-empty": "/uview-ui/components/u-empty/u-empty"
+  }
+}

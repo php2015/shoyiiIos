@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "树蚁历程",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "timeline": "/components/chenbin-timeline/timeLine",
+    "timeline-item": "/components/chenbin-timeline/timelineItem"
+  }
+}

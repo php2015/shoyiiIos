@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "login-top": "/components/login-top/login-top",
+    "uni-icons": "/components/uni-icons/uni-icons"
+  }
+}

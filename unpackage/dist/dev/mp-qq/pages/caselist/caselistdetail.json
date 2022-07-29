@@ -1,0 +1,31 @@
+{
+  "navigationBarTitleText": "病例",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationBarTextStyle": "black",
+  "navigationStyle": "custom",
+  "bounce": "none",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "v-tabs": "/components/v-tabs/v-tabs",
+    "u-modal": "/uview-ui/components/u-modal/u-modal",
+    "u-radio-group": "/uview-ui/components/u-radio-group/u-radio-group",
+    "u-radio": "/uview-ui/components/u-radio/u-radio",
+    "uni-transition": "/components/uni-transition/uni-transition",
+    "u-checkbox-group": "/uview-ui/components/u-checkbox-group/u-checkbox-group",
+    "u-checkbox": "/uview-ui/components/u-checkbox/u-checkbox",
+    "u-switch": "/uview-ui/components/u-switch/u-switch",
+    "u-popup": "/uview-ui/components/u-popup/u-popup",
+    "audit-status": "/components/auditStatus/auditStatus",
+    "case-bottom": "/components/case/caseBottom",
+    "casedocinfor": "/components/case/casedocinfor",
+    "electric-infor": "/components/case/caseElectric/electricInfor",
+    "electric-model": "/components/case/caseElectric/electricModel",
+    "twelve-items": "/components/surgical/twelveItems",
+    "methods-model": "/components/case/caseMethods/methodsModel",
+    "design-model": "/components/case/caseDesign/designModel",
+    "case-files": "/components/case/caseDesign/caseFiles",
+    "casepredict": "/components/case/casepredict/casepredict",
+    "casefollow": "/components/case/casefollow/casefollow"
+  }
+}

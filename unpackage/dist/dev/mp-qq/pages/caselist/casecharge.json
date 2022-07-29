@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "收费详情",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationBarTextStyle": "black",
+  "bounce": "none",
+  "usingComponents": {
+    "uni-transition": "/components/uni-transition/uni-transition",
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network"
+  }
+}

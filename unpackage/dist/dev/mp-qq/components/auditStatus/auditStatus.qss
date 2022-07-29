@@ -1,0 +1,28 @@
+
+.audit.data-v-0a834960{
+	padding: 30rpx 30rpx;
+	text-align: center;
+	background-color: #FFFFFF;
+}
+.audit .content.data-v-0a834960{
+	padding: 30rpx 0;
+}
+.btn.data-v-0a834960{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	border-top: 1px solid #EEEEEE;
+}
+.btn .text.data-v-0a834960{
+	/* width: 50%; */
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+	padding: 30rpx 0;
+	text-align: center;
+	color: #666666;
+}
+.btn .sure.data-v-0a834960{
+	color: #86B0D4;
+}
+

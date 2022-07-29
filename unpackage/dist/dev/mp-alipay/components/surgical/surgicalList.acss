@@ -1,0 +1,115 @@
+
+.box{
+	padding: 0 30rpx;
+	margin-bottom: 10rpx;
+	width: 100%;
+}
+.list{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: start;
+	-webkit-align-items: flex-start;
+	        align-items: flex-start;
+	padding: 18rpx 12rpx;
+	background-color: #FFFFFF;
+	/* border: 1px solid #EEEEEE; */
+	-webkit-border-radius: 10rpx;
+	        border-radius: 10rpx;
+}
+.bgColor{
+	background-color: #F8F8F8;
+}
+.surgical_image{
+	height: 214rpx;
+	width: 226rpx;
+	margin-right: 21rpx;
+}
+.surgical_image image{
+	width: 100%;
+	min-width: 226rpx;
+	height: 214rpx;
+	background: #adabff;	
+	/* border: 1px solid #EEEEEE; */
+}
+.content{
+	-webkit-box-flex:1;
+	-webkit-flex:1;
+	        flex:1;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	height: 214rpx;
+	overflow: hidden;
+	margin-top: 0;
+	padding: 0 10rpx;
+}
+.content .content_titlename{
+	color: #000000;
+	font-size: 30rpx;
+	font-weight: bold;
+	font-family: PingFang-SC-Bold;
+	/* margin-bottom: 22rpx; */
+	/* line-height: 24rpx; */
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	overflow: hidden;
+}
+.content .content_item{
+	color: #000000;
+	font-family: PingFang-SC-Regular;
+	font-size: 24rpx;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+	line-height: 30rpx;
+	margin: 22rpx 0 30rpx;
+}
+.title{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	color: #000000;
+	font-size: 24rpx;
+	font-family: PingFang-SC-Regular;
+}
+.title .time{
+	color: #909090;
+}
+.title_top{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+.title_top image{
+	width: 36rpx;
+	height: 36rpx;
+	-webkit-border-radius: 50%;
+	        border-radius: 50%;
+	margin-right: 7px;
+	display: block;
+}
+
+

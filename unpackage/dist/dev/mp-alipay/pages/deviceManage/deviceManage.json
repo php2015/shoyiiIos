@@ -1,0 +1,12 @@
+{
+  "defaultTitle": "设备管理",
+  "usingComponents": {
+    "uni-swipe-action": "/components/uni-swipe-action/uni-swipe-action",
+    "uni-swipe-action-item": "/components/uni-swipe-action-item/uni-swipe-action-item",
+    "groups-list": "/components/GroupsList/GroupsList",
+    "u-button": "/uview-ui/components/u-button/u-button",
+    "u-modal": "/uview-ui/components/u-modal/u-modal",
+    "u-input": "/uview-ui/components/u-input/u-input",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network"
+  }
+}

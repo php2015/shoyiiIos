@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar",
+    "u-search": "/uview-ui/components/u-search/u-search",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network",
+    "classify-model": "/components/model/classifyModel"
+  }
+}

@@ -1,0 +1,174 @@
+!function(e){var t={};function n(o){if(t[o])return t[o].exports;var r=t[o]={i:o,l:!1,exports:{}};return e[o].call(r.exports,r,r.exports,n),r.l=!0,r.exports}n.m=e,n.c=t,n.d=function(e,t,o){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:o})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var o=Object.create(null);if(n.r(o),Object.defineProperty(o,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var r in e)n.d(o,r,function(t){return e[t]}.bind(null,r));return o},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="",n(n.s=43)}({0:function(module,exports,__webpack_require__){"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var originalBridgeCall=self.AlipayJSBridge&&self.AlipayJSBridge.call,originalFetch=self.fetch,originImportScripts=self.importScripts,originEval="function"==typeof self.__eval?self.__eval:self.eval;exports.getUserAgent=function(){return navigator.swuserAgent||navigator.userAgent||""},exports.debug=console.log.bind(console),exports.checkIOS=function(){return/\(i[^;]+;( U;)? CPU.+Mac OS X/.test(exports.getUserAgent())},exports.isLyra=function(){return Boolean(self.__LyraWSWorkerOrigin)},exports.callInternalAPI=function(e,t){var n={data:{method:e,param:t},action:"internalAPI"},o=encodeURIComponent(JSON.stringify(n));originalFetch?originalFetch("https://alipay.kylinBridge/?data="+o,{mode:"no-cors"}).then((function(){})).catch((function(){})):originalBridgeCall&&originalBridgeCall("internalAPI",{method:e,param:t})},exports.getStartupParams=function(){return self.__appxStartupParams&&self.__appxStartupParams.appId?self.__appxStartupParams:self.AFAppX&&self.AFAppX.bridge&&self.AFAppX.bridge.callSync&&self.AFAppX.bridge.callSync("getStartupParams")||{}},exports.getBridge=function(){return self.AFAppX.bridge};var appxImported=!1,appxImportListener=[];exports.runAfterAppx=function(e){if(self.AFAppX)return appxImported=!0,void e();self.importScripts=function(e){originImportScripts(e),!appxImported&&/af-appx\.worker\.min\.js$/.test(e)&&(appxImported=!0,appxImportListener.forEach((function(e){return e()})),appxImportListener=[])},appxImportListener.push(e)},exports.evaluateScript=function(expression){return"function"==typeof eval?eval(expression):"function"==typeof originEval?(self.eval=originEval,eval(expression)):void 0}},10:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var o=n(11),r=n(0),s=n(2),a=n(5),i=function(){r.getBridge().call("showRemoteDebugPanel",{status:"connecting",text:"远程调试准备中",buttonTitle:"退出"})},c=function(){r.getBridge().call("showRemoteDebugPanel",{status:"connected",text:"远程调试已连接",buttonTitle:"退出"})},u=function(){r.getBridge().call("showRemoteDebugPanel",{status:"disconnected",text:"远程调试已断开",buttonTitle:"退出"})};t.SocketConn={messageQueue:[],socketTask:null,send:function(e){var t=this,n="string"==typeof e?e:JSON.stringify(e);n.length>5242880?r.debug("[bugme] socket send failed, size: ",n.length):this.socketTask?(this.messageQueue.length&&(this.messageQueue.forEach((function(e){t.socketTask.send({data:e})})),this.messageQueue=[]),this.socketTask.send({data:n})):this.messageQueue.push(n)},close:function(){this.socketTask?this.socketTask.close():r.getBridge().showToast({content:"请点击右上角关闭按钮退出",duration:1e3})},connect:function(e){var t=this,n=r.getBridge(),o=n.connectSocket({url:e,multiple:!0}),s=function(){t.socketTask||(t.socketTask=o,t.onopen(),r.debug("[bugme] websocket connected"))};o.onOpen((function(){s()})),o.onMessage((function(e){t.socketTask||s(),t.onmessage(e)})),o.onClose((function(){t.onclose()})),o.onError((function(){t.socketTask||(u(),n.showToast({content:"本次真机调试已结束，请重新生成调试版本",duration:2e3}))}))},open:function(){var e=this,t=r.getStartupParams(),n=t.channelId,o=t.channelAuthPair,s=t.remoteCh,c=self.__LyraWSWorkerOrigin;if(n||c){i();var u=a.wssConfig.default.openchannel;s&&a.wssConfig[s]&&a.wssConfig[s].openchannel&&(u=a.wssConfig[s].openchannel);var l=r.getBridge(),p=c?c+"/worker":"wss://"+u+"/group/connect/"+n+"?scene=tinyAppDebug&roleType=TINYAPP&roleId=0";if(o&&(p+="?"+o.key+"="+o.value),r.checkIOS()&&!r.isLyra()){this.connect(p);var f=l.connectSocket;l.connectSocket=function(e){if(e&&e.multiple)return f(e);l.showToast({content:"iOS 真机调试暂不支持 connectSocket JSAPI",duration:1e3})},l.onSocketOpen=l.offSocketOpen=l.onSocketMessage=l.offSocketMessage=l.closeSocket=function(){}}else setTimeout((function(){e.connect(p)}),1200)}else r.debug("[bugme] missing channelId in startup params")},onopen:function(){var e=r.getBridge(),t=e.getSystemInfoSync();this.send({method:s.RemoteXMethods.Connect,params:{userAgent:r.getUserAgent(),sdkVersion:e.SDKVersion,alipayVersion:t.version,model:t.model,system:t.system}}),c()},onmessage:function(e){try{var t=JSON.parse(e.data.data),n=t.method,a=t.id,i=t.params;if(n===s.RemoteXMethods.Disconnect)this.close();else if(n===s.RemoteXMethods.EvaluteScript){if(i&&i.code)try{var c=r.evaluateScript(i.code);this.send({returnId:a,payload:o.stringify(c)})}catch(e){r.debug("[remoteX worker evaluateScript] ",e)}}else n===s.RemoteXMethods.Ping&&this.send({method:s.RemoteXMethods.Pong,params:{returnId:a}})}catch(t){r.debug("RemoteX onSocketMessage error",t,e)}},onclose:function(){this.socketTask=null,this.messageQueue=[],u(),[1,2].forEach((function(e){r.getBridge().call("closeSocket",{socketTaskId:e})}))}}},11:function(e,t){var n="\\x"+("0"+"~".charCodeAt(0).toString(16)).slice(-2),o="\\"+n,r=new RegExp(n,"g"),s=new RegExp(o,"g"),a=new RegExp("(?:^|([^\\\\]))"+o),i=[].indexOf||function(e){for(var t=this.length;t--&&this[t]!==e;);return t},c=String;function u(e,t,n){return t instanceof Array?function(e,t,n){for(var o=0,r=t.length;o<r;o++)t[o]=u(e,t[o],n);return t}(e,t,n):t instanceof c?t.length?n.hasOwnProperty(t)?n[t]:n[t]=function(e,t){for(var n=0,o=t.length;n<o;e=e[t[n++].replace(s,"~")]);return e}(e,t.split("~")):e:t instanceof Object?function(e,t,n){for(var o in t)t.hasOwnProperty(o)&&(t[o]=u(e,t[o],n));return t}(e,t,n):t}var l={stringify:function(e,t,s,a){return l.parser.stringify(e,function(e,t,s){var a,c,u=!1,l=!!t,p=[],f=[e],d=[e],g=[s?"~":"[Circular]"],m=e,h=1;return l&&(c="object"==typeof t?function(e,n){return""!==e&&t.indexOf(e)<0?void 0:n}:t),function(e,t){return l&&(t=c.call(this,e,t)),u?(m!==this&&(a=h-i.call(f,this)-1,h-=a,f.splice(h,f.length),p.splice(h-1,p.length),m=this),"object"==typeof t&&t?(i.call(f,t)<0&&f.push(m=t),h=f.length,(a=i.call(d,t))<0?(a=d.push(t)-1,s?(p.push((""+e).replace(r,n)),g[a]="~"+p.join("~")):g[a]=g[0]):t=g[a]):"string"==typeof t&&s&&(t=t.replace(n,o).replace("~",n))):u=!0,t}}(e,t,!a),s)},parse:function(e,t){return l.parser.parse(e,function(e){return function(t,r){var s="string"==typeof r;return s&&"~"===r.charAt(0)?new c(r.slice(1)):(""===t&&(r=u(r,r,{})),s&&(r=r.replace(a,"$1~").replace(o,n)),e?e.call(this,t,r):r)}}(t))},parser:JSON};e.exports=l},2:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),function(e){e.Connect="RemoteX.connect",e.Disconnect="RemoteX.disconnect",e.PageChanged="RemoteX.pageChanged",e.DataChanged="RemoteX.dataChanged",e.EvaluteScript="RemoteX.evaluteScript",e.syncStorage="RemoteX.syncStorage",e.requestWillBeSent="RemoteX.requestWillBeSent",e.requestFinished="RemoteX.requestFinished",e.Ping="RemoteX.ping",e.Pong="RemoteX.pong"}(t.RemoteXMethods||(t.RemoteXMethods={}))},43:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var o=n(44),r=n(47),s=n(0);s.runAfterAppx((function(){setTimeout((function(){s.debug("[bugme] run after appx"),s.getStartupParams().isRemoteX||s.isLyra()?(s.debug("[bugme] remotex mode"),o.registerRemoteX()):(s.debug("[bugme] preview mode"),r.registerPreview())}),1e3)}))},44:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var o=n(10),r=n(0),s=n(45);t.registerRemoteX=function(){if(self.navigator){r.debug("[bugme] start to register remotex"),s.listenEvents(),o.SocketConn.open(),self.bugmeAPI={send:function(e){o.SocketConn.send(e)}};if(self.document&&self.document.dispatchEvent)try{self.document.dispatchEvent("bugmeInjected")}catch(e){self.document.dispatchEvent(new CustomEvent("bugmeInjected"))}else self.dispatchEvent&&self.dispatchEvent(new CustomEvent("bugmeInjected"))}}},45:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var o=n(2),r=n(0),s=n(10),a=n(46);function i(e){if(!e||"object"!=typeof e)return{};var t={};return Object.keys(e).forEach((function(n){t[n]=""+e[n]})),t}var c=/^https?:\/\/hpmweb\.alipay\.com/,u=function(e){c.test(e.url)||s.SocketConn.send({method:o.RemoteXMethods.requestWillBeSent,params:{reqId:e.requestId,url:e.url,method:(e.method||"GET").toUpperCase(),body:e.postBody,headers:i(e.headers)}})},l=function(e){c.test(e.url)||s.SocketConn.send({method:o.RemoteXMethods.requestFinished,params:{reqId:e.requestId,url:e.url,status:e.status,body:e.body,headers:i(e.headers)}})},p=function(e){c.test(e.url)||s.SocketConn.send({method:o.RemoteXMethods.requestFinished,params:{reqId:e.requestId,url:e.url,status:null}})},f=function(e){var t={};Object.keys(e.data).forEach((function(n){try{t[n]=JSON.parse(e.data[n]).APDataStorage}catch(e){}})),s.SocketConn.send({method:o.RemoteXMethods.syncStorage,params:{data:t}})};t.listenEvents=function(){var e=r.getBridge();e.on(a.ERiverWorkerEvent.PageResume,(function(){s.SocketConn.send({method:o.RemoteXMethods.PageChanged})})),e.on(a.ERiverWorkerEvent.DebugPanelClick,(function(){s.SocketConn.close()})),r.checkIOS()&&!r.isLyra()?(e.on(a.ERiverDebugEvent.networkRequest,(function(e){var t=e.data;u(t)})),e.on(a.ERiverDebugEvent.networkResponse,(function(e){var t=e.data;l(t)})),e.on(a.ERiverDebugEvent.networkError,(function(e){var t=e.data;p(t)})),e.on(a.ERiverDebugEvent.storageChanged,(function(e){var t=e.data;f(t)}))):e.on(a.ERiverDebugEvent.debugConsole,(function(e){var t,n=e.data,o=n.type,r=n.content;try{t=JSON.parse(r)}catch(e){return}switch(o){case a.ERiverDebugEvent.networkRequest:u(t);break;case a.ERiverDebugEvent.networkResponse:l(t);break;case a.ERiverDebugEvent.networkError:p(t);break;case a.ERiverDebugEvent.storageChanged:f(t)}}))}},46:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),function(e){e.networkRequest="tinyAppRemoteDebug_network_request",e.networkResponse="tinyAppRemoteDebug_network_response",e.networkError="tinyAppRemoteDebug_network_error",e.storageChanged="tinyAppRemoteDebug_storage",e.debugConsole="onTinyDebugConsole",e.vconsoleMessage="onMessageFromVConsole"}(t.ERiverDebugEvent||(t.ERiverDebugEvent={})),function(e){e.PageResume="pageResume",e.DebugPanelClick="tinyRemoteDebugPanelButtonClick"}(t.ERiverWorkerEvent||(t.ERiverWorkerEvent={}))},47:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var o=n(11),r=n(0),s=function(e,t){return void 0===t?"©undefined":null===t?"©null":t===-1/0?"©- Infinity":t===1/0?"©Infinity":"number"==typeof t&&isNaN(t)?"©NaN":"function"==typeof t?"©function":t},a=Function,i=function(e){try{if(e.fromVConsoleToWorker){var t=e.requestId;if("exec"===e.method){try{new a("requestId","sendBack","var res = "+e.script+";console.log(res);")(t,(function(e){return r.callInternalAPI("tinyDebugConsole",{type:"msgFromWorkerToVConsole",content:o.stringify({requestId:t,returnValue:e},s)})}))}catch(e){console.error(e.name+":"+e.message)}}}}catch(e){}};t.registerPreview=function(){setTimeout((function(){self.document?self.document.addEventListener("push",(function(e){try{var t=e.data.param;i(JSON.parse(t.content||t.data.content))}catch(e){}})):self.addEventListener&&self.addEventListener("push",(function(e){try{var t=JSON.parse(JSON.parse(e.data.text()).param.data.content);i(t)}catch(e){}}))}),10),["log","info","error","debug","warn"].forEach((function(e){var t="o"+e;console[t]||(console[t]=console[e],console[e]=function(){for(var n,a=[],i=0;i<arguments.length;i++)a[i]=arguments[i];console[t].apply(console,a);try{n=o.stringify(a.map((function(e){return e instanceof Error?e.name+": "+e.message:e})),s)}catch(e){return void console.error(e.name+": "+e.message)}r.callInternalAPI("tinyDebugConsole",{content:n,type:"console_"+e})})}))}},5:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.wssConfig={default:{openchannel:"openchannel.alipay.com",hpmweb:"hpmweb.alipay.com"},1:{openchannel:"miniprogram.alipay.com",hpmweb:"hpmweb.alipay.com"}}}});
+if(!self.__appxInited) {
+self.__appxInited = 1;
+
+
+require('./config$');
+require('./importScripts$');
+
+var AFAppX = self.AFAppX;
+self.getCurrentPages = AFAppX.getCurrentPages;
+self.getApp = AFAppX.getApp;
+self.Page = AFAppX.Page;
+self.App = AFAppX.App;
+self.my = AFAppX.bridge || AFAppX.abridge;
+self.abridge = self.my;
+self.Component = AFAppX.WorkerComponent || function(){};
+self.$global = AFAppX.$global;
+self.requirePlugin = AFAppX.requirePlugin;
+
+
+if(AFAppX.registerApp) {
+  AFAppX.registerApp({
+    appJSON: appXAppJson,
+  });
+}
+
+
+
+function success() {
+require('../../app');
+require('../../components/IndexMenu/IndexMenu?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/uni-segmented-control/uni-segmented-control?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/IndexCaselist/IndexCaselist?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../uview-ui/components/u-icon/u-icon?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../uview-ui/components/u-tag/u-tag?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../uview-ui/components/u-read-more/u-read-more?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../components/GroupsList/GroupsList?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/uni-icons/uni-icons?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../uview-ui/components/u-no-network/u-no-network?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/surgical/surgicalList?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../uview-ui/components/u-badge/u-badge?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/model/modellist?hash=798c98482750f07cd5a88fa7381b5fa0c097ec1f');
+require('../../uview-ui/components/u-image/u-image?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../uview-ui/components/u-empty/u-empty?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../components/model/classifyModel?hash=2927a0ecab7370c404d24131fd3d0ec816d1f288');
+require('../../uview-ui/components/u-swiper/u-swiper?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/uni-tag/uni-tag?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/load-more/load-more?hash=a11fdcdff8ea970c65f185a8731cafe48f67047c');
+require('../../components/uni-status-bar/uni-status-bar?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/uni-nav-bar/uni-nav-bar?hash=e131c6705ecd6504274661106fc380014f3123b8');
+require('../../components/navbar/navbar?hash=36d3342f94e28c6ebe9afa638b3c4fa44605137d');
+require('../../uview-ui/components/u-search/u-search?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../uview-ui/components/u-dropdown/u-dropdown?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../uview-ui/components/u-cell-group/u-cell-group?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../uview-ui/components/u-cell-item/u-cell-item?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../uview-ui/components/u-dropdown-item/u-dropdown-item?hash=5d79d77c84ed8f0da5f7b48edef6f4c45d55c279');
+require('../../uview-ui/components/u-button/u-button?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../uview-ui/components/u-back-top/u-back-top?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../uview-ui/components/u-mask/u-mask?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../uview-ui/components/u-popup/u-popup?hash=5622865c60292ad30694278ba2f3c54eebe00fac');
+require('../../uview-ui/components/u-loading/u-loading?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../uview-ui/components/u-modal/u-modal?hash=73b5969633e2c16bb5b00b7e7ccbb3297cea257f');
+require('../../components/auditStatus/auditStatus?hash=88a66ed679736e733658ae136af300b34b769801');
+require('../../components/surgical/MysurgicalList?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/v-tabs/v-tabs?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/caselist/caselist?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../uview-ui/components/u-calendar/u-calendar?hash=23881233565f89c98bc4a21b5cc494e37adf1393');
+require('../../uview-ui/components/u-navbar/u-navbar?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../uview-ui/components/u-radio-group/u-radio-group?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../uview-ui/components/u-radio/u-radio?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../components/uni-transition/uni-transition?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../uview-ui/components/u-checkbox-group/u-checkbox-group?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../uview-ui/components/u-checkbox/u-checkbox?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../uview-ui/components/u-switch/u-switch?hash=059f4e65dc0a15136be06911d4a9c64a7fa7917a');
+require('../../components/case/caseBottom?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/case/casedocinfor?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/case/caseElectric/electricInfor?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/uni-popup/uni-popup?hash=63f3d097e78ac04213190ce4a92c81860617f7b4');
+require('../../components/case/caseElectric/electricModel?hash=caf9f21582e52c0f919d2361f3f2de67617ff647');
+require('../../components/surgical/twelveItems?hash=2596391f94bb16b721514e09a0f5973ffdcfd8b2');
+require('../../components/case/caseMethods/methodsModel?hash=caf9f21582e52c0f919d2361f3f2de67617ff647');
+require('../../components/case/caseDesign/designModel?hash=caf9f21582e52c0f919d2361f3f2de67617ff647');
+require('../../components/case/caseDesign/caseFiles?hash=8f67ca3f306a18b34fbba53844c8a1047f50ec65');
+require('../../components/case/casepredict/casepredict?hash=caf9f21582e52c0f919d2361f3f2de67617ff647');
+require('../../components/case/casefollow/casefollow?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/case/successCase/electric?hash=caf9f21582e52c0f919d2361f3f2de67617ff647');
+require('../../components/case/successCase/docinfor?hash=8f67ca3f306a18b34fbba53844c8a1047f50ec65');
+require('../../components/case/successCase/successtwelveItem?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/case/successCase/design?hash=caf9f21582e52c0f919d2361f3f2de67617ff647');
+require('../../uview-ui/components/u-input/u-input?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../components/vrshow/vrshow?hash=34eba4eac3f77fb54555eeacd7a9d10f611cc765');
+require('../../components/wechatShare/wechatShare?hash=b38c0e26a63414fec586832d651ddd8a4ddc0cde');
+require('../../components/model/modelBottom?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../uview-ui/components/u-parse/libs/trees?hash=e8f483ad5a871b6c5d4bc3e44952d9f4da69faaf');
+require('../../uview-ui/components/u-parse/u-parse?hash=e8f483ad5a871b6c5d4bc3e44952d9f4da69faaf');
+require('../../components/model/publicModel?hash=4335a2cb877ffc9550a18e1eb0ebf351efe0aa9c');
+require('../../components/chenbin-timeline/timeLine?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/chenbin-timeline/timelineItem?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/login-top/login-top?hash=993ca45dec9dcdb8f19451ba17e5ec831eb613a0');
+require('../../uview-ui/components/u-field/u-field?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../uview-ui/components/u-verification-code/u-verification-code?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/threeModelPic/threeModelPic?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/surgical/surgicalDocInfor?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/surgical/surgicalBottom?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/surgical/successCase?hash=c4765ac1dfb9f3b4bdeb3e9785e7a7be19d4f370');
+require('../../uview-ui/components/u-avatar/u-avatar?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../uview-ui/components/u-select/u-select?hash=b38c0e26a63414fec586832d651ddd8a4ddc0cde');
+require('../../uview-ui/components/u-number-keyboard/u-number-keyboard?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../uview-ui/components/u-car-keyboard/u-car-keyboard?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../uview-ui/components/u-keyboard/u-keyboard?hash=ea38a9ccdc8dcc24c77155cb9bda8c72b10f42c3');
+require('../../uview-ui/components/u-top-tips/u-top-tips?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../uview-ui/components/u-toast/u-toast?hash=9e298209269eb10b31459e05fc702a747332b168');
+require('../../components/uni-swipe-action/uni-swipe-action?hash=a11fdcdff8ea970c65f185a8731cafe48f67047c');
+require('../../components/uni-swipe-action-item/uni-swipe-action-item?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/news/news?hash=d1b1277c405324177ecf993ed0e3098f70745cb5');
+require('../../components/otherDocInfor/otherDocInfor?hash=05d2a9730dd6009bf9446182f9c985f40f8c0f43');
+require('../../components/otherDocInfor/otherDocModel?hash=2927a0ecab7370c404d24131fd3d0ec816d1f288');
+require('../../components/otherDocInfor/otherDocSurgical?hash=2927a0ecab7370c404d24131fd3d0ec816d1f288');
+require('../../pages/index/index?hash=fcbf4d2626e59f731d485410331cd0418d754309');
+require('../../pages/aboutUs/aboutUs?hash=35e491d3c70c07ee9332c8f13e5f8f7214c1093f');
+require('../../pages/search/search?hash=28b40ce1076fc1f540b8288348d76d1c6f11f4b2');
+require('../../pages/surgicalData/surgicalData?hash=2dbadbb82feb78362aa149e9e9d66b6865bbcb92');
+require('../../pages/surgicalData/Mysurgical?hash=5581360c86a54f387012af9a1b798469adebeebe');
+require('../../pages/caselist/caselist?hash=daa680ede6ad71c74da748c7252c94068aae077a');
+require('../../pages/caselist/caselistdetail?hash=a1099941f2d0a0ba32440534ea9012062c835294');
+require('../../pages/caselist/successCaseDetail?hash=e382641bd85370f9b96c64b1b08c461eae33584f');
+require('../../pages/caselist/casecharge?hash=d2dcfa84aa992b6c4554e921ccaa99c2a766fd0a');
+require('../../pages/model/model?hash=808393bae1b3e2d1db7abfd751305d6a5561d901');
+require('../../pages/model/MyDetail?hash=c9398fabe2dc1ae9453751fe150558f348a417f5');
+require('../../pages/course/course?hash=3041ea741db1b96e608ea191cfaedc9bc248300a');
+require('../../pages/contactUs/contactUs?hash=da8bcc5f6be41a44c452ae6e56b02289755ce307');
+require('../../pages/mine/mine?hash=49c00f23b56ffa73b6caa29958503464804b5bee');
+require('../../pages/detail/detail?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../pages/login/tellogin?hash=ce90f82a34b9de1d653bc3b208b98d30efa4f286');
+require('../../pages/login/telloginitem?hash=f433f231f03b10cbbe16269475bb7fe68e3b8d22');
+require('../../pages/login/bindTel?hash=16e8a23c203f51238c939a19fab057d8b6c8a3b7');
+require('../../pages/register/register?hash=af30089a14de5bba22f51cbb6b3d48bc536087f6');
+require('../../pages/login/pwdLogin?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../pages/newsDetail/newsDetail?hash=b9852c817e5fe8452a2b8b499fba109e6189e861');
+require('../../pages/surgicalData/surgicalDetail?hash=d64c8da7a6c03f1a653d7a5488bfc015f1df36d2');
+require('../../pages/PersonalInfor/PersonalInfor?hash=990a56016b71c677ce8dd89aa492848c4a0f699a');
+require('../../pages/previewPdf/previewPdf?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../pages/ThreejsShow/ThreejsShow?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../pages/upload/upload?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../pages/publicModel/publicModel?hash=6ce1c1ff9320f1bc5e9e7e8c5015374704f9bf81');
+require('../../pages/publicModel/modelDetail?hash=e229b336448b5230724ee8b24cb207d8be2fa3bf');
+require('../../pages/publicModel/classifyModel?hash=980234ef574c3f0b34647303702c045e97721e20');
+require('../../pages/shoyiiStore/shoyiiStore?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../pages/PersonalInfor/AmendInfor?hash=57009003d124d2a7bb3337060c4a8526279abae1');
+require('../../pages/PersonalInfor/auditInfor?hash=ca326b92bdac5816992646afca7bd34f7ca2ea28');
+require('../../pages/deviceManage/addDevice?hash=c6aa093c7ffcfaa9f144b6ec2c59ac9c47779761');
+require('../../pages/deviceManage/deviceManage?hash=775314ce6da6a4290f9c5595c5fd40ec2efbbfd8');
+require('../../pages/deviceManage/groupDevices?hash=9118dce8800e96c542214879d6822d1128f3c7d4');
+require('../../pages/deviceManage/editDevice?hash=c6aa093c7ffcfaa9f144b6ec2c59ac9c47779761');
+require('../../pages/errpage/errpage?hash=d4aa4e5f40ceb6f58855716282c27be291cf94f7');
+require('../../pages/GeneralSetting/GeneralSetting?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../pages/news/news?hash=db3f796471d0f54c44c5cccdd18ad52b94f2664d');
+require('../../pages/aboutShoyii/aboutShoyii?hash=5717c63b3e8b163d2c309233b7a2c7fd3ee3956c');
+require('../../pages/aboutShoyii/introduce?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../pages/aboutShoyii/lawNotice?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../pages/aboutShoyii/privacyPolicy?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../pages/aboutShoyii/businessLicense?hash=32d7d2807ed4e666ef03b4b3fe8c38ecf2e34e68');
+require('../../pages/download/download?hash=fe07aa394977bf6fa97a1ac0b50a8db68ef16aee');
+require('../../pages/otherDoctor/otherDoctor?hash=1e617219a26781d9bd4931db8a336f3c1aa88467');
+require('../../pages/ForgetPassword/ForgetPassword?hash=16e8a23c203f51238c939a19fab057d8b6c8a3b7');
+require('../../pages/ForgetPassword/SetPassword?hash=d6babfbeff13edf9c3e80db760dd0917ec9fccc5');
+require('../../pages/AccoutSecurity/AccoutSecurity?hash=af30089a14de5bba22f51cbb6b3d48bc536087f6');
+require('../../pages/AccoutSecurity/amendPhone?hash=16e8a23c203f51238c939a19fab057d8b6c8a3b7');
+require('../../pages/AccoutSecurity/changePhone?hash=16e8a23c203f51238c939a19fab057d8b6c8a3b7');
+require('../../pages/AccoutSecurity/amendPwd?hash=d6babfbeff13edf9c3e80db760dd0917ec9fccc5');
+require('../../pages/doctorLogin/doctorLogin?hash=9f1f5dce1569f62f3f35de8b2fe5cb1ee12f74b3');
+}
+self.bootstrapApp ? self.bootstrapApp({ success }) : success();
+}

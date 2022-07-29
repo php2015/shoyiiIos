@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "uni-tag": "/components/uni-tag/uni-tag",
+    "load-more": "/components/load-more/load-more",
+    "surgical-list": "/components/surgical/surgicalList"
+  }
+}

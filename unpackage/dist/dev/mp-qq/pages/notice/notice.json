@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "消息中心",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-image": "/uview-ui/components/u-image/u-image",
+    "u-badge": "/uview-ui/components/u-badge/u-badge",
+    "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore"
+  }
+}

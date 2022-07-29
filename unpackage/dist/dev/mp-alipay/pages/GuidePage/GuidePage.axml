@@ -1,0 +1,1 @@
+<view class="data-v-0a9120c4"><u-swiper class="picHeight data-v-0a9120c4" vue-id="5c2d04fe-1" bg-color="#f60d8e" img-mode="aspectFit" list="{{list}}" title-style="{{titleStyle}}" title="{{true}}" circular="{{false}}" autoplay="{{false}}" data-event-opts="{{[['^click',[['clickDot']]]]}}" onClick="__e" onVueInit="__l"></u-swiper></view>

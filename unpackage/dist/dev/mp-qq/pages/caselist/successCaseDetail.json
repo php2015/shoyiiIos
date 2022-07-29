@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "成功案例",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "v-tabs": "/components/v-tabs/v-tabs",
+    "electric": "/components/case/successCase/electric",
+    "docinfor": "/components/case/successCase/docinfor",
+    "electric-infor": "/components/case/caseElectric/electricInfor",
+    "successtwelve-item": "/components/case/successCase/successtwelveItem",
+    "design": "/components/case/successCase/design"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "个人主页",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "other-doc-infor": "/components/otherDocInfor/otherDocInfor",
+    "uni-segmented-control": "/components/uni-segmented-control/uni-segmented-control",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network",
+    "other-doc-model": "/components/otherDocInfor/otherDocModel",
+    "other-doc-surgical": "/components/otherDocInfor/otherDocSurgical"
+  }
+}

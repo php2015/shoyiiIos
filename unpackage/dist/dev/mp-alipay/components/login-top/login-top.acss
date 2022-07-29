@@ -1,0 +1,21 @@
+
+.header{
+	/* width: 100%; */
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	padding: 20rpx 30rpx;
+	line-height: 80rpx;
+	position: fixed;
+	top: 40rpx;
+	left: 0px;
+	right: 0px;
+}
+.header text{
+	display: block;
+	color: #000000;
+}
+

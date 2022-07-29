@@ -1,0 +1,22 @@
+module.exports={
+	devServer : {        
+	    proxy:{
+	        '/asjdhjv' : {
+	            target : "http://apis.juhe.cn",
+	            changeOrigin : true,
+	            secure : false,
+	            pathRewrite : {
+	                 "^/asjdhjv" : ""
+	            }
+	        },
+	         "/prefix" : {
+	             target : "https://shoyii-open-1258143571.cos.ap-guangzhou.myqcloud.com",
+	             changeOrigin : true,
+	             secure : false,
+	             pathRewrite : {
+	                 "^/prefix" : ""
+	             }
+	        }
+	     }
+	}
+}

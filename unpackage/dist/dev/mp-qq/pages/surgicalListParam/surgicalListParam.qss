@@ -1,0 +1,64 @@
+
+.surgical.data-v-26755ca4{
+	background-color: #F0F0F0;
+}
+.header_top.data-v-26755ca4{
+	background-color: #FFFFFF;
+	width: 100%;
+	background-color: #FFFFFF;
+	z-index: 99999;
+}
+.header_top.data-v-26755ca4 .uni-searchbar__box{ 
+	-webkit-box-pack: start!important; 
+	-webkit-justify-content: flex-start!important; 
+	        justify-content: flex-start!important;
+}
+.header_top.data-v-26755ca4 .uni-searchbar{
+	padding-left: 30rpx;
+	padding-right: 30rpx;
+}
+.bottomTip.data-v-26755ca4{
+	color: #86B0D4;
+	text-align: center;
+	margin: 10rpx 0;
+	font-size: 28rpx;
+}
+.content.data-v-26755ca4{
+	margin-top: 20rpx;
+	/* height: calc(100vh - 90rpx - 184rpx - 88rpx); */
+	/* 自定义的导航栏 */
+
+
+
+
+
+
+	overflow-y: auto;
+}
+.selected.data-v-26755ca4{
+	background-color: #E8E8E8;
+}
+.slot-content.data-v-26755ca4{
+	background-color: #F8F8F8;
+}
+.subContent.data-v-26755ca4{
+	text-align: center;
+	font-size: 28rpx;
+	color: #000000;
+	padding: 20rpx 0;
+}
+.selectedClass.data-v-26755ca4{
+	background-color: #E8E8E8;
+	font-weight: bold;
+	font-family: PingFang-SC-Bold;
+}
+.btn.data-v-26755ca4{
+	padding: 20rpx 30rpx;
+	background-color: #FFFFFF;
+}
+.surebtn.data-v-26755ca4{
+	background-color: #86B0D4;
+	width: 100%;
+}
+
+

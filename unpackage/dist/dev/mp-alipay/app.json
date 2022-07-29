@@ -1,0 +1,101 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/aboutUs/aboutUs",
+    "pages/search/search",
+    "pages/surgicalData/surgicalData",
+    "pages/surgicalData/Mysurgical",
+    "pages/caselist/caselist",
+    "pages/caselist/caselistdetail",
+    "pages/caselist/successCaseDetail",
+    "pages/caselist/casecharge",
+    "pages/model/model",
+    "pages/model/MyDetail",
+    "pages/course/course",
+    "pages/contactUs/contactUs",
+    "pages/mine/mine",
+    "pages/detail/detail",
+    "pages/login/tellogin",
+    "pages/login/telloginitem",
+    "pages/login/bindTel",
+    "pages/register/register",
+    "pages/login/pwdLogin",
+    "pages/newsDetail/newsDetail",
+    "pages/surgicalData/surgicalDetail",
+    "pages/PersonalInfor/PersonalInfor",
+    "pages/previewPdf/previewPdf",
+    "pages/ThreejsShow/ThreejsShow",
+    "pages/upload/upload",
+    "pages/publicModel/publicModel",
+    "pages/publicModel/modelDetail",
+    "pages/publicModel/classifyModel",
+    "pages/shoyiiStore/shoyiiStore",
+    "pages/PersonalInfor/AmendInfor",
+    "pages/PersonalInfor/auditInfor",
+    "pages/deviceManage/addDevice",
+    "pages/deviceManage/deviceManage",
+    "pages/deviceManage/groupDevices",
+    "pages/deviceManage/editDevice",
+    "pages/errpage/errpage",
+    "pages/GeneralSetting/GeneralSetting",
+    "pages/news/news",
+    "pages/aboutShoyii/aboutShoyii",
+    "pages/aboutShoyii/introduce",
+    "pages/aboutShoyii/lawNotice",
+    "pages/aboutShoyii/privacyPolicy",
+    "pages/aboutShoyii/businessLicense",
+    "pages/download/download",
+    "pages/otherDoctor/otherDoctor",
+    "pages/ForgetPassword/ForgetPassword",
+    "pages/ForgetPassword/SetPassword",
+    "pages/AccoutSecurity/AccoutSecurity",
+    "pages/AccoutSecurity/amendPhone",
+    "pages/AccoutSecurity/changePhone",
+    "pages/AccoutSecurity/amendPwd",
+    "pages/doctorLogin/doctorLogin",
+    "pages/GuidePage/GuidePage"
+  ],
+  "subPackages": [],
+  "window": {
+    "titleBarColor": "#FFFFFF",
+    "backgroundColor": "#FFFFFF"
+  },
+  "tabBar": {
+    "textColor": "#CBCADC",
+    "selectedColor": "#86B0D4",
+    "backgroundColor": "#F7F7F7",
+    "items": [
+      {
+        "pagePath": "pages/index/index",
+        "name": "首页",
+        "icon": "/static/image/index.png",
+        "activeIcon": "/static/image/index1.png"
+      },
+      {
+        "pagePath": "pages/surgicalData/surgicalData",
+        "name": "方法库",
+        "icon": "/static/image/method.png",
+        "activeIcon": "/static/image/method1.png"
+      },
+      {
+        "pagePath": "pages/caselist/caselist",
+        "name": "病例",
+        "icon": "/static/image/case.png",
+        "activeIcon": "/static/image/case1.png"
+      },
+      {
+        "pagePath": "pages/model/model",
+        "name": "模型库",
+        "icon": "/static/image/model.png",
+        "activeIcon": "/static/image/model1.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "name": "我的",
+        "icon": "/static/image/mine.png",
+        "activeIcon": "/static/image/mine1.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

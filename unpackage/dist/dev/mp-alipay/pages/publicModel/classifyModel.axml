@@ -1,0 +1,1 @@
+<view class="Model data-v-4dccf44d"><modellist vue-id="{{'6bc8162f-1-'+index}}" items="{{item}}" MyModel="{{MyModel}}" class="data-v-4dccf44d" a:for="{{classifyData}}" a:for-item="item" a:for-index="index" a:key="index" onVueInit="__l"></modellist></view>

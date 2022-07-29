@@ -1,0 +1,1 @@
+<view class="box"><image src="{{newsDetail.pictureUrl}}" mode></image><view class="content"><u-parse vue-id="bdd4dde0-1" html="{{newsDetail.text}}" bind:__l="__l"></u-parse></view></view>

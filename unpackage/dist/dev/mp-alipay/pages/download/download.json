@@ -1,0 +1,11 @@
+{
+  "defaultTitle": "树蚁App下载",
+  "pullRefresh": false,
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar",
+    "u-image": "/uview-ui/components/u-image/u-image",
+    "u-icon": "/uview-ui/components/u-icon/u-icon",
+    "u-mask": "/uview-ui/components/u-mask/u-mask",
+    "uni-icons": "/components/uni-icons/uni-icons"
+  }
+}

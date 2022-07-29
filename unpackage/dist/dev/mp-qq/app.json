@@ -1,0 +1,116 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/NavTest/NavTest",
+    "pages/aboutUs/aboutUs",
+    "pages/search/search",
+    "pages/surgicalData/surgicalData",
+    "pages/surgicalData/Mysurgical",
+    "pages/caselist/caselist",
+    "pages/caselist/caselistdetail",
+    "pages/caselist/successCaseDetail",
+    "pages/caselist/casecharge",
+    "pages/model/model",
+    "pages/model/MyDetail",
+    "pages/course/course",
+    "pages/contactUs/contactUs",
+    "pages/mine/mine",
+    "pages/detail/detail",
+    "pages/login/tellogin",
+    "pages/login/telloginitem",
+    "pages/login/bindTel",
+    "pages/register/register",
+    "pages/login/pwdLogin",
+    "pages/newsDetail/newsDetail",
+    "pages/surgicalData/surgicalDetail",
+    "pages/PersonalInfor/PersonalInfor",
+    "pages/previewPdf/previewPdf",
+    "pages/ThreejsShow/ThreejsShow",
+    "pages/upload/upload",
+    "pages/publicModel/publicModel",
+    "pages/publicModel/modelDetail",
+    "pages/publicModel/classifyModel",
+    "pages/shoyiiStore/shoyiiStore",
+    "pages/PersonalInfor/AmendInfor",
+    "pages/PersonalInfor/auditInfor",
+    "pages/deviceManage/addDevice",
+    "pages/deviceManage/deviceManage",
+    "pages/deviceManage/groupDevices",
+    "pages/deviceManage/editDevice",
+    "pages/errpage/errpage",
+    "pages/GeneralSetting/GeneralSetting",
+    "pages/news/news",
+    "pages/download/download",
+    "pages/otherDoctor/otherDoctor",
+    "pages/ForgetPassword/ForgetPassword",
+    "pages/ForgetPassword/SetPassword",
+    "pages/AccoutSecurity/AccoutSecurity",
+    "pages/AccoutSecurity/amendPhone",
+    "pages/AccoutSecurity/changePhone",
+    "pages/AccoutSecurity/amendPwd",
+    "pages/doctorLogin/doctorLogin",
+    "pages/surgicalListParam/surgicalListParam",
+    "pages/notice/notice",
+    "pages/notice/noticeDetail"
+  ],
+  "subPackages": [
+    {
+      "root": "pages/GuidePage",
+      "pages": [
+        "GuidePage"
+      ]
+    },
+    {
+      "root": "pages/aboutShoyii",
+      "pages": [
+        "businessLicense",
+        "aboutShoyii",
+        "introduce",
+        "lawNotice",
+        "privacyPolicy",
+        "userAgree"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#FFFFFF"
+  },
+  "tabBar": {
+    "color": "#CBCADC",
+    "selectedColor": "#86B0D4",
+    "backgroundColor": "#F7F7F7",
+    "fontSize": "12px",
+    "height": "55px",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/static/image/index.png",
+        "selectedIconPath": "/static/image/index1.png"
+      },
+      {
+        "pagePath": "pages/caselist/caselist",
+        "text": "病例",
+        "iconPath": "/static/image/case.png",
+        "selectedIconPath": "/static/image/case1.png"
+      },
+      {
+        "pagePath": "pages/model/model",
+        "text": "模型库",
+        "iconPath": "/static/image/model.png",
+        "selectedIconPath": "/static/image/model1.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "/static/image/mine.png",
+        "selectedIconPath": "/static/image/mine1.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "van-nav-bar": "./wxcomponents/vant/dist/nav-bar/index"
+  }
+}

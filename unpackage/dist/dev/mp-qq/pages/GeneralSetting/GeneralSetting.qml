@@ -1,0 +1,1 @@
+<view><view data-event-opts="{{[['tap',[['model',['$event']]]]]}}" style="text-align:center;" bindtap="__e"><text>查看系统模式</text></view></view>

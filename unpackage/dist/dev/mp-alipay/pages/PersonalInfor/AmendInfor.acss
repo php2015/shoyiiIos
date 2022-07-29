@@ -1,0 +1,47 @@
+
+page.data-v-76f21519{
+	background-color: #FFFFFF;
+}
+.slot-wrap.data-v-76f21519{
+	-webkit-box-flex:1;
+	-webkit-flex:1;
+	        flex:1;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	padding: 0 30rpx;
+}
+.slot-wrap uni-text.data-v-76f21519:nth-child(2){
+	color: #000000;
+	font-size: 30rpx;
+	font-family: PingFang-SC-Bold;
+	font-weight: bold;
+}
+.slot-wrap uni-text.data-v-76f21519:nth-child(3){
+	color: #909090;
+	font-size: 28rpx;
+}
+.btnTitle.data-v-76f21519{
+	color: #000000!important;
+}
+.inputInfor.data-v-76f21519{
+	padding: 20rpx 30rpx;
+}
+.imgbox.data-v-76f21519{
+	margin-bottom: 50rpx;
+}
+.imgpic.data-v-76f21519{
+	background: url(/static/image/camerabg.png) no-repeat center;
+	background-size: 80rpx; width: 100%;height: 388rpx;
+	border:1px solid #EEEEEE;
+	line-height: 388rpx;
+	text-align: center;
+	margin-top: 20rpx;
+}
+

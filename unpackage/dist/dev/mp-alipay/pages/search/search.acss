@@ -1,0 +1,88 @@
+
+.box{
+	/* background-color: #F0F0F0; */
+}
+.box .uni-navbar__content{
+	padding-bottom: 20rpx;
+	padding-top: 20rpx;
+	border-bottom: none;
+	background-color: #FFFFFF;
+}
+.box .uni-navbar__header-btns-left{
+	width: 50rpx;
+}
+.searchBar{
+	width: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+.searchBar .uni-searchbar{
+	padding: 0;
+}
+.searchRight{
+	color: #909090;
+	font-size: 30rpx;
+}
+.Searchrecord{
+	padding: 0 30rpx;
+	padding-top: 30rpx;
+}
+.title{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	padding-bottom: 30rpx;
+	color: #343434;
+	font-size: 30rpx;
+	font-weight: bold;
+	font-family: PingFang-SC-Bold;
+}
+.title .uni-icons{
+	font-weight: 100;
+}
+.record{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	        flex-wrap: wrap;
+}
+.record .uni-tag-text{
+	color: #666666;
+}
+.record .uni-tag{
+	-webkit-border-radius: 10rpx;
+	        border-radius: 10rpx;
+	margin-right: 20rpx;
+	margin-bottom: 20rpx;
+}
+.content{
+	 margin-top: 20rpx;
+	 height: 100vh;
+	/* 自定义的导航栏 */
+
+
+
+
+
+
+
+	overflow-y: auto;
+}
+.bottomTip{
+	color: #86B0D4;
+	text-align: center;
+	margin: 10rpx 0;
+	font-size: 28rpx;
+}
+

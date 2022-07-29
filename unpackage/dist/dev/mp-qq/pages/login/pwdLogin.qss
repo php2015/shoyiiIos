@@ -1,0 +1,83 @@
+
+.login-main {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+	padding: 0 70rpx;
+}
+.login-logo {
+	width: 248rpx;
+	padding-bottom: 50rpx;
+	margin: 50rpx auto 0 auto;
+}
+.login-logo image{
+	width: 100%;
+	height: 100%;
+}
+.title_tip{
+	color: #000000;
+	font-size: 42rpx;
+	font-weight: 600;
+	margin-bottom: 50rpx;
+}
+.tel_login input{
+	border-bottom: 1px solid #EEEEEE;
+	padding: 30rpx 0;
+}
+.pwdlogin{
+	width: 514rpx;
+	height: 80rpx;
+	line-height: 80rpx;
+	margin: 44rpx auto;
+	color: #8F8F8F;
+	background: #EBEBEB;
+	border: 1px solid transparent;
+}
+.forget_pwd{
+	color: #333333;
+	font-size: 24rpx;
+	text-align: right;
+	margin-top: 24rpx;
+	-webkit-border-radius: 10rpx;
+	        border-radius: 10rpx;
+}
+.footer{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	color: #909090;
+	font-size: 28rpx;
+}
+.footer .user{
+	color: #86B0D4;
+}
+.footer .secret{
+	color: #86B0D4;
+}
+.footer .uni-label-pointer{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	width: 100%;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+

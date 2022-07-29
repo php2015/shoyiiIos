@@ -1,0 +1,25 @@
+{
+  "navigationBarTitleText": "shoyii",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationBarTextStyle": "black",
+  "titleImage": "./static/image/shoyiilogo.png",
+  "navigationStyle": "custom",
+  "backgroundColor": "#F7F7F7",
+  "enablePullDownRefresh": true,
+  "bounce": "",
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "u-swiper": "/uview-ui/components/u-swiper/u-swiper",
+    "index-menu": "/components/IndexMenu/IndexMenu",
+    "uni-segmented-control": "/components/uni-segmented-control/uni-segmented-control",
+    "index-caselist": "/components/IndexCaselist/IndexCaselist",
+    "u-tag": "/uview-ui/components/u-tag/u-tag",
+    "u-read-more": "/uview-ui/components/u-read-more/u-read-more",
+    "groups-list": "/components/GroupsList/GroupsList",
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network",
+    "surgical-list": "/components/surgical/surgicalList",
+    "modellist": "/components/model/modellist",
+    "classify-model": "/components/model/classifyModel"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "导航栏测试",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationBarTextStyle": "black",
+  "navigationStyle": "custom",
+  "usingComponents": {}
+}

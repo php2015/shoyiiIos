@@ -1,0 +1,7 @@
+{
+  "defaultTitle": "分类名称",
+  "titleBarColor": "#FFFFFF",
+  "usingComponents": {
+    "modellist": "/components/model/modellist"
+  }
+}

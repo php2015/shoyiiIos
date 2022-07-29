@@ -1,0 +1,21 @@
+
+.header.data-v-42804e30{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	padding: 20rpx 30rpx;
+	line-height: 80rpx;
+	position: fixed;
+	top: 40rpx;
+	left: 0px;
+	right: 0px;
+}
+.header .tip.data-v-42804e30{
+	display: block;
+	color: #000000;
+	font-size: 14px;
+}
+

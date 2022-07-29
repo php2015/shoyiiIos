@@ -1,0 +1,1 @@
+<view style="padding:10rpx 30rpx;"><block qq:for="{{newsList}}" qq:for-item="item" qq:for-index="index" qq:key="index"><news vue-id="{{'c45505a0-1-'+index}}" Newsid="{{item.newsId}}" imgUrl="{{item.pictureUrl}}" title="{{item.title}}" content="{{item.synopsis}}" bind:__l="__l"></news></block><u-no-network vue-id="c45505a0-2" bind:__l="__l"></u-no-network></view>

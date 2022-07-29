@@ -1,0 +1,8 @@
+{
+  "defaultTitle": "新闻列表",
+  "pullRefresh": false,
+  "usingComponents": {
+    "news": "/components/news/news",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network"
+  }
+}

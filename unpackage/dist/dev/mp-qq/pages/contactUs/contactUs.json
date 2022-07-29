@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "联系我们",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "u-modal": "/uview-ui/components/u-modal/u-modal",
+    "u-popup": "/uview-ui/components/u-popup/u-popup"
+  }
+}

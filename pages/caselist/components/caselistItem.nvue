@@ -1,0 +1,141 @@
+<template>
+	<view class="box" :class="$store.getters.isDark?'darkblockbg':''">
+		<view class="list" :class="$store.getters.isDark?'darkblockbg':''" @tap="enterDetail(Caseid)" :hover-class="$store.getters.isDark?'darkbgColor':'bgColor'" >
+			<view class="surgical_image">
+				<image lazy-load class="image" :src="imgUrl" mode="aspectFit"></image>
+			</view>
+			<view class="content">
+				<view>
+					<text class="content_titlename" :class="$store.getters.isDark?'darkfont':''">{{Uname}}</text>
+					<view>
+						<text class="content_item" :class="$store.getters.isDark?'darkfont':''">{{casecode}}</text>
+					</view>
+					<view>
+						<text class="content_item" :class="$store.getters.isDark?'darkfont':''">{{content}}</text>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		props:{
+			Caseid:{
+				type:Number,
+				default:null,
+			},
+			casecode:{
+				type:String,
+				default:'',
+			},
+			imgUrl:{
+				type:String,
+				default:'',
+			},
+			Uname:{
+				type:String,
+				default:'',
+			},
+			content:{
+				type:String,
+				default:'',
+			}
+		},
+		methods:{
+			enterDetail(id){
+				console.log(id)
+				uni.navigateTo({
+					// url:'/pages/caselist/caselistdetail?id='+'2097',
+					url:'/pages/caselist/caselistdetail?id='+id,
+					animationType:'pop-in'
+				})
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	/* #ifndef APP-NVUE */
+	.darkblockbg{
+		background-color: #3A3A3A;
+		border: none;
+	}
+	.darkfont{
+		color: #8F8F8F;  
+	}
+	/* #endif */
+	.box{
+		padding: 0 30rpx;
+		margin-bottom: 20rpx;
+		flex-direction: column;
+	}
+	.list{
+		flex-direction: row;
+		align-items: flex-start;
+		padding: 18rpx 12rpx;
+		background-color: #FFFFFF;
+		border-width: 1px;
+		border-style: solid;
+		border-color: #EEEEEE;
+		border-radius: 10rpx;
+	}
+	.bgColor{
+		background-color: #F8F8F8;
+	}
+	.darkbgColor{
+		background-color: #555555;
+	}
+	.surgical_image{
+		height: 214rpx;
+		width: 226rpx;
+		margin-right: 21rpx;
+	}
+	.image{
+		width: 100%;
+		height: 214rpx;
+		border-width: 1px;
+		border-style: solid;
+		border-color: #EEEEEE;
+		border-radius: 10rpx;
+		background-color: #FFFFFF;
+	}
+	.content{
+		flex:1;
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: column;
+		justify-content: space-between;
+		height: 214rpx;
+		margin-top: 0;
+	}
+	.content_titlename{
+		color: #000000;
+		font-size: 30rpx;
+		font-weight: bold;
+		lines: 1;
+		text-overflow: ellipsis;
+		/* #ifndef APP-NVUE */
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 1;
+		overflow: hidden;
+		/* #endif */
+	}
+	.content_item{
+		color: #000000;
+		font-size: 24rpx;
+		lines: 3;
+		text-overflow: ellipsis;
+		line-height: 30rpx;
+		margin: 20rpx 0 16rpx;
+		/* #ifndef APP-NVUE */
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+		/* #endif */
+	}
+</style>

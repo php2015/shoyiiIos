@@ -1,0 +1,13 @@
+{
+  "defaultTitle": "我的方法库",
+  "titleBarColor": "#FFFFFF",
+  "usingComponents": {
+    "uni-nav-bar": "/components/uni-nav-bar/uni-nav-bar",
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "load-more": "/components/load-more/load-more",
+    "u-back-top": "/uview-ui/components/u-back-top/u-back-top",
+    "u-empty": "/uview-ui/components/u-empty/u-empty",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network",
+    "mysurgical-list": "/components/surgical/MysurgicalList"
+  }
+}

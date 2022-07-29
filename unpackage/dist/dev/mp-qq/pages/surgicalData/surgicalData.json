@@ -1,0 +1,22 @@
+{
+  "navigationBarTitleText": "方法库",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationBarTextStyle": "black",
+  "navigationStyle": "custom",
+  "pullToRefresh": {
+    "color": "#85AFD3",
+    "offset": "10%"
+  },
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar",
+    "u-search": "/uview-ui/components/u-search/u-search",
+    "u-dropdown": "/uview-ui/components/u-dropdown/u-dropdown",
+    "u-dropdown-item": "/uview-ui/components/u-dropdown-item/u-dropdown-item",
+    "u-button": "/uview-ui/components/u-button/u-button",
+    "load-more": "/components/load-more/load-more",
+    "u-back-top": "/uview-ui/components/u-back-top/u-back-top",
+    "audit-status": "/components/auditStatus/auditStatus",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network",
+    "surgical-list": "/components/surgical/surgicalList"
+  }
+}

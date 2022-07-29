@@ -1,0 +1,16 @@
+{
+  "navigationBarTitleText": "模型库详情",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationBarTextStyle": "black",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar",
+    "u-image": "/uview-ui/components/u-image/u-image",
+    "u-empty": "/uview-ui/components/u-empty/u-empty",
+    "vrshow": "/components/vrshow/vrshow",
+    "wechat-share": "/components/wechatShare/wechatShare",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network",
+    "model-bottom": "/components/model/modelBottom",
+    "public-model": "/components/model/publicModel"
+  }
+}

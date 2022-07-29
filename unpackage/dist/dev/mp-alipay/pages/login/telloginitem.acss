@@ -1,0 +1,102 @@
+
+.loginSure{
+	padding: 0 30rpx;
+}
+.login-main {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+	padding: 0 70rpx;
+	margin-top: 260rpx;
+}
+.tel_login{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	padding: 20rpx 0;
+	border-bottom: 4rpx solid #EEEEEE;
+	margin-top: 50rpx;
+}
+.tel_login .uni-icons{
+	margin: 0 16rpx;
+}
+.title_tip {
+	font-family: PingFang-SC-Medium;
+	letter-spacing: 2rpx;
+}
+.title_tip .title{
+	color: #000000;
+	font-size: 42rpx;
+	font-weight: 600;
+}
+.title_tip .tip{
+	font-size: 24rpx;
+	margin-top: 30rpx;
+}
+.areaCode{
+	margin: 0 10rpx;
+}
+.codeimg{
+	padding: 0rpx 16rpx;
+	border: 2rpx solid #909090;
+	color: #909090;
+	font-size: 24rpx;
+	-webkit-border-radius:12rpx;
+	        border-radius:12rpx;
+}
+.getcodeBtn{
+	background: #EBEBEB;
+	color: #8F8F8F;
+	margin-top: 45rpx;
+	font-size: 32rpx;
+	-webkit-border-radius: 12rpx;
+	        border-radius: 12rpx;
+	padding:6rpx 0;
+	width: 514rpx;
+	margin-bottom: 35rpx;
+}
+.button-hover{
+	color: #FFFFFF;
+	background: #86B0D4;
+}
+.login-tip{
+	color: #666666;
+	font-size: 24rpx;
+	text-align: center;
+	margin-bottom: 45rpx;
+}
+.footer{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	color: #909090;
+	font-size: 28rpx;
+}
+.footer .user{
+	color: #86B0D4;
+}
+.footer .secret{
+	color: #86B0D4;
+}
+.footer .uni-label-pointer{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	width: 100%;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+

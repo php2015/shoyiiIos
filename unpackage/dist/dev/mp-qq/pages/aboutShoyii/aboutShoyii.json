@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "关于树蚁",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "u-image": "/uview-ui/components/u-image/u-image",
+    "uni-icons": "/components/uni-icons/uni-icons"
+  }
+}

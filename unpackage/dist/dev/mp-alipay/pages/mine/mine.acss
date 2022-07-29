@@ -1,0 +1,178 @@
+
+@font-face {
+	font-family: texticons;
+	font-weight: normal;
+	font-style: normal;
+	src: url('https://at.alicdn.com/t/font_984210_5cs13ndgqsn.ttf') format('truetype');
+}
+.slot-wrap.data-v-dcbcfe34 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	/* 如果让slot内容占满整个导航栏的宽度 */
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+	/* 如果让slot内容与导航栏左右有空隙 */
+	padding: 0 30rpx;
+}
+.slot-wrap uni-text.data-v-dcbcfe34:nth-child(2){
+	color: #000000;
+	font-family: PingFang-SC-Bold;
+	font-size: 30rpx;
+	font-weight: bold;
+}
+page.data-v-dcbcfe34,view.data-v-dcbcfe34 {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+}
+page.data-v-dcbcfe34 {
+	background-color: #f8f8f8;
+}
+.center.data-v-dcbcfe34 {
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+}
+.logo.data-v-dcbcfe34 {
+	width: 750rpx;
+	height: 186rpx;
+	padding: 30rpx;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+	background-color: #FFFFFF;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+.logo-hover.data-v-dcbcfe34 {
+	opacity: 0.8;
+}
+.logo-img.data-v-dcbcfe34 {
+	width: 126rpx;
+	height: 126rpx;
+	-webkit-border-radius: 126rpx;
+	        border-radius: 126rpx;
+}
+.logo-title.data-v-dcbcfe34 {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	margin-left: 20rpx;
+}
+.logoName.data-v-dcbcfe34{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+}
+.docInfor.data-v-dcbcfe34{
+	font-size: 24rpx;
+}
+.docInfor uni-text.data-v-dcbcfe34:nth-child(2){
+	margin: 0 10rpx;
+}
+.docInfor uni-text.data-v-dcbcfe34:nth-child(3){
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	width: 200px;
+}
+.uer-name.data-v-dcbcfe34 {
+	height: 60rpx;
+	line-height: 60rpx;
+	font-size: 30rpx;
+	font-weight: bold;
+	font-family: PingFang-SC-Bold;
+	color: #000000;
+}
+.go-login .navigat-arrow.data-v-dcbcfe34 {
+	font-size: 30rpx;
+	color: #000000;
+}
+.center-list.data-v-dcbcfe34 {
+	background-color: #FFFFFF;
+	margin-top: 20rpx;
+	width: 750rpx;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+}
+.center-list-item.data-v-dcbcfe34 {
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	        flex-direction: row;
+	padding: 40rpx 30rpx;
+	border-bottom: 1px solid #EEEEEE;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+.list-icon.data-v-dcbcfe34 {
+	width: 40rpx;
+	font-size: 34rpx;
+	color: #343434;
+	text-align: center;
+	font-family: texticons;
+	margin-right: 20rpx;
+}
+.list-text.data-v-dcbcfe34 {
+	font-size: 30rpx;
+	color: #000000;
+	font-family: PingFang-SC-Regular;
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	        flex: 1;
+	text-align: left;
+}
+.navigat-arrow.data-v-dcbcfe34 {
+	font-size: 34rpx;
+	color: #333333;
+	text-align: right;
+	font-family: texticons;
+}
+.exitBtn.data-v-dcbcfe34{
+	margin-bottom: 20rpx;
+	width: 100%;
+	font-size: 28rpx;
+	background-color: #FFFFFF;
+}
+.btn.data-v-dcbcfe34{
+	margin-top: 20rpx;
+}
+.bgColor.data-v-dcbcfe34{
+	background-color: #F8F8F8;
+}
+

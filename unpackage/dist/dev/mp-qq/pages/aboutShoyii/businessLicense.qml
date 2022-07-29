@@ -1,0 +1,1 @@
+<view style="padding:30rpx 30rpx;"><image style="width:100%;" src="./static/license.jpg" mode></image></view>

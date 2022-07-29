@@ -1,0 +1,36 @@
+<template>
+	<view class="">
+		<view class="video">
+			<video
+			:src="url" :autoplay="true" :show-fullscreen-btn="false"
+			objectFit="fill"
+			:show-mute-btn="true" :controls='true' :muted="true" :danmu-btn="true" :enable-danmu="true" 
+			:page-gesture="true" object-fit='fill'>
+			</video>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data(){
+			return{
+				url:'',
+			}
+		},
+		onLoad() {
+			uni.$on('video-popup',(data)=>{
+				this.url=data.url
+			})
+		}
+	}
+</script>
+
+<style scoped>
+	.video{
+		padding: 30rpx 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+</style>

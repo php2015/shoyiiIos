@@ -1,0 +1,6 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "login-top": "/components/login-top/login-top"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "defaultTitle": "审核信息",
+  "pullRefresh": false,
+  "usingComponents": {
+    "u-field": "/uview-ui/components/u-field/u-field",
+    "u-button": "/uview-ui/components/u-button/u-button",
+    "u-keyboard": "/uview-ui/components/u-keyboard/u-keyboard",
+    "u-select": "/uview-ui/components/u-select/u-select"
+  }
+}

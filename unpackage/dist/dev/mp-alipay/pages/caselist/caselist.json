@@ -1,0 +1,14 @@
+{
+  "defaultTitle": "病例",
+  "titleBarColor": "#FFFFFF",
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar",
+    "v-tabs": "/components/v-tabs/v-tabs",
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "caselist": "/components/caselist/caselist",
+    "load-more": "/components/load-more/load-more",
+    "u-calendar": "/uview-ui/components/u-calendar/u-calendar",
+    "audit-status": "/components/auditStatus/auditStatus",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network"
+  }
+}

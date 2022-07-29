@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "u-image": "/uview-ui/components/u-image/u-image",
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "u-read-more": "/uview-ui/components/u-read-more/u-read-more",
+    "u-parse": "/uview-ui/components/u-parse/u-parse"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "defaultTitle": "修改信息",
+  "pullRefresh": false,
+  "usingComponents": {
+    "u-navbar": "/uview-ui/components/u-navbar/u-navbar",
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "u-field": "/uview-ui/components/u-field/u-field",
+    "u-toast": "/uview-ui/components/u-toast/u-toast"
+  }
+}

@@ -1,0 +1,1 @@
+<view class="header data-v-42804e30"><uni-icons vue-id="4280759c-1" type="closeempty" size="28" data-event-opts="{{[['^click',[['close']]]]}}" bind:click="__e" class="data-v-42804e30" bind:__l="__l"></uni-icons><text data-event-opts="{{[['tap',[['register',['$event']]]]]}}" class="tip data-v-42804e30" bindtap="__e">注册</text></view>

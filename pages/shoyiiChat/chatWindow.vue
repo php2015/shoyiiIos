@@ -1,0 +1,1441 @@
+<template>
+	<view class="wechatItem">
+		<!-- #ifdef MP-WEIXIN -->
+		<u-navbar :title="navTitle" :background='background'>
+			<view slot="right" style="padding-right:10rpx;">
+				<u-icon @click='addGroup' name="more-dot-fill" size="44"></u-icon>
+			</view>
+		</u-navbar>
+		<!-- #endif -->
+		<!-- <button @click="close">close</button> -->
+		<!-- 病例，只有群组里才有 -->
+		<view class="caseheader">
+			<view class="header" justify="center" v-if="caseid">
+				<u-row gutter="16" class='headerRow dark-block' @click='enterCase(caselist.caseHistoryId)'>
+					<u-col span="3">
+						<view class="caseimage">
+							<u-image v-if='caselist.previewImage' width="100rpx" height="100rpx" :show-error='false' :src="caselist.previewImage" mode="aspectFit"></u-image>
+							<u-image v-else width="100rpx" height="100rpx" src="/static/image/shoyiilogo.png" mode="aspectFit"></u-image>		
+						</view>
+					</u-col>
+					<u-col span="4">
+						<view class="case dark-font">
+							<view class="content">
+								<text>病历名称：</text>
+								<text>{{caselist.name}}</text>
+							</view>
+							<view class="content">
+								<text>简介：</text>
+								<text>{{caselist.title}}</text>
+							</view>
+						</view>
+					</u-col>
+					<u-col span="5">
+						<view class="case dark-font">
+							<view class="content">
+								<text>病历号：</text>
+								<text>{{caselist.caseHistoryNo}}</text>
+							</view>
+							<view class="content">
+								<text>创建时间：</text>
+								<text>{{caselist.createTime}}</text>
+							</view>
+						</view>
+					</u-col>
+				</u-row>
+			</view>
+		</view>
+		<view class="" style="flex: 1;overflow: auto;height: 100%;" @click.stop="closeMore">
+			<scroll-view class="section" scroll-y="true" :scroll-top='scrollTop' @scrolltolower='toupper' @scroll="scroll">
+				<view class="section-item" :style="{paddingTop:scrollHeight+'rpx'}">
+					<view v-for="(item,index) in lastestChat" :key='index' class="list_item">
+						<text class="time" v-if="lastestChat.length  > index+1?lastestChat[index+1].sendTime < item.sendTime - 300000 : true">{{item.sendTime|relativtime}}</text>
+						<!-- <text class="time" v-if="index-1 >= 0 ? lastestChat[index-1].sendTime < item.sendTime - 300000 : true">{{item.sendTime|relativtime}}</text> -->
+						<view class="chatlist" :class="item.userId==userId?'alluser':'allother'">
+							<u-image class='image' style='border: 1px solid #F8F8F8;' width='80' height='80'  :src="item.userProfile" mode='aspectFit'>
+								<view slot="error" style="">
+									<u-image width='80rpx' height='80rpx' src='/static/image/person.png' mode="aspectFit"></u-image>
+								</view>
+							</u-image>
+							<view style="color: #000000;max-width: 500rpx;" :class="item.userId==userId?'userCord':'otherCord'">
+								<!-- 文本信息 -->
+								<view :class="item.userId==userId?'TextuserCord':'TextotherCord'" v-if="item.msgType=='1'">
+									<text selectable='true'>{{item.content}}</text>
+								</view>
+								<!-- 方法库数据 -->
+								<view @click="enterDetail(item)" class="surgicalCode" v-if="item.msgType=='3'">
+									<view class="s_header" style="">
+										<text>{{JSON.parse(item.content).surgicalPlanName}}</text>
+									</view>
+									<view class="s_section" style="">
+										<text class="content" style="">{{JSON.parse(item.content).title}}</text>
+										<image lazy-load class="image" v-if="JSON.parse(item.content).previewImage" :src="JSON.parse(item.content).previewImage" mode="aspectFit"></image>
+										<image lazy-load class="image" v-else src="/static/image/shoyiilogo.png" mode="aspectFit"></image>
+									</view>
+									<view class="s_footer" style="">
+										<image lazy-load class="image" style="" src="/static/image/shoyiilogo.png" mode="aspectFit"></image>
+										<text class="name">{{JSON.parse(item.content).doctorName}}</text>
+									</view>
+								</view>
+								<!-- 图片 -->
+								<view class="cordimages" v-if="item.msgType=='2'" @click="previewImage(item)">
+									<u-image class="chatimage" height="300rpx" :src="item.content" mode="aspectFit"></u-image>
+								</view>
+								<view class="cordfile" v-if="item.msgType=='4'" @click="openFile(item)">
+									<view class="title" style="">
+										<text>{{JSON.parse(item.content).name}}</text>
+									</view>
+									<view class="" v-if="filesuffix(item)=='mp3'">
+										<u-icon name="play-circle-fill" size='100' color='#86B0D4'></u-icon>
+									</view>
+									<view class=""
+										  v-else-if="filesuffix(item)=='pdf'||filesuffix(item)=='zip'||filesuffix(item)=='docx'">
+										<u-icon name="file-text-fill" size='100' color='#fa3534'></u-icon>
+									</view>
+									<view class="" v-else>
+										<u-icon name="file-text-fill" size='100' color='#999'></u-icon>
+									</view>
+								</view>
+								<view class="surgicalCode" v-if="item.msgType=='5'" @click=CaseDetail(item)>
+									<view class="s_header" style="">
+										<text>{{JSON.parse(item.content).name||JSON.parse(item.content).caseHistoryNo||'暂无数据'}}</text>
+									</view>
+									<view class="s_section" style="">
+										<text class="content" style="">{{JSON.parse(item.content).title||'暂无数据'}}</text>
+										<image lazy-load class="image" v-if="JSON.parse(item.content).previewImage" :src="JSON.parse(item.content).previewImage" mode="aspectFit"></image>
+										<image lazy-load class="image" v-else src="/static/image/shoyiilogo.png" mode="aspectFit"></image>
+									</view>
+									<view class="s_footer">
+										<image lazy-load class="image" src="/static/image/shoyiilogo.png" mode="aspectFit"></image>
+										<text class="name">树蚁医生</text>
+									</view>
+								</view>
+								<template v-if="item.msgType =='6'">
+									<view class="audio_box" :class="item.userId==userId?'TextuserCord':'TextotherCord'"
+										style="display: flex;align-items: center;" @click="playAudio(item,index)">
+										 <text class="content_box" style="text-align: left;">
+											{{JSON.parse(item.content).time}}
+										 </text>
+										<uni-icons class='audio_img' customPrefix="iconfont" :type="payAudioIndex==index?'iconshengyin':'iconshengyin1'"
+										size="24" color="#000" style="margin-left: 5rpx;margin: 5rpx;transform: rotate(180deg);">
+										</uni-icons>
+									</view>
+								</template>
+							 </view>
+							<view class="" style="width: 80rpx;"></view>
+						</view>
+					</view>
+				</view>
+				<u-loadmore :status="status" :is-dot='true' :load-text="loadText" class='loadtext'/>
+			</scroll-view>
+		</view>
+		<l-file ref="lFile" @up-success="onSuccess"></l-file>
+		<view class="footer dark-block">
+			<view class="inputItem" :style="{marginBottom:keyHeight+'px'}">
+				<!-- #ifdef APP-PLUS-->
+				<!-- <view class="record" style="padding-right: 20rpx;"  @click="startRecord">
+					<u-icon color="#999" size="70" name="mic"></u-icon>
+				</view> -->
+				<uni-icons @click="clickVoice" customPrefix="iconfont" :type="isVoice?'iconjianpan1':'iconyuyin'"
+				size="32" color="#999" style='margin:0 18rpx 0 10rpx;'></uni-icons>
+				<!-- #endif -->
+				<!-- #ifdef H5 -->
+				<textarea :adjust-position='false' :auto-blur='true' @focus='Inputfocus' @blur="Inputblur" cursor-spacing='10'
+				:hold-keyboard='true' :show-confirm-bar='false' :focus="focus"
+				maxlength='250' class="input dark-font" :auto-height='true' v-model="InputContent"></textarea>
+				<!-- #endif -->
+				 <!-- #ifndef H5 -->
+				 <template v-if="isVoice">
+				 	<view class="voice_box" @touchstart="touchstartVoice" @touchmove.stop.prevent="touchmoveVoice" @touchend="touchendVoice"
+					:style="{background:voiceFlg?'#f8f8f8':'#fff'}"
+					@touchcancel.stop="touchcancelVoice">
+						<text class="voice_text">
+							{{voiceText}}
+						</text>
+					</view>
+				 </template>
+				 <template v-else>
+				 	<textarea :adjust-position='false' :auto-blur='true' @focus='Inputfocus' @blur="Inputblur" cursor-spacing='10'
+				 	:hold-keyboard='true' :show-confirm-bar='false' :focus="focus"
+				 	maxlength='250' class="input dark-font" :auto-height='true' v-model="InputContent"></textarea>
+				 </template>
+				 <!-- #endif -->
+				 <view v-if="sendBool" class='sendBtn' @touchend.prevent="sendItem(0)">
+				 	<text>发送</text>
+				 </view> 
+				 <view v-else @click="moreplus" style="padding-left: 20rpx;">
+				 	<u-icon name="plus-circle" color="#999" size="70"></u-icon>
+				 </view>
+			</view>
+			<view :class="{displaynone:moreboolean}">
+				<view class="moreFunction dark-block">
+					<view class="item" v-for="(item,index) in menu" :key='index'>
+						<view class="icon">
+							<text @click="sendItem(index+1)" :class="item.icon" class="iconfont"></text>
+						</view>
+						<text class="tip">{{item.title}}</text>
+					</view>
+				</view> 
+			</view> 
+		</view>
+		<!-- 方法库 -->
+		<surgical-popup ref='Sonshow' :chatId='chatId' :type='type' @addPage='addPage' :page="surgicalPage" :total="surgicalTotal" :otherId='otherid' :surgical='surgical' @refleshData='refleshData'></surgical-popup>
+		<!-- 病例 -->
+		<case-popup ref='caseshow' :chatId='chatId' :type='type' @addcasePage='addcasePage' :page="casePage" :total="caseTotal" :otherId='otherid' :caseList='caseList' @caserefleshData='caserefleshData'></case-popup>
+		<!-- 语音状态显示 -->
+		<template v-if="voiceFlg">
+			<div class="voice_bd">
+				<div class="voice_ui">
+					<uni-icons type="mic-filled" size="100" style="margin-bottom: 20rpx;" color="#fff"></uni-icons>
+					<text class="voice_ui_text">{{voiceTis}}</text>
+				</div>
+			</div>
+		</template>
+	</view>
+</template>
+
+<script>
+	import {sendMessage,findchatLastest} from '@/utill/api/connect/connect.js'
+	import {getcasedetail} from '@/utill/api/case/getcasedetail.js'
+	import {getCaselist} from '@/utill/api/case/getCaselist.js'
+	import {relativtime} from '@/utill/tools/timestamp.js'
+	import {getSurgical} from '@/utill/api/surgical/getSurgical.js'
+	import {mapGetters,mapState} from 'vuex' 
+	import surgicalPopup from './components/surgicalPopup.vue'
+	import casePopup from './components/casePopup.vue'
+	import {getFileExtension} from '@/utill/tools/filesuffix.js'
+	const innerAudioContext=uni.createInnerAudioContext()
+	// #ifdef APP-PLUS
+	const recorderManager = uni.getRecorderManager();//录音
+	// #endif
+	export default{
+		components:{
+			surgicalPopup,
+			casePopup
+		},
+		data(){
+			return{
+				isVoice:false,
+				voiceFlg:false,
+				voiceStop: false,
+				voiceTimer: null,
+				voiceLength: 0,
+				voicePageY: 0,
+				voiceText: '按住 说话',
+				voiceTis: "手指上滑 取消发送",
+				payAudioIndex:null,
+				old: {
+					scrollTop: 0
+				},
+				scrollTop:0,
+				focus:false,
+				menu:[
+					{title:'相册',icon:'icontupian'},
+					{title:'拍摄',icon:'iconxiangji1'},
+					{title:'文件',icon:'iconwenjian'},
+					{title:'方法库',icon:'iconshoushufangfa'},
+					{title:'病例',icon:'iconfasongbingli'},
+				],
+				status:'nomore',
+				loadText: {
+					loadmore: '轻轻下拉',
+					loading: '',
+					nomore: '没有更多' //默认是圆点
+				},
+				otherid:null,//其他人id
+				userId:uni.getStorageSync('doctorId'),
+				caseid:'',
+				InputContent:'',//输入的内容
+				lastestChat:[],
+				page:1,
+				total:1,//聊天记录总页数
+				surgicalPage:1,
+				surgicalTotal:1,
+				mark:0,
+				surgical:[],//手术方法库数据
+				type:null,
+				caselist:{},
+				chatIndex:'',
+				chatId:'',//每一条记录的id
+				pictureid:'',
+				fileId:'',//上传文件的id
+				navTitle:'',
+				background:{
+					background:'#f8f8f8'
+				},
+				moreboolean:true,
+				scrollHeight:90,
+				keyHeight:0,
+				deviceBottom:0,
+				sendBool:false,//是否显示发送按钮
+				caseList:[],//病例数据
+				casePage:1,
+				caseTotal:1,
+			}
+		},
+		watch:{
+			'socketData': {
+				handler:function(val,oldVal) {
+					console.log('watch聊天时监听')
+					console.log(val)
+					if(val=='head'){//心跳回复
+						
+					}else if(val.friend_request){//请求的通知 JSON.parse(val).friend_request
+						console.log(val.friend_request)
+					}else{ 
+						if(val.chatMsgDetail.userId==this.userId){//用户自身的消息
+							this.InputContent=''//输入框清空
+						}
+						var receiveData=val.chatMsgDetail
+						if(this.chatId==receiveData.chatId){
+							this.lastestChat.unshift(receiveData)
+						}
+						console.log(this.lastestChat)
+						// this.pageToBottom();
+					} 
+				}, 
+				deep: true 
+			},  
+			"InputContent":function(val){
+				var reg = "^[ ]+$";
+				var space = new RegExp(reg);
+				// console.log(space.test(val)) //空格为true
+				if(val.length==0||space.test(val)){ //不存在
+					this.sendBool=false
+				}else{
+					this.sendBool=true
+				}
+			},
+		},
+		computed:{
+			...mapGetters(['connect']),
+			...mapState(['socketData']),
+		},
+		filters:{
+			relativtime 
+		},
+		methods:{
+			// 录音监听
+			onRecorderManager() {
+				//录音开始
+				recorderManager.onStart((e) => {
+					console.log('录音开始')
+				})
+				// 录音报错
+				recorderManager.onError((e) => {
+					console.log(e)
+					console.log('录音报错')
+				})
+				//录音结束
+				recorderManager.onStop((e)=>{
+					console.log('录音结束')
+					console.log(this.voiceStop)
+					if (this.voiceStop) {
+						uni.showToast({
+							icon: "none",
+							title: "取消发送"
+						})
+						//取消发送后，计时为0，voiceStop为false
+						this.voiceLength = 0
+						this.voiceStop=false
+					} else {  
+						console.log('发送的判断',this.voiceLength)
+						if (this.voiceLength < 1) {//多次可能会导致程序退出
+							uni.showToast({
+								icon: "none",
+								title: "发送时间过短"
+							})
+							return
+						} else {
+							console.log('发送语音')
+							var type= this.type=='GROUP'?'GROUP':'D'
+							console.log(e,e.tempFilePath,this.voiceLength)
+							uni.uploadFile({
+								url:this.$uploadUrl+'/cosFile/uploadSingleChatFile',
+								method:'POST',
+								filePath: e.tempFilePath,
+								name: 'file',//注意是file还是files
+								success: (res) => {
+									var data=JSON.parse(res.data)
+									console.log(this.voiceLength)
+									console.log(data);
+									if(data.code==0){
+										console.log('id',data.object)
+										var msg={
+											chatId:this.chatId,
+											sendUserType:'D',
+											sendUserId:this.userId,
+											receiveUserType:type,
+											receiveUserId:this.otherid,
+											msgType:'6',
+											msgContent:{
+												file:String(data.object),
+												time:this.voiceLength.toFixed(0)
+											}
+										}
+										console.log(msg)
+										console.log(this.voiceLength)
+										this.$store.dispatch('WEBSOCKET_SEND',JSON.stringify(msg))
+										this.$nextTick(() => {
+											this.voiceLength = 0
+										})
+									}else{
+										uni.showToast({
+											title:data.msg,
+											icon:'none'
+										})
+									}
+								},
+								fail:(err)=>{
+									console.log(err)
+								}
+							})
+						}
+					}
+				})
+			},
+			// 按下触发
+			touchstartVoice(e) {
+				this.pageToBottom()
+				uni.vibrateShort({
+					complete: function () {
+						console.log('complete');
+					}
+				})
+				this.voicePageY = (e.changedTouches[0].pageY).toFixed(2)
+				this.voiceText = '松开 结束'
+				this.voiceFlg = true
+				recorderManager.start({
+					format: "mp3"
+				}); //录音开始,
+				this.voiceTimer = setInterval(() => {
+					this.voiceLength += 0.1
+					console.log(this.voiceLength)
+				}, 100)
+				console.log('touchstartVoice', this.voicePageY)
+			},
+			// 滑动触发
+			touchmoveVoice(e) {
+				console.log('触发')
+				let numTemp = this.voicePageY - ((e.changedTouches[0].pageY).toFixed(2))
+				if (numTemp >= 60) {
+					console.log('松开手指')
+					this.voiceStop = true
+					this.voiceTis = "松开手指 取消发送"
+				} else {//这块注意的是：如果第一次取消发送（this.voiceStop = true），下一次发送语音可能不会触发该事件，导致voiceStop一直为true
+					console.log('手指上滑 取消发送')
+					this.voiceStop = false
+					this.voiceTis = "手指上滑 取消发送"
+				}
+				console.log(this.voiceStop)
+			}, 
+			// 松开触发
+			touchendVoice() { 
+				this.voiceFlg = false
+				this.voiceText = '按住 说话'
+				this.voiceTis = "手指上滑 取消发送"
+				console.log('touchendVoice')
+				console.log(this.voiceStop)
+				clearInterval(this.voiceTimer);
+				this.voiceTimer = null
+				console.log(recorderManager)
+				recorderManager.stop(); //录音结束
+			},
+			// 打断触发 
+			touchcancelVoice() {
+				clearInterval(this.voiceTimer);
+				this.voiceTimer = null
+				this.voiceFlg = false
+				this.voiceText = '按住 说话'
+				this.voiceTis = "手指上滑 取消发送"
+				console.log('touchcancelVoice')
+				// recorderManager.stop(); //录音结束
+			},
+			clickVoice(){
+				// this.isVoice=!this.isVoice
+				console.log(this.focus)
+				if(this.focus){//聚焦状态
+					this.focus=false
+					this.moreboolean=true//关闭底部box
+					this.$nextTick(()=>{
+						setTimeout(()=>{
+							this.isVoice=true
+						})
+					})
+				}else{//无焦点
+					if(!this.moreboolean){//底部box打开
+						this.moreboolean=true//关闭
+						this.$nextTick(()=>{
+							setTimeout(()=>{
+								this.isVoice=true
+							})
+						})
+					}else{
+						if(this.isVoice){
+							console.log('切换到输入')
+							this.isVoice=false
+							this.$nextTick(()=>{
+								setTimeout(()=>{
+									this.focus=true
+								})
+							})
+						}else{
+							this.isVoice=true
+							console.log('打开语音')
+						}
+					}
+				}
+				
+			},
+			// close(){
+			// 	uni.removeStorageSync('keyboardHeight')	
+			// },
+			playAudio(data,index){
+				var url=JSON.parse(data.content).file
+				if(this.payAudioIndex==index){
+					innerAudioContext.src=''
+					this.$nextTick(function(){
+						innerAudioContext.stop()
+						this.payAudioIndex=null
+					})
+				}else{
+					this.payAudioIndex=index
+					innerAudioContext.src=url
+					this.$nextTick(function(){
+						innerAudioContext.play()
+					})
+				}
+			},
+			scroll(e) {
+				this.old.scrollTop = e.detail.scrollTop
+			},
+			// 开始录音
+			startRecord(e) {
+				// #ifdef APP-PLUS
+				var options={
+					continue:false,
+					engine:'baidu',
+					punctuation:false,
+					userInterface:true
+				}
+				plus.speech.startRecognize(options, (res)=>{
+					console.log(res)
+					this.InputContent=res
+				}, (Error)=>{
+					console.log(Error)
+				} );
+				// #endif
+			},  
+			async getheight(){
+				let iosObj=plus.navigator.getSafeAreaInsets()
+				this.deviceBottom=iosObj.deviceBottom||0
+				console.log(this.deviceBottom)
+				let keyHeight=uni.getStorageSync('keyboardHeight')
+				let keyFlg = (!keyHeight || keyHeight == 0)
+				this.keyHeight = keyHeight
+				console.log(this.keyHeight)
+				if (keyFlg) {
+					// 主动弹出键盘 获取 键盘高度
+					await this.$nextTick(() => {
+						setTimeout(() => {
+							this.focus=true
+						}, 60)
+					})
+				}await this.$nextTick(() => {
+					console.log('00000000000')
+					uni.onKeyboardHeightChange(res => {
+						if (res.height !== 0) {
+							if (keyHeight < res.height) {
+								uni.setStorageSync('keyboardHeight', res.height)
+								this.keyHeight = res.height
+								this.$nextTick(() => {
+									keyFlg = false
+								})
+							}
+							this.$nextTick(() => {
+								console.log('弹起键盘')
+								this.focus=true
+							})
+						}
+					})
+				})
+			},
+			addGroup(){
+				if(this.type=='GROUP'){//群聊
+					uni.navigateTo({
+						url:'/pages/shoyiiChat/contactGroup?groupId='+this.otherid
+					})
+				}else{}
+			},
+			// 文件尾缀获取
+			filesuffix(data) {
+			    if (JSON.parse(data.content).fileDownloadUrl && JSON.parse(data.content)) {
+			        getFileExtension(JSON.parse(data.content).fileDownloadUrl)
+			        var dataBool = getFileExtension(JSON.parse(data.content).fileDownloadUrl)
+			        return dataBool;
+			    } else {
+			        return
+			    }
+			},
+			// 上传成功
+			onSuccess(res) {
+				console.log('上传文件的数据处理')
+				console.log(res)
+				console.log(res.fileName)
+				// #ifdef APP-PLUS
+				console.log('上传成功回调',JSON.parse(res.data.id));
+				if(JSON.parse(res.data.id).code==0){
+					this.fileId=JSON.parse(res.data.id).object
+				}else{
+					this.fileId='';
+					return;
+				}
+				// #endif
+				// #ifdef MP-WEIXIN
+				if(res.data.code==0){
+					this.fileId=res.data.object
+				}else{
+					this.fileId='';
+					return;
+				}
+				// #endif
+				console.log(this.fileId)
+				if(!this.fileId){
+					uni.showToast({
+						title:'文件没上传',
+						icon:'none'
+					})
+					return;
+				}
+				var msg={
+					chatId:this.chatId,
+					sendUserType:'D',
+					sendUserId:this.userId,
+					receiveUserType:this.type,
+					receiveUserId:this.otherid,
+					msgType:'4',
+					msgContent:String(this.fileId)
+				}
+				console.log(msg)
+				this.$store.dispatch('WEBSOCKET_SEND',JSON.stringify(msg))	
+			},
+			// 图片预览
+			previewImage(item){
+				var arr=[]
+				this.lastestChat.forEach(item=>{
+					if(item.msgType=='2'){
+						arr.push(item.content)
+					}
+				})
+				uni.previewImage({
+					current:item.content,
+					urls:arr,
+					success(e){
+						console.log(e)
+					},
+					fail(err){
+						console.log(err)
+					}
+				})
+			},
+			pageToBottom(){
+				this.scrollTop = this.old.scrollTop
+				this.$nextTick(function() {
+					this.scrollTop = 0
+				});
+			},
+			// 群组的病例详情
+			enterCase(id){
+				uni.navigateTo({
+					url:'/pages/caselist/caselistdetail?id='+id,
+					animationType:'pop-in'
+				})
+			},
+			// 手术方法库页面新增
+			addPage(){
+				console.log(this.surgicalPage)
+				this.mark=1
+				this.getSurgical(this.mark,this.surgicalPage)
+			},
+			toupper(e){//向上刷新
+				// 查找历史记录
+				if(this.page >= this.total) return this.status = 'nomore';
+				this.status = 'loading';
+				this.page++;
+				this.mark=1
+				if(this.type=='GROUP'){//群组
+					this.fondLast(this.mark,this.page,'GROUP')	
+				}else{
+					this.fondLast(this.mark,this.page,'D')
+				}
+			},
+			// 打开键盘
+			Inputfocus(e){
+				this.moreboolean=true
+				this.focus=true
+				// #ifdef APP-PLUS
+				uni.onKeyboardHeightChange(res=>{
+					this.keyHeight=res.height
+					this.pageToBottom()
+				})
+				// #endif
+				// #ifdef H5
+				if(this.lastestChat.length!=0){
+					// this.chatIndex = 'chatIndex'+this.lastestChat[this.lastestChat.length-1].id
+					this.scrollTop=0
+				}
+				// #endif
+			},
+			// 键盘收起
+			Inputblur(){
+				this.keyHeight=0
+				this.focus=false
+				this.pageToBottom()
+			},
+			uploadImage(source,type){
+				console.log(source)
+				console.log(type)
+				var that=this
+				uni.chooseImage({
+				    count: 3, //默认9
+				    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				    sourceType:source,
+					success(res) {
+						console.log(res)
+						const tempFilePaths = res.tempFilePaths;
+						const tempFiles=res.tempFiles;
+						tempFilePaths.forEach(item=>{
+							uni.uploadFile({
+								url:that.$uploadUrl+'/cosFile/uploadSingleOpenImage',
+								method:'POST',
+								filePath: item,
+								formData: {
+									'compression': String(true)  //formData是指除了图片以外，额外加的字段
+							    },
+								name: 'file',//注意是file还是files
+								success: (res) => {
+									var data=JSON.parse(res.data)
+									console.log(data);
+									if(data.code==0){
+										that.pictureid=data.object
+										console.log(that.pictureid)
+										var msg={
+											chatId:that.chatId,
+											sendUserType:'D',
+											sendUserId:that.userId,
+											receiveUserType:type,
+											receiveUserId:that.otherid,
+											msgType:'2',
+											msgContent:String(that.pictureid)
+										}
+										console.log(msg)
+										that.$store.dispatch('WEBSOCKET_SEND',JSON.stringify(msg))
+									}else{
+										uni.showToast({
+											title:data.msg,
+											icon:'none'
+										})
+									}
+								},
+								fail:(err)=>{
+									console.log(err)
+								}
+							})
+						})
+				    },
+					fail(err) {
+						console.log(err)
+					}
+				});
+			},
+			// 发送文字，图片,文件,手术方法
+			sendItem(index){
+				// if(!this.$store.state.is_open_socket){
+				// 	uni.showToast({
+				// 		// #ifndef MP-WEIXIN
+				// 		title:'连接已断，请重新启动App',
+				// 		icon:'none'
+				// 		// #endif
+				// 		// #ifdef MP-WEIXIN
+				// 		title:'连接已断，请重新进入小程序',
+				// 		icon:'none'
+				// 		// #endif
+				// 	})
+				// 	return;
+				// }
+				if(this.type=='GROUP'){//群组消息
+					var type='GROUP'
+				}else{
+					var type='D'
+				}
+				if(index==0){//发送文本
+					if(!this.InputContent){
+						uni.showToast({
+							title:'内容不能为空',
+							icon:'none'
+						})
+						return;
+					}
+					// var reg = /[^\u0020-\u007E\u00A0-\u00BE\u2E80-\uA4CF\uF900-\uFAFF\uFE30-\uFE4F\uFF00-\uFFEF\u0080-\u009F\u2000-\u201f\u2026\u2022\u20ac\r\n]/g;
+					// if(this.InputContent.match(reg)) {
+					// 	uni.showToast({
+					// 		title:'不能发送表情',
+					// 		icon:'none'
+					// 	})
+					// 	return;
+					// }
+					var msg={
+						chatId:this.chatId,
+						sendUserType:'D',
+						sendUserId:this.userId,
+						receiveUserType:type,
+						receiveUserId:this.otherid,
+						msgType:'1',
+						msgContent:this.InputContent
+					}
+					console.log(msg)
+					this.$store.dispatch('WEBSOCKET_SEND',JSON.stringify(msg))
+				}else if(index==1){ //相册
+					var source=['album']
+					this.uploadImage(source,type)
+				}else if(index==2){//拍摄
+					var source=['camera']
+					this.uploadImage(source,type)
+				}else if(index==3){//文件
+					console.log('文件')
+					/**
+					 * currentWebview: 当前webview
+					 * url：上传接口地址
+					 * name：附件key,服务端根据key值获取文件流，默认file,上传文件的key
+					 * header: 上传接口请求头
+					 */
+					this.$refs.lFile.upload({
+						// #ifdef APP-PLUS
+						// nvue页面使用时请查阅nvue获取当前webview的api，当前示例为vue窗口
+						currentWebview: this.$mp.page.$getAppWebview(),
+						// #endif
+						url: this.$uploadUrl+'/cosFile/uploadSingleChatFile',
+						// name: 'myFile',
+						// header: {'Authorization':'token'},
+						// 其他业务参数直接写key,value,如：
+						// key1: 'value1',
+						// key2: 'value2',
+					});
+				}else if(index==4){//手术方法库
+					console.log(this.surgical)
+					if(this.surgical.length!=0){
+						this.$refs.Sonshow.open()
+					}else{
+						this.getSurgical(0,1)
+					}
+					setTimeout(()=>{
+						this.pageToBottom();
+					},300)
+				}else{//病例
+					if(this.caseList.length!=0){
+						this.$refs.caseshow.open()
+					}else{
+						this.getCase(0,1)
+					}
+					setTimeout(()=>{
+						this.pageToBottom();
+					},300)
+				}
+			},
+			// 手术方法库详情
+			enterDetail(item){
+				console.log(item)
+				var id=JSON.parse(item.content).surgicalPlanId
+				uni.navigateTo({
+					url:'/pages/surgicalData/surgicalDetail?id='+id
+				})
+			},
+			// 文件详情
+			openFile(data){
+				var url=JSON.parse(data.content).fileDownloadUrl
+				console.log(url)
+				uni.showLoading({
+					title:'打开中',
+					icon:'none'
+				})
+				uni.downloadFile({
+					url:url,
+					success(res){
+						console.log(res)
+						if (res.statusCode === 200) {
+							console.log('下载成功');
+							uni.hideLoading()
+								//打开文档查看
+							uni.openDocument({
+								filePath: res.tempFilePath,
+								success: function(res) {
+									console.log('打开文档成功');
+								}
+							});
+						}else{
+							uni.hideLoading()
+							console.log('下载失败');
+						}
+					},
+					fail(err){
+						uni.hideLoading()
+						console.log(err)
+					}
+				})
+			},
+			// 聊天中的病例详情
+			CaseDetail(item){
+				var id=JSON.parse(item.content).caseHistoryId
+				uni.navigateTo({
+					url:'/pages/caselist/caselistdetail?id='+id,
+					animationType:'pop-in'
+				})
+			},
+			// 查询最新历史记录
+			fondLast(mark,page,type){
+				console.log(type)
+				var that=this
+				findchatLastest({
+					sendUserType:'D',
+					sendUserId:this.userId,
+					receiveUserType:type,//目标类型
+					receiveUserId:this.otherid, //目标用户(或者群组id)
+					pageNum:page,
+					pageSize:10,
+				}).then(res=>{
+					console.log(res)
+					if(res.data.code==0){
+						if(res.data.object){
+							this.total=res.data.object.pages//总页数
+							// if(mark==0){
+							// 	this.lastestChat=res.data.object.list.reverse()
+							// }else if(mark==1){
+							// 	this.lastestChat=this.lastestChat.reverse().concat(res.data.object.list).reverse()
+							// }
+							this.lastestChat=[...this.lastestChat,...res.data.object.list]
+						}
+					}else if(res.data.code==-1){//数据为空
+						this.status='nomore'
+					}else{
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none'
+						})
+					}
+				}).catch(err=>{
+					console.log(err)
+				})
+			},
+			// 查询相关病例
+			caseData(caseid){
+				getcasedetail({
+					caseHistoryId:caseid
+				}).then(res=>{
+					console.log(res)
+					if(res.data.code==0){
+						var data=res.data.object
+						this.caselist=res.data.object
+					}else{
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none'
+						})
+					}
+				}).catch(err=>{
+					console.log(err)
+				})
+			},
+			addcasePage(){
+				this.mark=1
+				this.getCase(this.mark,this.casePage)
+			},
+			// 方法库发送之后,要重新加载聊天记录
+			refleshData(){
+				this.pageToBottom();
+			},
+			// 病例发送之后,要重新加载聊天记录
+			caserefleshData(){
+				this.pageToBottom();
+			},
+			// 获取手术方法
+			getSurgical(mark,surgicalPage){
+				getSurgical({
+					start:surgicalPage,
+					length:6,
+				}).then(res=>{
+					console.log(res)
+					if(res.data.code==0){
+						this.surgicalTotal=res.data.object.pages//总页数
+						this.surgicalPage++//页数增加一页
+						if(mark=='1'){//加载更多的操作
+							this.surgical=this.surgical.concat(res.data.object.list) 
+						}else{//初始化操作
+							this.surgical=res.data.object.list
+						}
+					}else{
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none'
+						})
+					}
+				}).catch(err=>{
+					console.log(err)
+				})
+			},
+			getCase(mark,casePage){
+				getCaselist({
+					status:'ALL',
+					identity:'ALL',
+					type:'ALL',//现在默认全是all
+					page:casePage,
+					size:6,
+				}).then(res=>{
+					console.log(res)
+					if(res.data.code==0){
+						this.caseTotal=res.data.object.pages//总页数
+						this.casePage++//页数增加一页
+						if(mark=='1'){//加载更多的操作
+							this.caseList=this.caseList.concat(res.data.object.list) 
+						}else{//初始化操作
+							this.caseList=res.data.object.list
+						}
+					}else{
+						uni.showToast({
+							title:res.data.msg,
+							icon:'none'
+						})
+					}
+				}).catch(err=>{
+					console.log(err)
+				})
+			},
+			closeMore(){
+				this.moreboolean=true
+			},
+			// 更多功能
+			moreplus(){
+				this.moreboolean=!this.moreboolean
+				this.isVoice=false
+				this.$nextTick(()=>{
+					this.pageToBottom();
+				})
+			},
+		},
+		// 导航栏右上角
+		onNavigationBarButtonTap(e){
+			console.log(e)
+			console.log(this.type)
+			if(this.type=='GROUP'){//进入群聊设置
+				uni.navigateTo({
+					url:'/pages/shoyiiChat/contactGroup?groupId='+this.otherid
+				})
+			}else{//进入私聊设置
+				uni.navigateTo({
+					url:'/pages/shoyiiChat/contactGroup?memberId='+this.otherid+'&navTitle='+this.navTitle
+				})
+			}
+		},
+		onLoad(options) {
+			// #ifdef APP-PLUS
+			innerAudioContext.onEnded(res=>{
+				this.payAudioIndex=null
+			})
+			// this.getheight()
+			this.onRecorderManager()
+			// #endif
+			//语音自然播放结束
+			innerAudioContext.onEnded((res) => {
+				console.log('播放结束')
+				console.log(res)
+				this.payAudioIndex = null
+			});
+			console.log(options)
+			this.otherid=options.id	//群组或私聊id
+			this.type=options.type
+			this.chatId=options.chatId
+			this.navTitle=options.otherName
+			uni.setNavigationBarTitle({
+				title:options.otherName
+			})
+			if(options.type=='GROUP'){//群组,这个是从聊天列表进来的
+				// 查询相关病例
+				if(options.caseId!='undefined'){
+					this.caseid=options.caseId
+					this.caseData(options.caseId)
+				}
+				this.fondLast(0,1,'GROUP')
+			}else if(options.type=='D'){//私聊
+				// 查询最新聊天记录
+				this.fondLast(0,1,'D')
+			}else{
+				// 查询最新聊天记录
+				this.fondLast(0,1,'MGR')
+			}
+			// 获取手术方法库
+			this.getSurgical(0,1)
+			// 获取病例数据
+			this.getCase(0,1)
+		},
+		onShow() {
+			// #ifdef APP-PLUS
+			this.amendNavigator()
+			// #endif
+		},
+		onReady() {
+			this.pageToBottom()
+		},
+		onUnload() {
+			// unwatch()
+			// 取消监听键盘高度
+			// #ifndef H5
+			uni.offKeyboardHeightChange(res => {
+			  console.log('取消监听',res)
+			})
+			// #endif
+		},
+	}
+</script>
+
+<style scoped lang="scss">
+		.displaynone{
+			display: none;
+		}
+		.cordimages {
+			width: 300rpx;
+			height: 300rpx;
+			display: flex;
+			align-items: flex-start;
+			.chatimage{
+				width: 300rpx;
+				height: 300rpx;
+				&.u-image__image{
+					width: 300rpx!important;
+					height: 300rpx!important;
+				}
+			}
+		}
+		.image /deep/ uni-image{
+			width: 80rpx!important;
+			height: 80rpx!important;
+		}
+		page{
+			width: 100%;
+			height: 100%;
+		}
+		.wechatItem{
+			width: 100%;
+			/* #ifdef H5 */
+			height:100%;
+			/* #endif */
+			/* #ifndef H5 */
+			height: 100vh;
+			/* #endif */
+			display: flex;
+			flex-direction: column;
+		}
+		.header{
+			padding: 0 30rpx;
+			height: auto;
+			margin-top: 20rpx;
+			/* #ifdef MP-WEIXIN */
+			background-color: #FFFFFF;
+			/* #endif */
+			.headerRow{
+				background-color: #FFFFFF;
+				.caseimage{
+					border: 1px solid #F8F8F8;
+					display: flex;
+					justify-content: center;
+					.u-image{
+						text-align: center;
+						max-height: 140rpx;
+					}
+				}
+				.case {
+					height: 140rpx;
+					border-radius: 8rpx;
+					display: flex;
+					align-items: flex-start;
+					flex-direction: column;
+					justify-content: space-around;
+					color: #333333;
+					font-family: PingFang-SC-Regular;
+					font-size: 24rpx;
+					font-weight: 400;
+					.content{
+						text-overflow: ellipsis;
+						width: 100%;
+						white-space: nowrap;
+						overflow: hidden;
+					}
+				}
+			}
+		}
+		.section{
+			margin-top: 10px;
+			height: 100%;
+			// 旋转180
+			direction: ltr;
+			transform: rotate(180deg);
+			-ms-transform: rotate(180deg);
+			-moz-transform: rotate(180deg);
+			-webkit-transform: rotate(180deg);
+			-o-transform:rotate(180deg);
+			// 
+			.section-item{
+				// 
+				display: flex;  
+				flex-direction: column;
+				justify-content: flex-end;
+				min-height: 100%;
+				//    
+				padding: 0 30rpx;
+				.list_item{ 
+					//旋转180
+					direction: ltr;transform:rotate(180deg);-ms-transform:rotate(180deg);
+					-moz-transform:rotate(180deg);-webkit-transform:rotate(180deg);-o-transform:rotate(180deg);
+					// 
+				}
+				.time{
+					display: flex;justify-content: center;
+					padding: 20rpx 0;
+					color: #606266;  
+				} 
+				.chatlist{
+					padding: 20rpx 10rpx;
+					border-radius: 10rpx;
+					display: flex;
+					align-items: flex-start;
+				}
+				.alluser{
+					display: flex;
+					flex-direction: row-reverse;
+				}
+				.allother{
+					display: flex;
+					flex-direction: row;
+				}
+				.userCord{
+					margin-right: 18px;
+					.TextuserCord{
+						border-radius: 20rpx;
+						padding: 20rpx;
+						background-color: #7DCCEC;
+						word-wrap:break-word;
+						word-break: break-all;
+						position: relative;
+						&::before,&::after{
+						    position: absolute;
+						    content: " ";
+						    top: 13px;
+						    right: -15px;
+						    display: block;
+						    width: 0;
+						    height: 0;
+						    border: 8px solid #7DCCEC;
+						    border-color: transparent transparent transparent #7DCCEC;
+						    z-index: 111;
+						}
+						&::after{
+						    right: -15px;
+						    border-color: transparent transparent transparent #7DCCEC;
+						    z-index: 11;
+						}
+					}
+				}
+				.otherCord{
+					margin-left: 18px;
+					.TextotherCord{
+						border-radius: 20rpx;
+						padding: 20rpx;
+						background-color: #FFFFFF;
+						word-wrap:break-word;
+						word-break: break-all;
+						position: relative;
+						&::before,&::after{
+						    position: absolute;
+						    content: " ";
+						    top: 13px;
+						    left: -15px;
+						    display: block;
+						    width: 0;
+						    height: 0;
+						    border: 8px solid #7DCCEC;
+						    border-color: transparent #fff transparent transparent;
+						    z-index: 111;
+						}
+						&::after{
+						    left: -15px;
+						    border-color: transparent #FFFFFF transparent transparent;
+						    z-index: 11;
+						}
+					}
+				}
+			}
+			.surgicalCode{
+				width: 440rpx;
+				padding: 20rpx 20rpx 0;
+				background-color: #FFFFFF;border-radius: 10rpx;
+				.s_header{
+					color: #000000;font-size: 30rpx;font-weight: bold;
+					display: -webkit-box;
+					-webkit-box-orient: vertical;
+					-webkit-line-clamp: 2;
+					overflow: hidden;
+					word-wrap: break-word;
+					word-break: break-all;
+				}
+				.s_section{
+					display: flex;justify-content: space-between;align-items: center;
+					padding: 20rpx 0;color: #999999;font-size: 26rpx;
+					.content{
+						flex: 1;padding-right: 20rpx;
+						display: -webkit-box;
+						-webkit-box-orient: vertical;
+						-webkit-line-clamp: 3;
+						overflow: hidden;
+						word-wrap: break-word;
+						word-break: break-all;
+					}
+					.image{
+						width: 100rpx;height: 100rpx;
+					}
+				}
+				.s_footer{
+					display: flex;align-items: center;padding: 10rpx 0;font-size: 24rpx;
+					border-top: 1px solid #F8F8F8;color: #999;
+					.image{
+						width: 20rpx;height: 20rpx;padding-right:10rpx ;
+					}
+					.name{
+						display: -webkit-box;
+						-webkit-box-orient: vertical;
+						-webkit-line-clamp: 1;
+						overflow: hidden;
+						word-wrap: break-word;
+						word-break: break-all;
+					}
+				}
+			}
+			.cordfile {
+				width: 440rpx;
+				padding: 30rpx;background-color: #FFFFFF;display: flex;justify-content: space-between;
+				.title{
+					flex: 1;flex-wrap: wrap;
+					display: -webkit-box;
+					-webkit-box-orient: vertical;
+					-webkit-line-clamp: 3;
+					overflow: hidden;
+					word-wrap: break-word;
+					word-break: break-all;
+				}
+			}
+		}
+		.loadtext{
+			//
+			direction: ltr;
+			transform: rotate(180deg);
+			-ms-transform: rotate(180deg);
+			-moz-transform: rotate(180deg);
+			-webkit-transform: rotate(180deg);
+			-o-transform:rotate(180deg);
+			// 
+		}
+		.footer{
+			width: 100%;
+			background-color: #fff;
+			z-index: 150;
+			.inputItem{
+				padding: 20rpx 30rpx;
+				display: flex;align-items: center;justify-content: space-between;
+				.input{
+					padding: 26rpx 0;
+					background-color: #F8F8F8;
+					border-radius:10rpx;
+					font-size: 30rpx;
+					/* #ifdef MP-WEIXIN */
+					height: 40rpx;
+					/* #endif */
+				}
+				.sendBtn{
+					width: 120rpx;
+					height: 60rpx;
+					margin-left: 20rpx;
+					background-color: #7DCCEC;
+					color: #FFFFFF;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+				.voice_box{
+					flex: 1;display: flex;
+					height: 82rpx;
+					background-color: #FFFFFF;
+					border: 1px solid #F8F8F8;
+					align-items: center;
+					justify-content: center;
+					.voice_text{
+						font-size: 32rpx;
+						font-weight: 400;
+						color: #161616;
+					}
+				}
+			}
+			.moreFunction{
+				padding:0 40rpx;
+				// height: 100%;
+				background-color: #F8F8F8;
+				box-sizing: border-box;
+				display: flex;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				align-items: center;
+				.item{
+					width: 25%;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					box-sizing: border-box;
+					margin: 20rpx 0;
+					.iconfont{
+						font-size: 48rpx;
+					}
+					.icon{
+						background-color: #FFFFFF;
+						width: 70rpx;
+						height: 70rpx;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						color: #000000;
+						border-radius: 20rpx;
+						margin-bottom: 10rpx;
+					}
+					.tip{
+						font-size: 24rpx;
+						color: #666;
+					}
+				}
+			}
+		}
+		.voice_bd{
+			position: fixed;display: flex;flex-direction: column;
+			align-items: center;
+			bottom:400rpx;
+			width: 750rpx;
+			height: 400rpx;
+			.voice_ui{
+				width: 300rpx;display: flex;flex-direction: column;
+				height: 400rpx;
+				border-radius: 8rpx;
+				align-items: center;
+				justify-content: center;
+				background-color: rgba(0,0,0,0.8);
+				.voice_ui_text{
+					color: #FFFFFF;
+					font-size: 30rpx;
+				}
+			}
+		}
+</style>

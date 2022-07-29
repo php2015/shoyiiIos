@@ -1,0 +1,24 @@
+{
+  "titleNView": {
+    "buttons": [
+      {
+        "float": "right",
+        "text": "搜索",
+        "fontSize": "14px"
+      }
+    ],
+    "searchInput": {
+      "autoFocus": "true",
+      "backgroundColor": "#EEEEEE",
+      "align": "left",
+      "borderRadius": "8px",
+      "placeholder": "输入搜索内容"
+    }
+  },
+  "usingComponents": {
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "uni-tag": "/components/uni-tag/uni-tag",
+    "load-more": "/components/load-more/load-more",
+    "surgical-list": "/components/surgical/surgicalList"
+  }
+}

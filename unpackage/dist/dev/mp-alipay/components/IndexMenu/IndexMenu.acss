@@ -1,0 +1,56 @@
+
+.menu.data-v-af842d30{
+	display:-webkit-box;
+	display:-webkit-flex;
+	display:flex;
+	text-align: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	color: #000000;
+	font-size: 24rpx;
+}
+.menu :nth-child(1) .pic uni-image.data-v-af842d30{
+	width: 56rpx;
+	height: 56rpx;
+}
+.menu :nth-child(2) .pic uni-image.data-v-af842d30{
+	width:70rpx ;
+	height: 70rpx;
+}
+.menu :nth-child(3) .pic uni-image.data-v-af842d30{
+	width:58rpx ;
+	height: 58rpx;
+}
+.menu :nth-child(4) .pic uni-image.data-v-af842d30{
+	width:60rpx ;
+	height: 60rpx;
+}
+.menu :nth-child(5) .pic uni-image.data-v-af842d30{
+	width: 56rpx;
+	height: 56rpx;
+}
+.pic.data-v-af842d30{
+	height: 80rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	margin-bottom: 4rpx;
+}
+.menu .img.data-v-af842d30{
+	width: 74rpx;
+	height: 74rpx;
+}
+.other-navigator-hover.data-v-af842d30{
+	color: #86B0D4;
+} 
+

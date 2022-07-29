@@ -1,0 +1,1 @@
+<view style="position:fixed;left:0;bottom:0;top:0;right:0;"><u-empty vue-id="38d36c3a-1" text="资源不存在" mode="page" bind:__l="__l"></u-empty></view>

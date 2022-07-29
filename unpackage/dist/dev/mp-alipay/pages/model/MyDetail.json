@@ -1,0 +1,17 @@
+{
+  "defaultTitle": "模型库详情",
+  "titleBarColor": "#FFFFFF",
+  "usingComponents": {
+    "navbar": "/components/navbar/navbar",
+    "uni-icons": "/components/uni-icons/uni-icons",
+    "u-switch": "/uview-ui/components/u-switch/u-switch",
+    "u-modal": "/uview-ui/components/u-modal/u-modal",
+    "u-radio-group": "/uview-ui/components/u-radio-group/u-radio-group",
+    "u-radio": "/uview-ui/components/u-radio/u-radio",
+    "vrshow": "/components/vrshow/vrshow",
+    "wechat-share": "/components/wechatShare/wechatShare",
+    "u-no-network": "/uview-ui/components/u-no-network/u-no-network",
+    "model-bottom": "/components/model/modelBottom",
+    "public-model": "/components/model/publicModel"
+  }
+}

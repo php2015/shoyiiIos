@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "分类名称",
+  "navigationBarBackgroundColor": "#FFFFFF",
+  "navigationBarTextStyle": "black",
+  "titleNView": {},
+  "usingComponents": {
+    "modellist": "/components/model/modellist"
+  }
+}
