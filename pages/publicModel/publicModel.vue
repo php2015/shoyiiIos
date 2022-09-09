@@ -211,11 +211,6 @@
 				this.getPublicModel(e,this.publicData[e].page,'mark')
 			},
 			getPublicModel(swiperCurrent,page,mark){
-				var timer = setTimeout(function() {
-					uni.showLoading({
-					  title: '数据加载中...',
-					})
-				}, 2000)
 				// 0,全部;1,仅观看;2,可下载;3,收藏夹;
 				getPublicModel({
 					category:swiperCurrent,
@@ -223,8 +218,6 @@
 					pageSize:4
 				}).then(res=>{
 					console.log(res)
-					clearTimeout(timer)
-					uni.hideLoading()
 					if(res.data.code==0){
 						if(res.data.object.list.length==0){
 							this.publicData[swiperCurrent].show=true
@@ -239,8 +232,6 @@
 						this.publicData[swiperCurrent].Totalpage=res.data.object.pages//总页数
 					}
 				}).catch(err=>{
-					clearTimeout(timer)
-					uni.hideLoading()
 					uni.showToast({
 						title:'err',
 						icon:'none'

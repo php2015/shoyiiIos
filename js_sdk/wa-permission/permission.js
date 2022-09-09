@@ -67,9 +67,9 @@ function judgeIosPermissionRecord() {
 	var avaudiosession = plus.ios.import("AVAudioSession");
 	var avaudio = avaudiosession.sharedInstance();
 	var permissionStatus = avaudio.recordPermission();
-	console.log("permissionStatus:" + permissionStatus);
+	// console.log("permissionStatus:" + permissionStatus);
 	if (permissionStatus == 1684369017 || permissionStatus == 1970168948) {
-		console.log("麦克风权限没有开启");
+		// console.log("麦克风权限没有开启");
 	} else {
 		result = true;
 		console.log("麦克风权限已经开启");

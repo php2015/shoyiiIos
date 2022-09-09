@@ -27,30 +27,17 @@
 		</view>
 		<view class="center-list dark-block">
 			<view class="center-list-item dark-bottom-border" @tap='enterPage(index)' v-for="(item,index) in listTop" :key='index' hover-class="bgColor darkbgColor">
-				<!-- <text class="iconfont list-icon dark-font" :class="item.icon"></text> -->
-				<!-- #ifdef H5 -->
-				<svg class='list-icon' aria-hidden="true">
+				<!-- <svg class='list-icon' aria-hidden="true">
 					<use :xlink:href="'#'+item.icon"></use>
-				</svg>
-				<!-- #endif -->
-				<!-- #ifndef H5 -->
-				<image :src="item.icon" mode="scaleToFill" class="image_icon"></image>
-				<!-- #endif -->
+				</svg> -->
+				<image :src="$store.getters.isDark?item.dark_url:item.url" mode="scaleToFill" class="image_icon"></image>
 				<text class="list-text dark-font">{{item.title}}</text>
 				<text class="navigat-arrow dark-font">&#xe65e;</text>
 			</view>
 		</view>
 		<view class="center-list dark-block">
 			<view class="center-list-item dark-bottom-border" @tap='enterPageBottom(index)' v-for="(item,index) in listBottom" :key='index' hover-class="bgColor darkbgColor">
-				<!-- <text class="iconfont list-icon dark-font" :class="item.icon"></text> -->
-				<!-- #ifdef H5 -->
-				<svg class='list-icon' aria-hidden="true">
-					<use :xlink:href="'#'+item.icon"></use>
-				</svg>
-				<!-- #endif -->
-				<!-- #ifndef H5 -->
-				<image :src="item.icon" mode="scaleToFill" class="image_icon"></image>
-				<!-- #endif -->
+				<image :src="$store.getters.isDark?item.dark_url:item.url" mode="scaleToFill" class="image_icon"></image>
 				<text class="list-text dark-font">{{item.title}}</text>
 				<text class="navigat-arrow dark-font">&#xe65e;</text>
 			</view>
@@ -80,31 +67,17 @@
 				darkbackground:{
 					backgroundColor: '#1B1C1E'  	
 				},
-				// #ifdef H5
 				listTop:[
-					{icon:'iconfangfaku1',title:'我的方法库'},
-					{icon:'icondingdanguanli1',title:'我的订单管理'},
-					{icon:'iconshebeiguanli2',title:'我的设备管理'},
+					{url:'/static/image/svg/surgical.svg',dark_url:'/static/image/svg/surgical_dark.svg',title:'我的方法库'},
+					{url:'/static/image/svg/order.svg',dark_url:'/static/image/svg/order_dark.svg',title:'我的订单管理'},
+					{url:'/static/image/svg/devicemanage.svg',dark_url:'/static/image/svg/devicemanage_dark.svg',title:'我的设备管理'},
 				],
 				listBottom:[
-					{icon:'iconzhanghaoanquan1',title:'账号安全'},
-					{icon:'icontongyong1',title:'通用'},
-					{icon:'iconguanyushuyi1',title:'关于树蚁'},
+					{url:'/static/image/svg/account.svg',dark_url:'/static/image/svg/account_dark.svg',title:'账号安全'},
+					{url:'/static/image/svg/general.svg',dark_url:'/static/image/svg/general_dark.svg',title:'通用'},
+					{url:'/static/image/svg/aboutshoyii.svg',dark_url:'/static/image/svg/aboutshoyii_dark.svg',title:'关于树蚁'},
 				],
-				// #endif
-				// #ifndef H5
-				listTop:[
-					{icon:'/static/image/svg/surgical.svg',title:'我的方法库'},
-					{icon:'/static/image/svg/order.svg',title:'我的订单管理'},
-					{icon:'/static/image/svg/devicemanage.svg',title:'我的设备管理'},
-				],
-				listBottom:[
-					{icon:'/static/image/svg/account.svg',title:'账号安全'},
-					{icon:'/static/image/svg/general.svg',title:'通用'},
-					{icon:'/static/image/svg/aboutshoyii.svg',title:'关于树蚁'},
-				],
-				// #endif
-				phone:'',//用于进入账号安全页面
+				phone:'',//用于进入账号安全页面 
 			}
 		},
 		methods: {
@@ -331,8 +304,7 @@
 		},
 		onShow() {
 			// #ifdef APP-PLUS
-			// 暗黑系统的检测
-			aemdTabbar()
+			aemdTabbar()//暗黑设置
 			// #endif
 			console.log(uni.getStorageSync('token'))
 			if(uni.getStorageSync('token')){//token存在

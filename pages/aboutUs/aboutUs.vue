@@ -93,16 +93,13 @@
 				</view>
 			</view>
 		</u-index-list> -->
-		<com-box label="所在城市" :candidates="candidates" placeholder="请选择所在城市" v-model="city"></com-box>
 	</view>
 </template>
 
 <script>
-	import candidates from '@/mock/hostipal.json'
 	export default {
 		data() {
 			return {
-				candidates:candidates,
 				city:'',
 				scrollTop: 0,
 				indexList: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",

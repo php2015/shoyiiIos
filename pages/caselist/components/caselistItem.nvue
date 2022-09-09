@@ -57,7 +57,7 @@
 </script>
 
 <style scoped>
-	/* #ifndef APP-NVUE */
+	/* #ifdef APP-NVUE */
 	.darkblockbg{
 		background-color: #3A3A3A;
 		border: none;

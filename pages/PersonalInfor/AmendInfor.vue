@@ -404,27 +404,39 @@
 				}
 			},
 			gethospital(){
+				let timer=setTimeout(()=>{
+					uni.showLoading({
+						title:'加载中...'
+					})
+				},2000)
 				uni.request({
-					// url:'https://shoyii-open-1258143571.cos.ap-guangzhou.myqcloud.com/dev/hospitalNameList.json'
-					// url:'/prefix/coshospital/dev/hospitalNameList.json'
-					url:'/asjdhjv/simpleWeather/query?key=ee5196d94da3c6db148fd58239357e8a',
-					// url:'http://apis.juhe.cn/simpleWeather/query?key=ee5196d94da3c6db148fd58239357e8a',
-					data:{
-						city:'广州'
-					}
+					//#ifndef H5
+					url:'https://shoyii-open-1258143571.cos.ap-guangzhou.myqcloud.com/dev/hospitalNameList.json',
+					//#endif
+					//#ifdef H5
+					url:'/proxy-hospital/dev/hospitalNameList.json'
+					// url:'/asjdhjv',
+					// data:{
+					// 	city:'广州',
+					// 	Key:'ee5196d94da3c6db148fd58239357e8a'
+					// }
+					//#endif
 				}).then((res)=>{
-					console.log(res)
+					clearTimeout(timer)
+					uni.hideLoading()
+					// console.log(res)
 					// console.log(res[1].data)
-					// this.hospitallist=res[1].data
+					this.hospitallist=res[1].data
 				}).catch(err=>{
+					clearTimeout(timer)
+					uni.hideLoading()
 					console.log(err) 
 				})
 			}
 		},
 		watch:{
 			input (newValue,oldValue){
-				console.log(newValue)
-				console.log(oldValue)
+				console.log(newValue,oldValue)
 				if(newValue!=oldValue){
 					this.boolean=true
 				}

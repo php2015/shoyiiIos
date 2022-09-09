@@ -21,7 +21,6 @@
 </template>
 
 <script>
-	import {sendMessage} from '@/utill/api/connect/connect.js'
 	import surgicalList from '@/components/surgical/surgicalList.vue'
 	export default{
 		components:{
@@ -141,7 +140,7 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				line-height: 80rpx;
+				// line-height: 80rpx;
 				font-size: 30rpx;
 				color: #000000;
 				.surgicalName{

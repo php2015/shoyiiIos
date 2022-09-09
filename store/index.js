@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import user from './modules/user.js'
 import {socketurl} from '@/utill/baseUrl/baseurl.js'
 import createorder from './modules/createorder.js'
+import {aemdTabbar} from '@/utill/tools/checkdark.js'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -53,7 +54,7 @@ const store = new Vuex.Store({
 				console.log("WebSocket连接正常打开中...！");
 				state.is_open_socket = true;
 				state.timerheart=setInterval(()=>{ //10s发一次心跳
-					console.log(state.is_open_socket,state.socketTask)
+					// console.log(state.is_open_socket,state.socketTask)
 					 state.socketTask.send({
 						data: 'head',
 						success(e) {
@@ -103,12 +104,14 @@ const store = new Vuex.Store({
 						}
 						// content ,payload(数据),options（JSON对象，获客户端创建本地消息的参数）
 						// #ifdef APP-PLUS
-						if(plus.os.name=='iOS'){//
-							
+						if(plus.os.name=='iOS'){//ios以字符串发送
+							// let data={...message,...{messageType:message.msgType}}
+							// console.log(data)
+							plus.push.createMessage(message.content,JSON.stringify(message),options)
 						}else{
 							plus.push.createMessage(message.content,message,options)
 						}
-						// #endif
+						// #endif 
 						// 迁移到全局方法里
 						// plus.push.addEventListener('click', function(message) {
 						// 	console.log('click事件')
@@ -226,8 +229,9 @@ const store = new Vuex.Store({
 			return state.newNoticeStatus
 		},
 		isDark(state){
+			aemdTabbar(state.isDark)
 			return state.isDark
-		}
+		} 
     },
 	actions: {
 		// 初始化

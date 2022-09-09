@@ -261,8 +261,7 @@
 		},
 		onShow() {
 			// #ifdef APP-PLUS
-			// 暗黑系统的检测
-			aemdTabbar()
+			aemdTabbar()//暗黑设置
 			// #endif
 			if(this.checkLogin('/pages/model/model',1)){//token 存在
 				if(this.modelData.length==0||this.DataStatus){//有没有数据去加载

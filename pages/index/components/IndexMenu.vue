@@ -56,14 +56,8 @@
 							url:'/pages/teachTrain/teachTrain'
 						})
 					}else{
-						var timer = setTimeout(function() {
-							uni.showLoading({
-							  title: '数据加载中...',
-							})
-						}, 2000)
 						// 获取报名信息
 						getReportInfor({}).then(res=>{
-							clearTimeout(timer)
 							console.log(res)
 							if(res.data.code==0){
 								if(res.data.object.length!=0){//有报名信息，则进入报名列表页面
@@ -81,7 +75,6 @@
 								})
 							}
 						}).catch(err=>{
-							clearTimeout(timer)
 							console.log(err)
 							uni.navigateTo({
 								url:'/pages/teachTrain/teachTrain'

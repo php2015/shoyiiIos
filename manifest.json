@@ -2,8 +2,8 @@
     "name" : "树蚁医疗",
     "appid" : "__UNI__AF91735",
     "description" : "",
-    "versionName" : "1.1.59",
-    "versionCode" : 131,
+    "versionName" : "1.1.61",
+    "versionCode" : 134,
     "transformPx" : false,
     "app-plus" : {
         "compatible" : {
@@ -86,6 +86,7 @@
                     "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
                     "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
                     "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
                     "<uses-permission android:name=\"android.permission.REQUEST_INSTALL_PACKAGES\"/>",
                     "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
@@ -110,14 +111,15 @@
                     "NSLocationWhenInUseUsageDescription" : "访问位置，为用户提供所在地区的天气信息",
                     "NSLocationAlwaysUsageDescription" : "访问位置，为用户提供所在地区的天气信息",
                     "NSLocationAlwaysAndWhenInUseUsageDescription" : "访问位置，为用户提供所在地区的天气信息u",
-                    "NSSpeechRecognitionUsageDescription" : "用户在病例讨论组中交流时，通过麦克风说话将语音转为文字",
+                    "NSSpeechRecognitionUsageDescription" : "用户在病例讨论组中交流时，通过麦克风录制语音发送",
                     "NSLocalNetworkUsageDescription" : "访问本地网络，便于用户使用网络获取本机号码从而一键登录",
                     "NSBluetoothPeripheralUsageDescription" : "使用了第三方的个推SDK,会存在访问用户蓝牙等设备，便于及时推送信息到用户通知栏中",
                     "NSBluetoothAlwaysUsageDescription" : "使用了第三方的个推SDK,会存在访问用户蓝牙等设备，便于及时推送信息到用户通知栏中",
                     "NSUserTrackingUsageDescription" : "请放心，开启权限不会获取您在其他站点的隐私信息，该权限仅用于标识设备并保障服务安全与提示浏览体验"
                 },
                 "urltypes" : "shoyiimedical",
-                "UIUserInterfaceStyle" : "Automatic"
+                "UIUserInterfaceStyle" : "Automatic",
+                "dSYMs" : false
             },
             "sdkConfigs" : {
                 "geolocation" : {},
@@ -139,7 +141,8 @@
                 "ad" : {
                     "gdt" : {},
                     "csj" : {},
-                    "ks" : {}
+                    "ks" : {},
+                    "bd" : {}
                 },
                 "payment" : {
                     "weixin" : {
@@ -256,17 +259,15 @@
         },
         "title" : "shoyii",
         "domain" : "192.168.31.40",
-        "devServer" : {
-            "disableHostCheck" : true
-        },
-        // "port" : 8080,
+        "devServer" : {},
+        // "port": 8080,
         // "proxy" : {
         //     "/asjdhjv" : {
-        //         "target" : "http://apis.juhe.cn",
+        //         "target" : "http://apis.juhe.cn/simpleWeather/query",
         //         "changeOrigin" : true,
-        //         "secure" : false,
+        //         "secure" : false,//设置支持https协议的代理
         //         "pathRewrite" : {
-        //             "^/asjdhjv" : ""
+        //             "^/asjdhjv" : "/"
         //         }
         //     },
         //     "/prefix" : {

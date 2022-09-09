@@ -21,7 +21,6 @@
 </template>
 
 <script>
-	import {sendMessage} from '@/utill/api/connect/connect.js'
 	import caselist from '@/components/caselist/caselist.vue'
 	export default{
 		components:{

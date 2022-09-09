@@ -7,7 +7,7 @@
                                    :avatar="item.anotherUserProfile?item.anotherUserProfile:'/static/image/shoyiilogo.png'"
                                    badge-positon="left" :badge-text="item.readCount!=0&&item.readCount?item.readCount:0" clickable
                                    @click="enterChat(item.chatId,item.groupSize,item.anotherUserId,item.anotherUserName,item.anotherUserType,item.caseHistoryId)"
-                                   :title="item|groupName" :note="item.chatMsgDetail.content|filterText">
+                                   :title="item|groupName" :note="filterText(item.chatMsgDetail.content,item.chatMsgDetail.msgType)">
                         <view class="chat-custom-right">
                             <text class="chat-custom-text" v-if="item.chatMsgDetail.sendTime">{{item.chatMsgDetail.sendTime|relativtime}}</text>
                         </view>
@@ -30,7 +30,6 @@
 <script>
     import {deleteChatList} from '@/utill/api/connect/connect.js'
     import {relativtime} from '@/utill/tools/timestamp.js'
-	import _ from 'lodash'
     export default {
         data() {
             return {
@@ -51,13 +50,6 @@
 					return val.anotherUserName
 				}
 			},
-			filterText(text){
-				if(_.startsWith(text, '{')&&_.endsWith(text, '}')&&JSON.parse(text).file){
-					return '[语音]'
-				}else{
-					return text
-				}
-			}
         },
         props: {
             chatlist: {
@@ -68,6 +60,21 @@
             }
         },
         methods: {
+			filterText(text,msgType){
+				if(msgType=='1'){
+					return text
+				}else if(msgType=='2'){
+					return '[图片]'
+				}else if(msgType=='3'){
+					return '[手术方法分享]'
+				}else if(msgType=='4'){
+					return '[文件]'
+				}else if(msgType=='5'){
+					return '[病例分享]'
+				}else if(msgType=='6'){
+					return '[语音]'
+				}
+			},
             enterChat(chatId, gruopSize, id, otherName, type, caseId) {//其他人id,name,群组或者私聊
                 console.log(caseId)
 				if (gruopSize) {

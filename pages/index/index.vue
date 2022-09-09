@@ -28,7 +28,7 @@
 				</view>
 			</view>
 			<!-- 病历管理 -->
-			<module-title :title="$t('index.caseManage')" index='0' style="padding-top: 0;"></module-title>
+			<module-title title="服务进程" index='0' style="padding-top: 0;"></module-title>
 			<view class="casecontent dark-block">
 				<view class="segmentedMenu casemenu dark-page" style="padding: 0 60rpx;">
 					<u-tabs-swiper class='' ref="tabs" :list="items" :current='casecurrent' @change="menuClick" gutter='10' font-size='28' 
@@ -50,7 +50,7 @@
 				</view>
 			</view>	
 			<!-- 设备管理 -->
-			<module-title :title="$t('index.deviceManage')" index='4' style="padding-top: 50rpx;"></module-title>
+			<module-title title="设备管理" index='4' style="padding-top: 50rpx;"></module-title>
 			<view class="" style="display: flex;" v-if="token">
 			    <scroll-view v-if="deviceData.length>0" scroll-x="true" lower-threshold='10' style="white-space: nowrap;width: 100%;
 			     margin-top: 20rpx;
@@ -118,9 +118,8 @@
 				</view>
 			</view>
 		</view>
-		<!-- 聊天入口 -->
 		<view class="chat" v-if="token" style="position: fixed;bottom: 20%;right: 20%;">
-			<movable-view direction='all' style="opacity: .8;">
+			<movable-view direction='all' scale scale-max='2' style="opacity: .8;">
 				<view @click="Enterchat" class="chatIcon" style="position: relative;display: flex;align-items: center;justify-content: center;width: 50px;height: 50px;border-radius: 50%;background-color: #007AFF;">
 					<u-badge :is-dot="true" type="error" v-if="isDot"></u-badge>
 					<u-icon color="#fff" size="48" name="chat"></u-icon>
@@ -165,8 +164,8 @@
 	import {myRequest} from '@/utill/request.js'
 	// iOS提示框
 	import {ifAgree} from '@/utill/tools/PrompTtip.js'
-	import {aemdTabbar} from '@/utill/tools/checkdark.js'
 	import {reLaunch} from '@/utill/tools/switchtheme.js'
+	import {aemdTabbar} from '@/utill/tools/checkdark.js'
 	var dbclickTimer=null;
 	var animationTimer=null;
 	var stopTimer=null;
@@ -655,7 +654,6 @@
 					this.iOSshow=false
 				}
 			}
-			console.log(this.$t('lang.intro'));
 			// #endif
 			// 首页连接socket
 			if(!this.$store.state.socketTask){
@@ -667,8 +665,7 @@
 		},
 		onShow() {
 			// #ifdef APP-PLUS
-			// 暗黑系统的检测
-			aemdTabbar()
+			aemdTabbar()//暗黑设置
 			// #endif
 			this.token=uni.getStorageSync('token')
 			console.log(this.DataStatus)
@@ -711,6 +708,8 @@
 			if(this.bannerList.length==0||this.DataStatus){
 				this.getBannerList()
 			}
+		},
+		onReachBottom(){
 			// 获取新闻
 			if(this.newsData[0].data.length==0){
 				this.getNews('4',1) //默认是案例

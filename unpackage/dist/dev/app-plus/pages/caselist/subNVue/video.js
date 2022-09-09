@@ -114,12 +114,16 @@ var STAT_VERSION = Object({"NODE_ENV":"development","UNI_APP_ID":"__UNI__AF91735
     "address": [
         "127.0.0.1",
         "192.168.31.242",
-        "169.254.13.144",
-        "169.254.251.29"
+        "169.254.229.24",
+        "169.254.194.66"
     ],
-    "debugPort": 52813,
+    "debugPort": 54139,
     "initialLaunchType": "remote",
-    "servePort": 52814
+    "servePort": 54140,
+    "skipFiles": [
+        "<node_internals>/**/*.js",
+        "/Applications/HBuilderX.app/Contents/HBuilderX/plugins/unicloud/**/*.js"
+    ]
 }
 ,"RUN_BY_HBUILDERX":true,"UNI_AUTOMATOR_WS_ENDPOINT":undefined,"UNI_STAT_UNI_CLOUD":{},"UNI_STAT_DEBUG":false}).UNI_COMPILER_VERSION;
 var STAT_URL = 'https://tongji.dcloud.io/uni/stat';
@@ -583,6 +587,9 @@ var log = function log(data) {
       break;
     case '31':
       msg_type = '应用错误';
+      break;
+    case '101':
+      msg_type = 'PUSH';
       break;}
 
   if (msg_type) {
@@ -1008,8 +1015,9 @@ Report = /*#__PURE__*/function () {"use strict";
     /**
        * 发送请求,应用维度上报
        * @param {Object} options 页面信息
+       * @param {Boolean} type 是否立即上报
        */ }, { key: "sendReportRequest", value: function sendReportRequest(
-    options) {
+    options, type) {
       this._navigationBarTitle.lt = '1';
       this._navigationBarTitle.config = get_page_name(options.path);
       var is_opt = options.query && JSON.stringify(options.query) !== '{}';
@@ -1026,9 +1034,9 @@ Report = /*#__PURE__*/function () {"use strict";
         cst: options.cst || 1 });
 
       if (get_platform_name() === 'n') {
-        this.getProperty();
+        this.getProperty(type);
       } else {
-        this.getNetworkInfo();
+        this.getNetworkInfo(type);
       }
     }
 
@@ -1107,54 +1115,96 @@ Report = /*#__PURE__*/function () {"use strict";
         t: get_time() };
 
       this.request(options);
+    } }, { key: "sendPushRequest", value: function sendPushRequest(
+
+    options, cid) {var _this = this;
+      var time = get_time();
+
+      var statData = {
+        lt: '101',
+        cid: cid,
+        t: time,
+        ut: this.statData.ut };
+
+
+      // debug 打印打点信息
+      if (is_debug) {
+        log(statData);
+      }
+
+      var stat_data = handle_data({
+        101: [statData] });
+
+      var optionsData = {
+        usv: STAT_VERSION, //统计 SDK 版本号
+        t: time, //发送请求时的时间戮
+        requests: stat_data };
+
+
+      {
+        if (statData.ut === 'h5') {
+          this.imageRequest(optionsData);
+          return;
+        }
+      }
+
+      // XXX 安卓需要延迟上报 ，否则会有未知错误，需要验证处理
+      if (get_platform_name() === 'n' && this.statData.p === 'a') {
+        setTimeout(function () {
+          _this.sendRequest(optionsData);
+        }, 200);
+        return;
+      }
+
+      this.sendRequest(optionsData);
     }
 
     /**
        * 获取wgt资源版本
-       */ }, { key: "getProperty", value: function getProperty()
-    {var _this = this;
+       */ }, { key: "getProperty", value: function getProperty(
+    type) {var _this2 = this;
       plus.runtime.getProperty(plus.runtime.appid, function (wgtinfo) {
-        _this.statData.v = wgtinfo.version || '';
-        _this.getNetworkInfo();
+        _this2.statData.v = wgtinfo.version || '';
+        _this2.getNetworkInfo(type);
       });
     }
 
     /**
        * 获取网络信息
-       */ }, { key: "getNetworkInfo", value: function getNetworkInfo()
-    {var _this2 = this;
+       */ }, { key: "getNetworkInfo", value: function getNetworkInfo(
+    type) {var _this3 = this;
       uni.getNetworkType({
         success: function success(result) {
-          _this2.statData.net = result.networkType;
-          _this2.getLocation();
+          _this3.statData.net = result.networkType;
+          _this3.getLocation(type);
         } });
 
     }
 
     /**
        * 获取位置信息
-       */ }, { key: "getLocation", value: function getLocation()
-    {var _this3 = this;
+       */ }, { key: "getLocation", value: function getLocation(
+    type) {var _this4 = this;
       if (stat_config.getLocation) {
         uni.getLocation({
           type: 'wgs84',
           geocode: true,
           success: function success(result) {
             if (result.address) {
-              _this3.statData.cn = result.address.country;
-              _this3.statData.pn = result.address.province;
-              _this3.statData.ct = result.address.city;
+              _this4.statData.cn = result.address.country;
+              _this4.statData.pn = result.address.province;
+              _this4.statData.ct = result.address.city;
             }
 
-            _this3.statData.lat = result.latitude;
-            _this3.statData.lng = result.longitude;
-            _this3.request(_this3.statData);
+            _this4.statData.lat = result.latitude;
+            _this4.statData.lng = result.longitude;
+            _this4.request(_this4.statData, type);
           } });
 
       } else {
         this.statData.lat = 0;
         this.statData.lng = 0;
-        this.request(this.statData);
+        this.request(this.statData, type);
       }
     }
 
@@ -1163,7 +1213,7 @@ Report = /*#__PURE__*/function () {"use strict";
        * @param {Object} data 上报数据
        * @param {Object} type 类型
        */ }, { key: "request", value: function request(
-    data, type) {var _this4 = this;
+    data, type) {var _this5 = this;
       var time = get_time();
       var title = this._navigationBarTitle;
       Object.assign(data, {
@@ -1210,7 +1260,7 @@ Report = /*#__PURE__*/function () {"use strict";
       // XXX 安卓需要延迟上报 ，否则会有未知错误，需要验证处理
       if (get_platform_name() === 'n' && this.statData.p === 'a') {
         setTimeout(function () {
-          _this4.sendRequest(optionsData);
+          _this5.sendRequest(optionsData);
         }, 200);
         return;
       }
@@ -1226,7 +1276,7 @@ Report = /*#__PURE__*/function () {"use strict";
        * 数据上报
        * @param {Object} optionsData 需要上报的数据
        */ }, { key: "sendRequest", value: function sendRequest(
-    optionsData) {var _this5 = this;
+    optionsData) {var _this6 = this;
 
       {
         this.getIsReportData().then(function () {
@@ -1242,13 +1292,13 @@ Report = /*#__PURE__*/function () {"use strict";
               }
             },
             fail: function fail(e) {
-              if (++_this5._retry < 3) {
+              if (++_this6._retry < 3) {
                 if (is_debug) {
                   console.warn('=== 统计上报错误，尝试重新上报！');
                   console.error(e);
                 }
                 setTimeout(function () {
-                  _this5.sendRequest(optionsData);
+                  _this6.sendRequest(optionsData);
                 }, 1000);
               }
             } });
@@ -1304,16 +1354,33 @@ Stat = /*#__PURE__*/function (_Report) {"use strict";_inherits(Stat, _Report);va
   }
 
   /**
-     * 进入应用
-     * @param {Object} options 页面参数
-     * @param {Object} self	当前页面实例
-     */_createClass(Stat, [{ key: "launch", value: function launch(
+     * 获取推送id
+     */_createClass(Stat, [{ key: "pushEvent", value: function pushEvent(
+    options) {var _this7 = this;
+      if (uni.getPushClientId) {
+        uni.getPushClientId({
+          success: function success(res) {
+            var cid = res.cid || false;
+            //  只有获取到才会上传
+            if (cid) {
+              _this7.sendPushRequest(options, cid);
+            }
+          } });
+
+      }
+    }
+
+    /**
+       * 进入应用
+       * @param {Object} options 页面参数
+       * @param {Object} self	当前页面实例
+       */ }, { key: "launch", value: function launch(
     options, self) {
       // 初始化页面停留时间  start
       set_page_residence_time();
       this.__licationShow = true;
       dbSet('__launch_options', options);
-      // 应用初始上报参数为1 
+      // 应用初始上报参数为1
       options.cst = 1;
       this.sendReportRequest(options, true);
     } }, { key: "load", value: function load(
@@ -1424,6 +1491,8 @@ var lifecycle = {
   onLaunch: function onLaunch(options) {
     // 进入应用上报数据
     stat.launch(options, this);
+    // 上报push推送id
+    stat.pushEvent(options);
   },
   onLoad: function onLoad(options) {
     stat.load(options, this);

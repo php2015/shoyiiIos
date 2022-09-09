@@ -10,7 +10,7 @@
 		<!-- <button @click="close">close</button> -->
 		<!-- 病例，只有群组里才有 -->
 		<view class="caseheader">
-			<view class="header" justify="center" v-if="caseid">
+			<view class="header" justify="center" v-show="caseid&&caseShow">
 				<u-row gutter="16" class='headerRow dark-block' @click='enterCase(caselist.caseHistoryId)'>
 					<u-col span="3">
 						<view class="caseimage">
@@ -48,80 +48,84 @@
 		<view class="" style="flex: 1;overflow: auto;height: 100%;" @click.stop="closeMore">
 			<scroll-view class="section" scroll-y="true" :scroll-top='scrollTop' @scrolltolower='toupper' @scroll="scroll">
 				<view class="section-item" :style="{paddingTop:scrollHeight+'rpx'}">
-					<view v-for="(item,index) in lastestChat" :key='index' class="list_item">
-						<text class="time" v-if="lastestChat.length  > index+1?lastestChat[index+1].sendTime < item.sendTime - 300000 : true">{{item.sendTime|relativtime}}</text>
+					<view v-for="(item,index) in lastestChat" :key='item.id' class="list_item">
+						<text class="time" v-if="index < lastestChat.length-1 && (item.sendTime -  lastestChat[index + 1].sendTime) > 300000">{{item.sendTime|relativtime}}</text>
+						<!-- <text class="time" v-if="lastestChat.length  > index+1?lastestChat[index+1].sendTime < item.sendTime - 300000 : true">{{item.sendTime|relativtime}}</text> -->
 						<!-- <text class="time" v-if="index-1 >= 0 ? lastestChat[index-1].sendTime < item.sendTime - 300000 : true">{{item.sendTime|relativtime}}</text> -->
 						<view class="chatlist" :class="item.userId==userId?'alluser':'allother'">
-							<u-image class='image' style='border: 1px solid #F8F8F8;' width='80' height='80'  :src="item.userProfile" mode='aspectFit'>
-								<view slot="error" style="">
-									<u-image width='80rpx' height='80rpx' src='/static/image/person.png' mode="aspectFit"></u-image>
-								</view>
-							</u-image>
-							<view style="color: #000000;max-width: 500rpx;" :class="item.userId==userId?'userCord':'otherCord'">
-								<!-- 文本信息 -->
-								<view :class="item.userId==userId?'TextuserCord':'TextotherCord'" v-if="item.msgType=='1'">
-									<text selectable='true'>{{item.content}}</text>
-								</view>
-								<!-- 方法库数据 -->
-								<view @click="enterDetail(item)" class="surgicalCode" v-if="item.msgType=='3'">
-									<view class="s_header" style="">
-										<text>{{JSON.parse(item.content).surgicalPlanName}}</text>
+							<image :src="item.userProfile?item.userProfile:'/static/image/person.png'" mode="aspectFit"
+							class='avatar_image' lazy-load></image>
+							<view class="chatlist_box">
+								<!-- 群组且非自身 -->
+								<text class="item" v-if="type=='GROUP'&&item.userId!=userId">
+									{{item.userName}}
+								</text>
+								<view style="color: #000000;max-width: 500rpx;" :class="item.userId==userId?'userCord':'otherCord'">
+									<!-- 文本信息 -->
+									<view :class="item.userId==userId?'TextuserCord':'TextotherCord'" v-if="item.msgType=='1'">
+										<text selectable='true'>{{item.content}}</text>
 									</view>
-									<view class="s_section" style="">
-										<text class="content" style="">{{JSON.parse(item.content).title}}</text>
-										<image lazy-load class="image" v-if="JSON.parse(item.content).previewImage" :src="JSON.parse(item.content).previewImage" mode="aspectFit"></image>
-										<image lazy-load class="image" v-else src="/static/image/shoyiilogo.png" mode="aspectFit"></image>
+									<!-- 方法库数据 -->
+									<view @click="enterDetail(item)" class="surgicalCode" v-if="item.msgType=='3'">
+										<view class="s_header" style="">
+											<text>{{JSON.parse(item.content).surgicalPlanName}}</text>
+										</view>
+										<view class="s_section" style="">
+											<text class="content" style="">{{JSON.parse(item.content).title}}</text>
+											<image lazy-load class="image" v-if="JSON.parse(item.content).previewImage" :src="JSON.parse(item.content).previewImage" mode="aspectFit"></image>
+											<image lazy-load class="image" v-else src="/static/image/shoyiilogo.png" mode="aspectFit"></image>
+										</view>
+										<view class="s_footer" style="">
+											<image lazy-load class="image" style="" src="/static/image/shoyiilogo.png" mode="aspectFit"></image>
+											<text class="name">{{JSON.parse(item.content).doctorName}}</text>
+										</view>
 									</view>
-									<view class="s_footer" style="">
-										<image lazy-load class="image" style="" src="/static/image/shoyiilogo.png" mode="aspectFit"></image>
-										<text class="name">{{JSON.parse(item.content).doctorName}}</text>
+									<!-- 图片 -->
+									<view class="cordimages" v-if="item.msgType=='2'" @click="previewImage(item)">
+										<u-image class="chatimage" height="300rpx" :src="item.content" mode="aspectFill"></u-image>
 									</view>
-								</view>
-								<!-- 图片 -->
-								<view class="cordimages" v-if="item.msgType=='2'" @click="previewImage(item)">
-									<u-image class="chatimage" height="300rpx" :src="item.content" mode="aspectFit"></u-image>
-								</view>
-								<view class="cordfile" v-if="item.msgType=='4'" @click="openFile(item)">
-									<view class="title" style="">
-										<text>{{JSON.parse(item.content).name}}</text>
+									<view class="cordfile" v-if="item.msgType=='4'" @click="openFile(item)">
+										<view class="title" style="">
+											<text>{{JSON.parse(item.content).name}}</text>
+										</view>
+										<view class="" v-if="filesuffix(item)=='mp3'">
+											<u-icon name="play-circle-fill" size='100' color='#86B0D4'></u-icon>
+										</view>
+										<view class=""
+											  v-else-if="filesuffix(item)=='pdf'||filesuffix(item)=='zip'||filesuffix(item)=='docx'">
+											<u-icon name="file-text-fill" size='100' color='#fa3534'></u-icon>
+										</view>
+										<view class="" v-else>
+											<u-icon name="file-text-fill" size='100' color='#999'></u-icon>
+										</view>
 									</view>
-									<view class="" v-if="filesuffix(item)=='mp3'">
-										<u-icon name="play-circle-fill" size='100' color='#86B0D4'></u-icon>
+									<view class="surgicalCode" v-if="item.msgType=='5'" @click=CaseDetail(item)>
+										<view class="s_header" style="">
+											<text>{{JSON.parse(item.content).name||JSON.parse(item.content).caseHistoryNo||'暂无数据'}}</text>
+										</view>
+										<view class="s_section" style="">
+											<text class="content" style="">{{JSON.parse(item.content).title||'暂无数据'}}</text>
+											<image lazy-load class="image" v-if="JSON.parse(item.content).previewImage" :src="JSON.parse(item.content).previewImage" mode="aspectFit"></image>
+											<image lazy-load class="image" v-else src="/static/image/shoyiilogo.png" mode="aspectFit"></image>
+										</view>
+										<view class="s_footer">
+											<image lazy-load class="image" src="/static/image/shoyiilogo.png" mode="aspectFit"></image>
+											<text class="name">树蚁医生</text>
+										</view>
 									</view>
-									<view class=""
-										  v-else-if="filesuffix(item)=='pdf'||filesuffix(item)=='zip'||filesuffix(item)=='docx'">
-										<u-icon name="file-text-fill" size='100' color='#fa3534'></u-icon>
-									</view>
-									<view class="" v-else>
-										<u-icon name="file-text-fill" size='100' color='#999'></u-icon>
-									</view>
-								</view>
-								<view class="surgicalCode" v-if="item.msgType=='5'" @click=CaseDetail(item)>
-									<view class="s_header" style="">
-										<text>{{JSON.parse(item.content).name||JSON.parse(item.content).caseHistoryNo||'暂无数据'}}</text>
-									</view>
-									<view class="s_section" style="">
-										<text class="content" style="">{{JSON.parse(item.content).title||'暂无数据'}}</text>
-										<image lazy-load class="image" v-if="JSON.parse(item.content).previewImage" :src="JSON.parse(item.content).previewImage" mode="aspectFit"></image>
-										<image lazy-load class="image" v-else src="/static/image/shoyiilogo.png" mode="aspectFit"></image>
-									</view>
-									<view class="s_footer">
-										<image lazy-load class="image" src="/static/image/shoyiilogo.png" mode="aspectFit"></image>
-										<text class="name">树蚁医生</text>
-									</view>
-								</view>
-								<template v-if="item.msgType =='6'">
-									<view class="audio_box" :class="item.userId==userId?'TextuserCord':'TextotherCord'"
-										style="display: flex;align-items: center;" @click="playAudio(item,index)">
-										 <text class="content_box" style="text-align: left;">
-											{{JSON.parse(item.content).time}}
-										 </text>
-										<uni-icons class='audio_img' customPrefix="iconfont" :type="payAudioIndex==index?'iconshengyin':'iconshengyin1'"
-										size="24" color="#000" style="margin-left: 5rpx;margin: 5rpx;transform: rotate(180deg);">
-										</uni-icons>
-									</view>
-								</template>
-							 </view>
+									<template v-if="item.msgType =='6'">
+										<view class="audio_box" :class="item.userId==userId?'TextuserCord':'TextotherCord'"
+											style="display: flex;align-items: center;" @click="playAudio(item,index)">
+											 <text class="content_box" style="text-align: left;">
+												{{JSON.parse(item.content).time}}
+											 </text>
+											<uni-icons class='audio_img' customPrefix="iconfont" :type="payAudioIndex==index?'iconshengyin':'iconshengyin1'"
+											size="24" color="#000" style="margin-left: 5rpx;margin: 5rpx;transform: rotate(180deg);">
+											</uni-icons>
+										</view>
+									</template>
+								 </view>
+							</view>
 							<view class="" style="width: 80rpx;"></view>
 						</view>
 					</view>
@@ -156,8 +160,9 @@
 				 </template>
 				 <template v-else>
 				 	<textarea :adjust-position='false' :auto-blur='true' @focus='Inputfocus' @blur="Inputblur" cursor-spacing='10'
+					@linechange="texTlinechange" :auto-height="lineCount>=2?false:true"
 				 	:hold-keyboard='true' :show-confirm-bar='false' :focus="focus"
-				 	maxlength='250' class="input dark-font" :auto-height='true' v-model="InputContent"></textarea>
+				 	maxlength='250' class="input dark-font" v-model="InputContent"></textarea>
 				 </template>
 				 <!-- #endif -->
 				 <view v-if="sendBool" class='sendBtn' @touchend.prevent="sendItem(0)">
@@ -184,18 +189,29 @@
 		<case-popup ref='caseshow' :chatId='chatId' :type='type' @addcasePage='addcasePage' :page="casePage" :total="caseTotal" :otherId='otherid' :caseList='caseList' @caserefleshData='caserefleshData'></case-popup>
 		<!-- 语音状态显示 -->
 		<template v-if="voiceFlg">
-			<div class="voice_bd">
-				<div class="voice_ui">
-					<uni-icons type="mic-filled" size="100" style="margin-bottom: 20rpx;" color="#fff"></uni-icons>
-					<text class="voice_ui_text">{{voiceTis}}</text>
+			<view class="voice_bd">
+				<div class="voice_box">
+					<div class="voice_ui" :class="voiceStop?'cancel_ui':'normal_ui'">
+						<uni-icons class='voice_icon' custom-prefix="iconfont" type="iconshengyin" size="50" color="#fff"></uni-icons>
+						<text class="voice_ui_text">{{voiceTis}}</text>
+						<view style="color: #ff9900;font-weight: bold;padding-top: 10rpx;" v-if="endTip">
+							 <text style="font-size: 36rpx;">{{30-voiceLength.toFixed(0)}}</text>
+							 <text>'' 后</text>
+							 <text >{{endTip}}</text>
+						</view>
+					</div>
+					<div class='round_ui' :class="voiceStop?'cancel_round_ui':'normal_round_ui'"></div>
+					<div class="tip_text" v-if="!voiceStop">
+						<text>松开 发送</text>
+					</div>
 				</div>
-			</div>
+			</view>
 		</template>
 	</view>
 </template>
 
 <script>
-	import {sendMessage,findchatLastest} from '@/utill/api/connect/connect.js'
+	import {findchatLastest} from '@/utill/api/connect/connect.js'
 	import {getcasedetail} from '@/utill/api/case/getcasedetail.js'
 	import {getCaselist} from '@/utill/api/case/getCaselist.js'
 	import {relativtime} from '@/utill/tools/timestamp.js'
@@ -207,6 +223,7 @@
 	const innerAudioContext=uni.createInnerAudioContext()
 	// #ifdef APP-PLUS
 	const recorderManager = uni.getRecorderManager();//录音
+	import permission from '@/utill/tools/getpermission.js'
 	// #endif
 	export default{
 		components:{
@@ -215,6 +232,10 @@
 		},
 		data(){
 			return{
+				lineCount:1,
+				endTip:'',
+				caseShow:true,
+				permissionBool:true,//默认麦克风权限未开启
 				isVoice:false,
 				voiceFlg:false,
 				voiceStop: false,
@@ -285,10 +306,12 @@
 					}else{ 
 						if(val.chatMsgDetail.userId==this.userId){//用户自身的消息
 							this.InputContent=''//输入框清空
-						}
+						}  
 						var receiveData=val.chatMsgDetail
 						if(this.chatId==receiveData.chatId){
 							this.lastestChat.unshift(receiveData)
+							console.log(this.lineCount)
+							if(this.lineCount!==1){this.lineCount=1}//行高恢复
 						}
 						console.log(this.lastestChat)
 						// this.pageToBottom();
@@ -306,6 +329,22 @@
 					this.sendBool=true
 				}
 			},
+			"voiceLength":function(val){
+				// console.log(val,val.toFixed(0),this.voiceStop)
+				if(val.toFixed(0)>20&&val.toFixed(0)<30){//20-30，提示录音即将结束
+					// console.log(val.toFixed(0))
+					this.endTip = "录音即将发送"
+				}else if(val.toFixed(0)==30){//30s，停止录音
+					this.endTip='录音结束'
+					clearInterval(this.voiceTimer);
+					this.voiceTimer = null
+					this.voiceStop=false//正常发送
+					recorderManager.stop(); //录音结束
+					this.voiceFlg=false// 
+				}else{
+					this.endTip=''
+				}
+			}
 		},
 		computed:{
 			...mapGetters(['connect']),
@@ -325,11 +364,18 @@
 				recorderManager.onError((e) => {
 					console.log(e)
 					console.log('录音报错')
+					// 当录音权限未开启时，录音start触发时，会触发该错误，且不会触发onStop事件；
+					this.voiceLength = 0
+					this.voiceStop=false
+					this.voiceFlg = false
+					clearInterval(this.voiceTimer);
+					this.voiceTimer = null
+					recorderManager.stop(); //录音结束
 				})
 				//录音结束
 				recorderManager.onStop((e)=>{
-					console.log('录音结束')
-					console.log(this.voiceStop)
+					console.log('录音结束',e.tempFilePath)
+					console.log(this.voiceStop,this.voiceLength)
 					if (this.voiceStop) {
 						uni.showToast({
 							icon: "none",
@@ -348,6 +394,11 @@
 							return
 						} else {
 							console.log('发送语音')
+							// this.$nextTick(() => {
+							// 	this.voiceLength = 0
+							// 	this.voiceStop=false
+							// })
+							// return
 							var type= this.type=='GROUP'?'GROUP':'D'
 							console.log(e,e.tempFilePath,this.voiceLength)
 							uni.uploadFile({
@@ -378,6 +429,7 @@
 										this.$store.dispatch('WEBSOCKET_SEND',JSON.stringify(msg))
 										this.$nextTick(() => {
 											this.voiceLength = 0
+											this.voiceStop=false
 										})
 									}else{
 										uni.showToast({
@@ -395,65 +447,97 @@
 				})
 			},
 			// 按下触发
-			touchstartVoice(e) {
-				this.pageToBottom()
+			async touchstartVoice(e) {
 				uni.vibrateShort({
 					complete: function () {
 						console.log('complete');
-					}
+					} 
 				})
-				this.voicePageY = (e.changedTouches[0].pageY).toFixed(2)
-				this.voiceText = '松开 结束'
-				this.voiceFlg = true
 				recorderManager.start({
 					format: "mp3"
 				}); //录音开始,
-				this.voiceTimer = setInterval(() => {
-					this.voiceLength += 0.1
-					console.log(this.voiceLength)
-				}, 100)
-				console.log('touchstartVoice', this.voicePageY)
+				console.log('321')
+				this.permissionBool=await permission.getpermission('record')
+				console.log(this.permissionBool)
+				if(this.permissionBool){//麦克风权限
+					this.pageToBottom()
+					this.voicePageY = (e.changedTouches[0].pageY).toFixed(2)
+					this.voiceText = '松开 结束'
+					this.voiceFlg = true
+					// recorderManager.start({
+					// 	format: "mp3"
+					// }); //录音开始,
+					this.voiceTimer = setInterval(() => {
+						this.voiceLength += 0.1
+						console.log(this.voiceLength)
+					}, 100)
+					console.log('touchstartVoice', this.voicePageY)
+				}else{//还未获取授权
+					recorderManager.stop(); //录音结束
+					uni.showModal({
+						title: '权限申请',
+						content: '树蚁医疗-开启麦克风权限，以正常使用语音功能',
+						confirmText:'去设置',
+						success: function (res) {
+							if (res.confirm) {
+								permission.opensetting()
+							} else if (res.cancel) {
+								 uni.showToast({
+									title:'取消',
+									icon:'none'
+								 })
+							} 
+						}
+					})
+					return
+				} 
 			},
 			// 滑动触发
 			touchmoveVoice(e) {
 				console.log('触发')
-				let numTemp = this.voicePageY - ((e.changedTouches[0].pageY).toFixed(2))
-				if (numTemp >= 60) {
-					console.log('松开手指')
-					this.voiceStop = true
-					this.voiceTis = "松开手指 取消发送"
-				} else {//这块注意的是：如果第一次取消发送（this.voiceStop = true），下一次发送语音可能不会触发该事件，导致voiceStop一直为true
-					console.log('手指上滑 取消发送')
-					this.voiceStop = false
-					this.voiceTis = "手指上滑 取消发送"
+				if(this.permissionBool){//麦克风权限可使用
+					let numTemp = this.voicePageY - ((e.changedTouches[0].pageY).toFixed(2))
+					if (numTemp >= 60) {
+						console.log('松开手指')
+						this.voiceStop = true
+						this.voiceTis = "松开手指 取消发送"
+					} else {//这块注意的是：如果第一次取消发送（this.voiceStop = true），下一次发送语音可能不会触发该事件，导致voiceStop一直为true
+						console.log('手指上滑 取消发送')
+						this.voiceStop = false
+						this.voiceTis = "手指上滑 取消发送"
+					}
+					console.log(this.voiceStop)
 				}
-				console.log(this.voiceStop)
 			}, 
 			// 松开触发
 			touchendVoice() { 
-				this.voiceFlg = false
-				this.voiceText = '按住 说话'
-				this.voiceTis = "手指上滑 取消发送"
-				console.log('touchendVoice')
-				console.log(this.voiceStop)
-				clearInterval(this.voiceTimer);
-				this.voiceTimer = null
-				console.log(recorderManager)
-				recorderManager.stop(); //录音结束
+				if(this.permissionBool){//麦克风权限可使用
+					this.voiceFlg = false
+					this.voiceText = '按住 说话'
+					this.voiceTis = "手指上滑 取消发送"
+					console.log('touchendVoice')
+					console.log(this.voiceStop)
+					clearInterval(this.voiceTimer);
+					this.voiceTimer = null
+					console.log(recorderManager)
+					recorderManager.stop(); //录音结束
+				}
 			},
 			// 打断触发 
 			touchcancelVoice() {
-				clearInterval(this.voiceTimer);
-				this.voiceTimer = null
-				this.voiceFlg = false
-				this.voiceText = '按住 说话'
-				this.voiceTis = "手指上滑 取消发送"
-				console.log('touchcancelVoice')
-				// recorderManager.stop(); //录音结束
+				if(this.permissionBool){
+					clearInterval(this.voiceTimer);
+					this.voiceTimer = null
+					this.voiceFlg = false
+					this.voiceText = '按住 说话'
+					this.voiceTis = "手指上滑 取消发送"
+					console.log('touchcancelVoice')
+					// recorderManager.stop(); //录音结束
+				}
 			},
-			clickVoice(){
+			async clickVoice(){
 				// this.isVoice=!this.isVoice
-				console.log(this.focus)
+				// console.log(this.focus)
 				if(this.focus){//聚焦状态
 					this.focus=false
 					this.moreboolean=true//关闭底部box
@@ -485,7 +569,8 @@
 						}
 					}
 				}
-				
+				this.permissionBool=await permission.getpermission('record')
+				console.log(this.permissionBool)
 			},
 			// close(){
 			// 	uni.removeStorageSync('keyboardHeight')	
@@ -507,6 +592,13 @@
 				}
 			},
 			scroll(e) {
+				if(this.caseid){//针对群组中的病例
+					if(e.detail.scrollTop>100){//不展示
+						this.caseShow=false
+					}else{//展示
+						this.caseShow=true
+					}
+				}
 				this.old.scrollTop = e.detail.scrollTop
 			},
 			// 开始录音
@@ -629,7 +721,7 @@
 				})
 				uni.previewImage({
 					current:item.content,
-					urls:arr,
+					urls:arr.reverse(),
 					success(e){
 						console.log(e)
 					},
@@ -963,7 +1055,7 @@
 					start:surgicalPage,
 					length:6,
 				}).then(res=>{
-					console.log(res)
+					// console.log(res)
 					if(res.data.code==0){
 						this.surgicalTotal=res.data.object.pages//总页数
 						this.surgicalPage++//页数增加一页
@@ -1011,6 +1103,12 @@
 			},
 			closeMore(){
 				this.moreboolean=true
+			},
+			// 获取输入框行高
+			texTlinechange(e) {
+				// console.log(e.detail.lineCount)
+				// 获取行高
+				this.lineCount = e.detail.lineCount
 			},
 			// 更多功能
 			moreplus(){
@@ -1093,6 +1191,10 @@
 			})
 			// #endif
 		},
+		onHide() {
+			innerAudioContext.stop()
+			this.payAudioIndex=null
+		}
 	}
 </script>
 
@@ -1206,6 +1308,19 @@
 					border-radius: 10rpx;
 					display: flex;
 					align-items: flex-start;
+					.avatar_image{
+						border: 1px solid #F8F8F8;
+						width: 80rpx;
+						height: 80rpx;
+					}
+					.chatlist_box{
+						display: flex;flex-direction: column;justify-content: flex-start;align-items: flex-start;
+							.item{
+								margin-left: 36rpx;max-width: 400rpx;
+								text-overflow: ellipsis;overflow: hidden;
+								font-size: 20rpx;color: #8f8f8f;white-space: nowrap;
+							}
+					}
 				}
 				.alluser{
 					display: flex;
@@ -1344,7 +1459,7 @@
 		.footer{
 			width: 100%;
 			background-color: #fff;
-			z-index: 150;
+			// z-index: 150;
 			.inputItem{
 				padding: 20rpx 30rpx;
 				display: flex;align-items: center;justify-content: space-between;
@@ -1420,22 +1535,74 @@
 			}
 		}
 		.voice_bd{
-			position: fixed;display: flex;flex-direction: column;
-			align-items: center;
-			bottom:400rpx;
+			position: fixed;
+			// bottom: 140rpx;
+			// top:200rpx;
 			width: 750rpx;
-			height: 400rpx;
+			height: 100%;
+			background:rgba(0,0,0,0.8);
+			.voice_box{
+				position: relative;
+				height: 100%;
+			}
 			.voice_ui{
-				width: 300rpx;display: flex;flex-direction: column;
-				height: 400rpx;
-				border-radius: 8rpx;
+				position: absolute;top:0;
+				left:0;
+				right:0;
+				bottom:0;
+				width: 360rpx;display: flex;flex-direction: column;margin: auto;
+				height: 240rpx;
+				border-radius: 16rpx;
 				align-items: center;
 				justify-content: center;
-				background-color: rgba(0,0,0,0.8);
+				.voice_icon{
+					margin-bottom: 20rpx;
+					animation: voice_style 1s infinite;
+				}
 				.voice_ui_text{
 					color: #FFFFFF;
 					font-size: 30rpx;
 				}
+			}
+			.cancel_ui{
+				background-color: #dd6161;
+			}
+			.normal_ui{
+				background-color: #50BCF2;
+			}
+			.round_ui{
+				width: 750rpx;
+				height: 180rpx;
+				border-radius: 80%/100% 100% 0 0;
+				position: absolute;
+				bottom: 0;
+				// top: 120px;
+				
+			}
+			.cancel_round_ui{
+				background: #8f8f8f;
+			}
+			.normal_round_ui{
+				background: #fff;
+			}
+			.tip_text{
+				width: 100%;
+				position: absolute;
+				bottom: 200rpx;
+				text-align: center;
+				color: #8f8f8f;
+				// top: 110px;
+			}
+		}
+		@keyframes voice_style{
+			from{
+				transform: scale(1);   
+			}
+			50%{
+				transform: scale(1.5)
+			}
+			to{
+				transform: scale(1)
 			}
 		}
 </style>

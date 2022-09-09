@@ -3,7 +3,8 @@ export const getSurgical=params=>{//获取手术方法数据
 	console.log(params)
 	return request.myRequest({
 		url:'/surgicalPlan/getSurgicalPlanList',
-		data:params
+		data:params,
+		loading:true
 	})
 }
 //获取小程序的手术方法数据
@@ -25,7 +26,8 @@ export const getSurgicalDetail=params=>{
 	console.log(params)
 	return request.myRequest({//获取手术方法详情数据
 		url:'/surgicalPlan/getDetails',
-		data:params
+		data:params,
+		loading:true
 	})
 } 
 // 获取小程序的手术方法详情数据
@@ -33,14 +35,16 @@ export const getSurgicalDetailParam=params=>{
 	console.log(params)
 	return request.myRequest({
 		url:'/surgicalPlan/getDetails',
-		data:params
+		data:params,
+		loading:true
 	})
 } 
 export const getMySurgical=params=>{
 	console.log(params)
 	return request.myRequest({//获取我的方法详情数据
 		url:'/surgicalPlan/getMySurgicalMethod',
-		data:params
+		data:params,
+		loading:true
 	})
 }
 // 获取成功案例

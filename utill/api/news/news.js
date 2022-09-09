@@ -4,6 +4,7 @@ export const getNewsList=params=>{
 	console.log(params)
 	return request.myRequest({
 		url:'/news/getNews',
-		data:params
+		data:params,
+		loading:true
 	})
 }  

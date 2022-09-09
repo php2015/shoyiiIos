@@ -3,6 +3,7 @@ export const querydevice=params=>{
 	console.log(params)
 	return request.myRequest({
 		url:'/deviceGroup/getDevices',
-		data:params
+		data:params,
+		loading:true
 	})
 }  

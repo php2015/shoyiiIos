@@ -1,7 +1,8 @@
 <template>
 	<view class="PublicTitle">
 		<text class="title dark-white-font">{{title}}</text>
-		<text class='tip' @tap="more(index)">{{$t('index.Moremenu')}}</text>
+		<!-- {{$t('index.Moremenu')}} -->
+		<text class='tip' @tap="more(index)">更多</text>
 	</view>
 </template>
 

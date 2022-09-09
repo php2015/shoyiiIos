@@ -3,6 +3,7 @@ export const getgroupDevice=params=>{
 	console.log(params)
 	return request.myRequest({
 		url:'/device/getGroupDevices',
-		data:params
+		data:params,
+		loading:true
 	})
 } 

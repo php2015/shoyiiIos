@@ -1,3 +1,3 @@
-iosProfile=/Users/apple/Desktop/ios/development/ShoYiiDevelopProfile.mobileprovision
-ioscertFile=/Users/apple/Desktop/ios/development/developer.p12
+iosProfile=/Users/apple/Desktop/ios/distribution/shoyiiDistributionProfile.mobileprovision
+ioscertFile=/Users/apple/Desktop/ios/distribution/distribution.p12
 ioscertPassword=ep/Tdjka4Y7WYqDB6/S7dw==

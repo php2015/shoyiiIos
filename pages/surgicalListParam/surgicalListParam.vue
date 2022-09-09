@@ -32,7 +32,7 @@
 	</view>
 </template>   
 <script>
-	import {getSurgical,getSurgicalMenu,getSurgicalparam} from '@/utill/api/surgical/getSurgical.js' 
+	import {getSurgical,getSurgicalMenu} from '@/utill/api/surgical/getSurgical.js' 
 	import surgicalList from '@/components/surgical/surgicalList.vue'
 	import {mapGetters} from 'vuex'
 	export default {
@@ -107,11 +107,6 @@
 			getSurcialData(mark,id){
 				console.log(mark)
 				console.log(id)
-				var timer = setTimeout(function() {
-					uni.showLoading({
-					  title: '数据加载中...',
-					})
-				}, 2000)
 				var _this=this
 				getSurgical({
 					start:this.page,
@@ -119,8 +114,6 @@
 					surgicalPlanTypeId:id
 				}).then(res=>{
 					console.log(res)
-					clearTimeout(timer)
-					uni.hideLoading()//关闭加载提示
 					if(res.data.code==0){
 						this.total=res.data.object.pages//总页数
 						console.log(res.data.object.pages)

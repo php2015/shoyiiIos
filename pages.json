@@ -1002,8 +1002,8 @@
 			"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
 	},
 	"tabBar":{
-		"color":"#CBCADC",
-		"selectedColor":"#86B0D4",
+		"color":"#000000",
+		"selectedColor":"#69CDFF",
 		"backgroundColor":"#F7F7F7",
 		"fontSize":"12px",
 		"height":"55px",

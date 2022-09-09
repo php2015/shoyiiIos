@@ -312,17 +312,10 @@
 				})
 			},
 			getDeviceData(id){
-				var timer = setTimeout(function() {
-					uni.showLoading({
-					  title: '数据加载中...',
-					})
-				}, 2000)
 				getgroupDevice({
 					groupId:id
 				}).then(res=>{
 					console.log(res)
-					clearTimeout(timer)
-					uni.hideLoading()
 					if(res.data.code==0){
 						this.devicesData=res.data.object
 					}else{
@@ -332,8 +325,6 @@
 						})
 					}
 				}).catch(err=>{
-					clearTimeout(timer)
-					uni.hideLoading()
 					console.log(err)
 				})
 			}

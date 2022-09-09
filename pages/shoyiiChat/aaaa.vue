@@ -168,7 +168,7 @@
 </template>
 
 <script>
-	import {sendMessage,findchatLastest} from '@/utill/api/connect/connect.js'
+	import {findchatLastest} from '@/utill/api/connect/connect.js'
 	import {getcasedetail} from '@/utill/api/case/getcasedetail.js'
 	import {getCaselist} from '@/utill/api/case/getCaselist.js'
 	import {relativtime} from '@/utill/tools/timestamp.js'

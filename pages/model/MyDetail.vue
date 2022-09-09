@@ -148,16 +148,9 @@
 			},
 			// 获取模型库数据详情
 			getDetail(id){
-				var timer = setTimeout(function() {
-					uni.showLoading({
-					  title: '数据加载中...',
-					})
-				}, 2000)
 				getModelDetail({
 					id:id
 				}).then(res=>{
-					clearTimeout(timer)
-					uni.hideLoading()
 					console.log(res)
 					if(res.data.code==0){
 						this.Navtitle=res.data.object.modelName
@@ -173,8 +166,6 @@
 						})
 					}
 				}).catch(err=>{
-					clearTimeout(timer)
-					uni.hideLoading()
 					uni.showToast({
 						title:'err',
 						icon:'none'

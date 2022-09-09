@@ -309,17 +309,10 @@
 			},
 			// 查询通讯录
 			getaddressList(){
-				var timer = setTimeout(function() {
-					uni.showLoading({
-					  title: '数据加载中...',
-					})
-				}, 2000)
 				getAddress({
 					userId:this.userId,
 					groupId:Number(null)
 				}).then(res=>{
-					clearTimeout(timer)
-					uni.hideLoading()
 					console.log(res)
 					if(res.data.code==0){
 						if(res.data.object.length==0){
@@ -336,8 +329,6 @@
 						})
 					}
 				}).catch(err=>{
-					clearTimeout(timer)
-					uni.hideLoading()
 					console.log(err)
 				})
 			},

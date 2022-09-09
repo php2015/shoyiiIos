@@ -18,7 +18,7 @@ module.exports = {
 					var data=JSON.parse(message.payload)
 				}else{
 					var data=message.payload
-				}
+				} 
 				console.log(data) //自定义过来的数据
 				console.log(data.messageType)
 			}
@@ -43,9 +43,16 @@ module.exports = {
 					}
 				break;
 				case 2://新闻推送
-					uni.navigateTo({
-						url:'/pages/news/newsDetail?id='+data.id
-					})
+					if(data.caseLink){//新闻链接
+						uni.navigateTo({
+							url:'/pages/ThreejsShow/ThreejsShow?baseUrl='+encodeURIComponent(data.caseLink),
+							animationType:'pop-in'
+						})
+					}else{
+						uni.navigateTo({
+						  url:'/pages/news/newsDetail?id='+data.id
+						})
+					}
 				break;
 				case 3://消息推送
 					uni.navigateTo({

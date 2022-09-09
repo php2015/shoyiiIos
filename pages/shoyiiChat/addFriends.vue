@@ -20,7 +20,7 @@
 </template>
 
 <script>
-	import {sendMessage,agreeQuest} from '@/utill/api/connect/connect.js'
+	import {agreeQuest} from '@/utill/api/connect/connect.js'
 	export default{
 		data(){
 			return{

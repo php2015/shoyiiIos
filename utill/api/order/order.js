@@ -1,17 +1,11 @@
 var request = require('../../request.js')
-// 获取订单列表
-// export const getOrderList=params=>{
-// 	console.log(params)
-// 	return request.myRequest({
-// 		url:'/omsOrder/queryOrderListForPage',
-// 		data:params
-// 	})
-// }  
+// 获取订单列表 
 export const getOrderList = params => {
 	console.log(params)
 	return request.myRequest({
 		url: '/omsOrder/queryOrderListForPageApp',
-		data: params
+		data: params,
+		loading:true
 	})
 }
 // 进入账单时,获取用户的openid,用于支付，用于小程序的

@@ -99,28 +99,17 @@
 			grounpCancel(){},
 			// 获取设备分组及相关信息
 			getDeviceData(){
-				var timer = setTimeout(function() {
-					uni.showLoading({
-					  title: '数据加载中...',
-					})
-				}, 2000)
 				querydevice({}).then(res=>{
 					console.log(res)
-					clearTimeout(timer)
-					uni.hideLoading()
 					if(res.data.code==0){
 						this.deviceData=res.data.object
 					}else{
-						clearTimeout(timer)
-						uni.hideLoading()
 						uni.showToast({
 							title:res.data.msg,
 							icon:'none'
 						})
 					}
 				}).catch(err=>{
-					clearTimeout(timer)
-					uni.hideLoading()
 					console.log(err)
 				})
 			},

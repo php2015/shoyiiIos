@@ -104,6 +104,7 @@
 		checkAudit
 	} from '@/utill/tools/checkAudit.js'
 	import {mapGetters,mapState} from 'vuex'
+	import {aemdTabbar} from '@/utill/tools/checkdark.js'
 	export default {
 		components:{
 			caselistItem
@@ -158,7 +159,7 @@
 			}
 		},
 		computed:{
-			...mapGetters (['appTheme','DataStatus']),
+			...mapGetters (['isDark','DataStatus']),
 			// #ifdef MP-WEIXIN
 			widthLength(){
 				return 750 - this.menuButtonInfo.width*2
@@ -321,13 +322,7 @@
 			},
 			// 获取病例数据（mark为0表示初始化加载数据）
 			getCaseData(mark,index,status,identity,startTime,endTime,otherStatus){
-				console.log(mark)
-				console.log(index)
-				var timer = setTimeout(function() {
-					uni.showLoading({
-					  title: '数据加载中...',
-					})
-				}, 2000)
+				console.log(mark,index)
 				getCaselist({
 					// status:status,
 					identity:identity,
@@ -338,8 +333,6 @@
 					endTime:endTime,
 					otherStatus:otherStatus,
 				}).then(res=>{
-					clearTimeout(timer)
-					uni.hideLoading()//关闭加载提示
 					console.log(res)
 					if(res.data.code==0){
 						console.log(res.data.object.list)
@@ -486,6 +479,9 @@
 			console.log(e) 
 		},
 		onShow() {
+			// #ifdef APP-PLUS
+			aemdTabbar(this.isDark)//暗黑设置
+			// #endif
 			// 病例审核无意义（1. 注册者，没数据，审什么？2. 已通过的，再修改信息，还是通过，审什么？）
 			if (checkLogin('/pages/caselist/case',1)) { //token 存在
 				if(this.DataStatus||this.caseList[this.tabIndex].data.length==0){//数据更新

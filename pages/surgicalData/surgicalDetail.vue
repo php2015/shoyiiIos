@@ -352,18 +352,11 @@
 			},
 			// 获取手术方法库详情
 			getDetail(id){
-				var timer = setTimeout(function() {
-					uni.showLoading({
-					  title: '数据加载中...',
-					})
-				}, 2000)
 				// #ifdef APP-PLUS||H5
 				getSurgicalDetail({
 					surgicalPlanId:id,
 				}).then(res=>{
 					console.log(res)
-					clearTimeout(timer)
-					uni.hideLoading()
 					if(res.data.code==0){
 						this.Navtitle=res.data.object.surgicalPlanName
 						this.arrData=res.data.object
@@ -403,8 +396,6 @@
 						})
 					}
 				}).catch(err=>{
-					clearTimeout(timer)
-					uni.hideLoading()
 					console.log(err)
 					uni.showToast({
 						title:'数据错误',
@@ -417,8 +408,6 @@
 					surgicalPlanId:id,
 				}).then(res=>{
 					console.log(res)
-					uni.hideLoading()
-					clearTimeout(timer)
 					if(res.data.code==0){
 						this.Navtitle=res.data.object.surgicalPlanName
 						// uni.setNavigationBarTitle({
@@ -460,8 +449,6 @@
 						})
 					}
 				}).catch(err=>{
-					uni.hideLoading()
-					clearTimeout(timer)
 					console.log(err)
 					uni.showToast({
 						title:'数据错误',

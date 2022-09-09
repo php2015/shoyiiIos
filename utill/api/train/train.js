@@ -18,7 +18,8 @@ export const getReportInfor=params=>{//获取报名信息
 	console.log(params)
 	return request.myRequest({
 		url:'/train/getSignUpMessage',
-		data:params
+		data:params,
+		loading:true
 	})
 }
 export const amendInfor=params=>{//获取报名信息

@@ -1,7 +1,6 @@
 module.exports={
 	checkLogin(url,type){//backpage为返回的页面，backtype为返回的页面跳转类型
-		console.log(url)
-		console.log(type)
+		console.log(url,type)
 		var token=uni.getStorageSync('token')
 		if(!token){
 			uni.showModal({

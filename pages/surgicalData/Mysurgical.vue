@@ -80,19 +80,12 @@
 				// 获取我的手术方法库
 				MySurgical(mark,id){
 					console.log(id)
-					var timer = setTimeout(function() {
-						uni.showLoading({
-						  title: '数据加载中...',
-						})
-					}, 2000)
 					var _this=this
 					getMySurgical({
 						start:this.page,
 						length:this.size,
 						surgicalPlanTypeId:id
 					}).then(res=>{
-						clearTimeout(timer)
-						uni.hideLoading()
 						console.log(res)
 						if(res.data.code==0){
 							this.total=res.data.object.pages//总页数
@@ -144,8 +137,6 @@
 						})
 					}
 					}).catch(err=>{
-						clearTimeout(timer)
-						uni.hideLoading()
 						console.log(err)
 					})
 				},

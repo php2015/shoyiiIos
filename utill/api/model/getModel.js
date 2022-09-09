@@ -4,7 +4,8 @@ export const getPublicModel=params=>{
 	console.log(params)
 	return request.myRequest({
 		url:'/modelLib/getModelTypeListForPublic',
-		data:params
+		data:params,
+		loading:true
 	})
 }  
 // 添加或去除收藏
@@ -28,7 +29,8 @@ export const getModelDetail=params=>{
 	console.log(params)
 	return request.myRequest({
 		url:'/modelLib/getModelLibDetail',
-		data:params
+		data:params,
+		loading:true
 	})
 } 
 // 查询所有的分类

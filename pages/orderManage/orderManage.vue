@@ -54,17 +54,10 @@
 		},
 		methods: {
 			getOrderList(mark, page) {
-				var timer = setTimeout(function() {
-					uni.showLoading({
-						title: '数据加载中...',
-					})
-				}, 2000)
 				getOrderList({
 					pageNum: page,
 					pageSize: 5
 				}).then(res => {
-					clearTimeout(timer)
-					uni.hideLoading()
 					console.log(res)
 					if (res.data.code == 0) {
 						if (!res.data.object) { //无数据
@@ -99,8 +92,6 @@
 						return;
 					}
 				}).catch(err => {
-					clearTimeout(timer)
-					uni.hideLoading()
 					console.log(err)
 				})
 			},

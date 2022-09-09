@@ -160,19 +160,12 @@
 			// 获取全部手术方法数据
 			getSurcialData(mark,id){
 				if(!this.checkAudit()){// 审核通过
-					var timer = setTimeout(function() {
-						uni.showLoading({
-						  title: '数据加载中...',
-						})
-					}, 2000)
 					var _this=this
 					getSurgical({
 						start:this.page,
 						length:this.size,
 						surgicalPlanTypeId:id
 					}).then(res=>{ 
-						clearTimeout(timer)
-						uni.hideLoading()//关闭加载提示
 						// console.log(res)
 						if(res.data.code==0){
 							this.total=res.data.object.pages//总页数
@@ -199,9 +192,6 @@
 							}
 							// console.log(this.surgicalListAll)
 						}else{
-							clearTimeout(timer)
-							uni.hideLoading()//关闭加载提示
-							// uni.hideLoading()//关闭加载提示
 							uni.showModal({
 								title:'未登录',
 								content:'用户未登录',
@@ -363,8 +353,7 @@
 		},
 		onShow() {//默认加载全部手术方法数据
 			// #ifdef APP-PLUS
-			// 暗黑系统的检测
-			aemdTabbar()
+			aemdTabbar()//暗黑设置
 			// #endif
 			//1表示switchTab
 			var res=this.checkLogin('/pages/surgicalData/surgicalData',1)

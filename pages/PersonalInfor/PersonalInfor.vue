@@ -485,15 +485,15 @@
 					for(let i in data.previewImage){
 						if(i==data.iDcardPicture){
 							this.frontSrc=data.previewImage[i]
-							console.log(this.frontSrc)
+							// console.log(this.frontSrc)
 						}
 						if(i==data.iDcardPictureBack){
 							this.backSrc=data.previewImage[i]
-							console.log(this.backSrc)
+							// console.log(this.backSrc)
 						}
 						if(i==data.doctorLicense){
 							this.licenseSrc=data.previewImage[i]
-							console.log(this.licenseSrc)
+							// console.log(this.licenseSrc)
 						}
 					}
 				}else{

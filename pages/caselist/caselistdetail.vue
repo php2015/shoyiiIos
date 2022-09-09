@@ -818,7 +818,7 @@
 				getcasedetail({
 					caseHistoryId:id
 				}).then(res=>{
-					console.log(res)
+					// console.log(res)
 					if(res.data.code==0){
 						var data=res.data.object
 						this.list=data
